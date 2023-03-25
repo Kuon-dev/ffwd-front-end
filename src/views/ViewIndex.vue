@@ -8,37 +8,39 @@
 			<div>5</div>
 			<div>6</div>
 		</div>
+		<Suspense>
+			<template #default>
+				<img :src="test" class="h-[50rem]" />
+			</template>
+			<template #fallback> loading </template>
+		</Suspense>
 		<button class="text-sky-400">Hide P</button>
 		<p class="text-amber-300 text-md">This is a P element</p>
 	</div>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
 import Test from '@jquery/Example.ts';
 import QRCode from 'qrcode';
 
 Test;
-
-// With promises
-QRCode.toDataURL('I am a pony!')
-	.then((url) => {
-		console.log(url);
-	})
-	.catch((err) => {
-		console.error(err);
-	});
-
 // With async/await
 const generateQR = async (text) => {
 	try {
-		console.log(await QRCode.toDataURL(text));
+		const image = await QRCode.toDataURL(text);
+		console.log(image);
+		console.log(text);
+		return image;
 	}
 	catch (err) {
 		console.error(err);
 	}
 };
 
-generateQR('test');
+const test = ref(
+	await generateQR('https://www.youtube.com/watch?v=vEyPvak2K9o'),
+);
 </script>
 
 <style lang="scss" scoped>
