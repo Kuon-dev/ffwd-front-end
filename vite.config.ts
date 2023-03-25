@@ -27,12 +27,12 @@ export default defineConfig({
 			setAlias('form-components', './src/components/FormComponents/'),
 			setAlias('nav-components', './src/components/NavigationComponents/'),
 			setAlias('payment-components', './src/components/PaymentComponents/'),
-			setAlias('jquery', './src/jquery/'),
+			setAlias('jquery-components', './src/jquery-components/'),
 		],
 	},
 	plugins: [
 		VueRouter({
-			/* options */
+			routesFolder: 'src/views',
 		  }),
 		vue(),
 		

@@ -21,7 +21,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import Test from '@jquery/Example.ts';
+import Test from '@/jquery-components/Example';
 import QRCode from 'qrcode';
 
 Test;

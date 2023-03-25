@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { apiClient, getToken } from '@stores/BackendAPI.ts';
+import { apiClient, getToken } from 'stores/BackendAPI';
 
 export const useUserStore = defineStore('userStore', {
 	state: () => ({
