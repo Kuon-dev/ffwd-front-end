@@ -1,65 +1,11 @@
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
-import { createRouter, createWebHistory } from 'vue-router';
-import { useUserStore } from '@stores/UserStore.ts'
-
-const NotFound = () => import('@views/ViewNotFound.vue');
-const Index = () => import('@views/ViewIndex.vue');
-
-const setPath = (path, name, component) => {
-	return {
-		path: path,
-		name: name ?? null,
-		component: (component),
-		props: true,
-	};
-};
-
-const setPathChildren = (path, name, component, children) => {
-	return {
-		path: path,
-		name: name ?? null,
-		component: (component),
-		props: true,
-		children: children,
-	};
-};
-
-const setPathChildrenNoComponent = (path, name, children) => {
-	return {
-		path: path,
-		name: name ?? null,
-		props: true,
-		children: children,
-	};
-};
+import { createRouter, createWebHistory } from 'vue-router/auto';
+import { useUserStore } from 'stores/UserStore'
 
 const router = createRouter({
 	history: createWebHistory(),
-	routes: [
-		/*
-		setPath('/', 'landing', Home),
-		setPath('/signup', 'signup', Register),
-		setPath('/login', 'login', Login),
-		setPath('/password-reset/:token', 'password-reset', ResetPassword),
-		setPath('/forgot-password', 'forgot-password', ForgotPassword),
-		setPath('/verify-email', 'verify-email', VerifyEmail),
-
-		setPathChildren('/admin', 'admin-account', AdminDashboard, [
-			setPath('dashboard', 'admin-view-dashboard', AdminViewDashboard),
-
-			setPathChildrenNoComponent('listing', 'admin-listing', [
-				setPath(':pathMatch(.*)*', 'admin-listing-section', AdminViewListing),
-				setPath('view', 'admin-view-listing', AdminViewListing),
-				setPath('edit/:id', 'admin-edit-listing', AdminEditListing),
-				setPath('add', 'admin-add-listing', AdminEditListing),
-			]),
-
-		]),
-    */
-		setPath('/', 'home', Index),
-		setPath('/:pathMatch(.*)*', '404', NotFound),
-	],
+	routes: [] 
 });
 
 router.beforeEach(async (to) => {
