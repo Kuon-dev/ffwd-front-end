@@ -1,26 +1,6 @@
 <template>
-	<div>
-		<div class="flex flex-row gap-4">
-			<NavSideBar />
-			<div class="flex flex-col gap-4 bg-amber-300">
-				<div class="flex flex-row gap-4">
-					<div class="">1</div>
-					<div>2</div>
-					<div>3</div>
-					<div>4</div>
-					<div>5</div>
-					<div>6</div>
-				</div>
-				<Suspense>
-					<template #default>
-						<img :src="test" class="h-[50rem]" />
-					</template>
-					<template #fallback> loading </template>
-				</Suspense>
-			</div>
-		</div>
-		<button class="text-sky-400">Hide P</button>
-		<p class="text-amber-300 text-md">This is a P element</p>
+	<div class="">
+		<Nav />
 	</div>
 </template>
 
@@ -29,7 +9,7 @@ import { ref } from 'vue';
 import Test from '@/jquery-components/Example';
 import QRCode from 'qrcode';
 
-import NavSideBar from 'nav-components/NavSidebar.vue';
+import Nav from 'nav-components/NavTop.vue';
 
 Test;
 // With async/await
