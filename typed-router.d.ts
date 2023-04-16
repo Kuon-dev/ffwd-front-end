@@ -36,9 +36,17 @@ import type {
 declare module 'vue-router/auto/routes' {
   export interface RouteNamedMap {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
+    '/[...path]': RouteRecordInfo<'/[...path]', '/:path(.*)', { path: ParamValue<true> }, { path: ParamValue<false> }>,
     '/about': RouteRecordInfo<'/about', '/about', Record<never, never>, Record<never, never>>,
+    '/forgot-password': RouteRecordInfo<'/forgot-password', '/forgot-password', Record<never, never>, Record<never, never>>,
+    '/forum/': RouteRecordInfo<'/forum/', '/forum', Record<never, never>, Record<never, never>>,
+    '/forum/[id]': RouteRecordInfo<'/forum/[id]', '/forum/:id', { id: ParamValue<true> }, { id: ParamValue<false> }>,
+    '/forum/create': RouteRecordInfo<'/forum/create', '/forum/create', Record<never, never>, Record<never, never>>,
+    '/login': RouteRecordInfo<'/login', '/login', Record<never, never>, Record<never, never>>,
+    '/register': RouteRecordInfo<'/register', '/register', Record<never, never>, Record<never, never>>,
+    '/reset-password': RouteRecordInfo<'/reset-password', '/reset-password', Record<never, never>, Record<never, never>>,
     '/terms-conditions': RouteRecordInfo<'/terms-conditions', '/terms-conditions', Record<never, never>, Record<never, never>>,
-    '/ViewNotFound': RouteRecordInfo<'/ViewNotFound', '/ViewNotFound', Record<never, never>, Record<never, never>>,
+    '/verify-email': RouteRecordInfo<'/verify-email', '/verify-email', Record<never, never>, Record<never, never>>,
   }
 }
 
