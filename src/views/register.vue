@@ -19,7 +19,7 @@
 						<h2
 							class="mt-6 text-2xl font-bold text-white sm:text-3xl md:text-4xl"
 						>
-							Welcome to VDA GLBOAL
+							Welcome to CodeGenius
 						</h2>
 
 						<p class="mt-4 leading-relaxed text-white/90">
@@ -33,7 +33,7 @@
 					aria-label="Main"
 					class="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:py-12 lg:px-16 xl:col-span-6"
 				>
-					<div class="max-w-xl lg:max-w-3xl">
+					<BaseCard class="max-w-xl lg:max-w-3xl">
 						<div class="relative -mt-16 block lg:hidden">
 							<a
 								class="inline-flex h-16 w-16 items-center justify-center rounded-full bg-white text-blue-600 sm:h-20 sm:w-20"
@@ -61,7 +61,6 @@
 							</router-link>
 						</div>
 						<form method="POST" action="" class="mt-8 grid grid-cols-6 gap-6">
-							<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 							<div class="col-span-6 sm:col-span-3">
 								<label
 									for="FirstName"
@@ -72,7 +71,7 @@
 
 								<input
 									type="text"
-									class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+									class="mt-1 w-full rounded-sm border-gray-200 bg-white text-sm text-gray-700 shadow-sm border"
 									v-model="firstName"
 									required
 								/>
@@ -88,7 +87,7 @@
 
 								<input
 									type="text"
-									class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+									class="mt-1 w-full rounded-sm border-gray-200 bg-white text-sm text-gray-700 shadow-sm border"
 									v-model="lastName"
 									required
 								/>
@@ -104,7 +103,7 @@
 
 								<input
 									type="email"
-									class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+									class="mt-1 w-full rounded-sm border-gray-200 bg-white text-sm text-gray-700 shadow-sm border"
 									v-model="email"
 									required
 									autocomplete="email"
@@ -132,7 +131,7 @@
 								<input
 									type="password"
 									name="password"
-									class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+									class="mt-1 w-full rounded-sm border-gray-200 bg-white text-sm text-gray-700 shadow-sm border"
 									v-model="password"
 									required
 									autocomplete="false"
@@ -151,7 +150,7 @@
 									type="password"
 									id="PasswordConfirmation"
 									name="password_confirmation"
-									class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+									class="mt-1 w-full rounded-sm border-gray-200 bg-white text-sm text-gray-700 shadow-sm border"
 									autocomplete="false"
 									v-model="passwordConf"
 									required
@@ -175,10 +174,10 @@
 										type="checkbox"
 										id="MarketingAccept"
 										name="marketing_accept"
-										class="h-5 w-5 rounded-md border-gray-200 bg-white shadow-sm"
+										class="h-5 w-5 rounded-sm border"
 									/>
 
-									<span class="text-sm text-gray-700">
+									<span class="text-sm text-gray-700 mt-[0.4rem]">
 										I want to receive emails about events, product updates and
 										company announcements.
 									</span>
@@ -199,7 +198,7 @@
 
 							<div class="col-span-6 sm:flex sm:items-center sm:gap-4">
 								<button
-									class="inline-block shrink-0 rounded-md border border-brand bg-brand px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
+									class="inline-block shrink-0 rounded-sm border border-brand bg-brand px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
 									@click.stop="submitRegister($event)"
 								>
 									Create an account
@@ -217,7 +216,7 @@
 							v-for="(errors, index) in store.errorList?.password"
 							:key="index"
 						></div>
-					</div>
+					</BaseCard>
 				</main>
 			</div>
 		</section>
@@ -225,14 +224,13 @@
 </template>
 
 <script setup lang="ts">
+import BaseCard from 'base-components/BaseCard.vue';
 import { ref } from 'vue';
 import { useUserStore } from 'stores/UserStore';
 
 const store = useUserStore();
 
-const image = ref(
-	'https://images.unsplash.com/photo-1617195737496-bc30194e3a19?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
-);
+const image = ref('/img1.png');
 
 const firstName = ref<String>('');
 const lastName = ref<String>('');
@@ -265,5 +263,10 @@ const submitRegister = async (e: Event) => {
 	&input :invalid {
 		border-color: red;
 	}
+}
+
+input {
+	height: 2rem;
+	padding: 1rem;
 }
 </style>

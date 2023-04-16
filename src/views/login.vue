@@ -93,7 +93,7 @@
 
 						<p class="text-sm text-gray-500">
 							No account?
-							<router-link :to="'/signup'" class="underline" href=""
+							<router-link :to="'/register'" class="underline" href=""
 								>Sign up</router-link
 							>
 						</p>
