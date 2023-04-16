@@ -22,21 +22,6 @@ const handleResize = () => {
 	windowWidth.value = window.innerWidth;
 };
 const isInMobile = ref(windowWidth.value < 1024);
-/*
-interface Theme {
-  bg: string,
-  bg2: string,
-  text: string,
-  subtext: string,
-  subtext2: string,
-  panel: string,
-  overlay: string,
-  brand: string,
-  brand2: string,
-}
-*/
-
-// const app = ref(document.getElementById('app')?.style);
 
 watch(windowWidth, () => {
 	isInMobile.value = windowWidth.value < 1024;
