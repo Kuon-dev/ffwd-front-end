@@ -2,10 +2,7 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 // import path from 'path';
 import { fileURLToPath, URL } from 'url';
-
-import VueRouter from 'unplugin-vue-router/vite'
-
-
+import VueRouter from 'unplugin-vue-router/vite';
 
 const setAlias = (alias: string, path: string) => {
 	return {
@@ -35,7 +32,7 @@ export default defineConfig({
 			routesFolder: 'src/views',
 		  }),
 		vue(),
-		
+
 	],
 
 	server: {
