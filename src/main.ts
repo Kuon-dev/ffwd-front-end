@@ -16,6 +16,19 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
 /* add icons to the library */
 library.add(fas, fab, far);
 
+// Vuetify
+import 'vuetify/styles';
+import { createVuetify } from 'vuetify';
+import * as components from 'vuetify/components';
+import * as directives from 'vuetify/directives';
+
+const vuetify = createVuetify({
+	components,
+	directives,
+});
+
+createApp(App).use(vuetify).mount('#app');
+
 import NProgress from 'nprogress';
 
 NProgress.configure({ showSpinner: false });
@@ -30,5 +43,6 @@ pinia.use(({ store }) => {
 createApp(App)
 	.use(router)
 	.use(pinia)
+	.use(vuetify)
 	.component('font-awesome-icon', FontAwesomeIcon)
 	.mount('#app');

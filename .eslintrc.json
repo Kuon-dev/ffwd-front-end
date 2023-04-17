@@ -19,6 +19,8 @@
 	},
 	"plugins": ["vue", "@typescript-eslint"],
 	"rules": {
+		"no-unused-vars": "warn",
+		"vue/multi-word-component-names": "off",
 		"arrow-spacing": ["warn", { "before": true, "after": true }],
 		"brace-style": ["error", "stroustrup", { "allowSingleLine": true }],
 		"comma-dangle": ["error", "always-multiline"],
