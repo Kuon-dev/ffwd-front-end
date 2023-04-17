@@ -43,5 +43,6 @@ pinia.use(({ store }) => {
 createApp(App)
 	.use(router)
 	.use(pinia)
+	.use(vuetify)
 	.component('font-awesome-icon', FontAwesomeIcon)
 	.mount('#app');
