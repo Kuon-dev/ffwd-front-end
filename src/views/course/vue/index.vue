@@ -1,5 +1,5 @@
 <template>
-	<div class="ml-10 mr-20">
+	<div class="ml-10 mr-20 mb-10">
 		<Card
 			image="/Fotor_AI.png"
 			title="Vue"
@@ -7,8 +7,6 @@
 		/>
 
 		<List :course="vue" class="mt-10"> </List>
-
-		This is a test
 	</div>
 </template>
 

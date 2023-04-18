@@ -47,6 +47,8 @@ declare module 'vue-router/auto/routes' {
     '/forum/[id]': RouteRecordInfo<'/forum/[id]', '/forum/:id', { id: ParamValue<true> }, { id: ParamValue<false> }>,
     '/forum/create': RouteRecordInfo<'/forum/create', '/forum/create', Record<never, never>, Record<never, never>>,
     '/login': RouteRecordInfo<'/login', '/login', Record<never, never>, Record<never, never>>,
+    '/quiz/[id]/': RouteRecordInfo<'/quiz/[id]/', '/quiz/:id', { id: ParamValue<true> }, { id: ParamValue<false> }>,
+    '/quiz/[id]/feedback': RouteRecordInfo<'/quiz/[id]/feedback', '/quiz/:id/feedback', { id: ParamValue<true> }, { id: ParamValue<false> }>,
     '/register': RouteRecordInfo<'/register', '/register', Record<never, never>, Record<never, never>>,
     '/reset-password': RouteRecordInfo<'/reset-password', '/reset-password', Record<never, never>, Record<never, never>>,
     '/terms-conditions': RouteRecordInfo<'/terms-conditions', '/terms-conditions', Record<never, never>, Record<never, never>>,

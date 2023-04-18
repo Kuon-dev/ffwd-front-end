@@ -9,11 +9,13 @@
 				<router-view></router-view>
 			</div>
 		</div>
+		<Footer />
 	</div>
 </template>
 
 <script setup lang="ts">
 import Nav from 'nav-components/NavTop.vue';
+import Footer from 'base-components/BaseFooter.vue';
 import Sidebar from 'course-components/CourseSidebar.vue';
 </script>
 
