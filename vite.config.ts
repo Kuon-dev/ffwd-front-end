@@ -25,6 +25,7 @@ export default defineConfig({
 			setAlias('nav-components', './src/components/NavigationComponents/'),
 			setAlias('payment-components', './src/components/PaymentComponents/'),
 			setAlias('jquery-components', './src/jquery-components/'),
+			setAlias('course-components', './src/components/CourseComponents/'),
 		],
 	},
 	plugins: [
