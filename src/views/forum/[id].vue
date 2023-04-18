@@ -1,9 +1,9 @@
 <template>
 	<!--The Whole Page-->
-	<div class="h-screen w-screen bg-[url('/public/img1.png')] bg-cover">
+	<div class="h-full w-full bg-[url('/public/img1.png')] bg-cover p-1">
 		<!--Forum-->
 		<div
-			class="bg-white border rounded-lg p-9 xl:w-3/5 md:w-5/6 sm:w-6/7 xl:mx-72 md:mx-16 sm:mx-2 grid grid-cols-1 my-15"
+			class="bg-white flex justify-center border rounded-lg p-9 xl:w-3/5 md:w-5/6 sm:w-6/7 xl:mx-72 md:mx-16 sm:mx-2 grid grid-cols-1 my-15"
 		>
 			<!-- Forum Title -->
 			<h2 class="place-content-start flex text-2xl font-semibold leading-10">

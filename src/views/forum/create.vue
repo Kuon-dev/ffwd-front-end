@@ -1,7 +1,7 @@
 <template>
 	<!--The whole page-->
 	<div
-		class="h-full w-full bg-cover bg-center bg-no-repeat content-start"
+		class="h-full w-full bg-cover bg-center bg-no-repeat content-start p-1"
 		style="background-image: url('/public/img2.png')"
 	>
 		<!--backgrond image-->
