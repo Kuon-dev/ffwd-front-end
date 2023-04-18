@@ -1,7 +1,7 @@
 <template>
 	<nav class="mx-20 my-5">
 		<BaseCard
-			class="flex flex-row justify-space-between"
+			class="flex flex-row justify-space-between items-center"
 			padding-size="sm"
 			add-class=""
 		>
@@ -13,9 +13,15 @@
 
 			<!-- <div class="">test</div> -->
 			<div class="">
-				<v-btn variant="text"> About </v-btn>
-				<v-btn variant="text"> Course </v-btn>
-				<v-btn variant="text"> Forum </v-btn>
+				<router-link
+					v-for="(item, index) in landingNavigation"
+					:key="index"
+					:to="item.path"
+				>
+					<v-btn variant="text">
+						{{ item.title }}
+					</v-btn>
+				</router-link>
 			</div>
 			<v-avatar color="info">
 				<font-awesome-icon icon="fa-regular fa-user" />
@@ -26,6 +32,7 @@
 
 <script setup lang="ts">
 import BaseCard from 'base-components/BaseCard.vue';
+import { landingNavigation } from 'nav-components/NavItems';
 </script>
 
 <style lang="scss" scoped></style>
