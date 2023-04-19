@@ -15,12 +15,12 @@ export const topics = [
 		'path': '/course/javascript',
 	},
 	{
-		'topic': 'php',
+		'topic': 'PHP',
 		'img': '',
 		'path': '/course/php',
 	},
 	{
-		'topic': 'vue',
+		'topic': 'Vue',
 		'img': '',
 		'path': '/course/vue',
 	},

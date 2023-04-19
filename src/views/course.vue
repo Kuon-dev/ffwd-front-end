@@ -2,10 +2,10 @@
 	<div class="bg-cover top-0 h-full flex flex-col bg-gray-100 overflow-hidden">
 		<Nav />
 		<div class="flex flex-row w-full mt-32">
-			<div class="ml-10">
+			<div class="ml-[3.95rem]">
 				<Sidebar />
 			</div>
-			<div class="w-full rounded-lg ml-32">
+			<div class="w-full rounded-lg ml-64">
 				<router-view></router-view>
 			</div>
 		</div>
