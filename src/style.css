@@ -46,3 +46,9 @@ input {
 	-ms-transform: rotate(3deg) translate(0px, -4px);
 	transform: rotate(3deg) translate(0px, -4px);
 }
+
+@layer base {
+	.likeButton {
+		@apply flex gap-3 w-[10rem] h-[3rem] justify-center items-center bg-blue-400 p-2 rounded-md hover:bg-blue-500 hover:text-white;
+	}
+}

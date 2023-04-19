@@ -13,8 +13,8 @@ const setAlias = (alias: string, path: string) => {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-	resolve:{
-		alias:[
+	resolve: {
+		alias: [
 			setAlias('@', './src'),
 			setAlias('stores', './src/stores/'),
 			setAlias('admins', './src/views/Admin/'),
@@ -31,9 +31,8 @@ export default defineConfig({
 	plugins: [
 		VueRouter({
 			routesFolder: 'src/views',
-		  }),
+		}),
 		vue(),
-
 	],
 
 	server: {
