@@ -1,5 +1,5 @@
 <template>
-	<nav class="mx-20 my-5">
+	<nav class="mx-20 my-5 fixed w-full pr-[8rem] z-50">
 		<BaseCard
 			class="flex flex-row justify-space-between items-center"
 			padding-size="sm"

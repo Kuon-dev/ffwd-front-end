@@ -1,15 +1,14 @@
 <template>
-	<div class="bg-cover top-0 h-full flex flex-col bg-gray-100">
+	<div class="bg-cover top-0 h-full flex flex-col bg-gray-100 overflow-hidden">
 		<Nav />
-		<div class="flex flex-row w-full">
+		<div class="flex flex-row w-full mt-32">
 			<div class="ml-10">
 				<Sidebar />
 			</div>
-			<div class="w-full rounded-lg">
+			<div class="w-full rounded-lg ml-32">
 				<router-view></router-view>
 			</div>
 		</div>
-		<Footer />
 	</div>
 </template>
 
