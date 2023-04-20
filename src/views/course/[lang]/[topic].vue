@@ -1,5 +1,5 @@
 <template>
-	<div class="ml-10 mr-20 mb-10">
+	<div class="mb-10">
 		<BaseCard paddingSize="md">
 			<div id="md-convert"></div>
 		</BaseCard>
@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import BaseCard from 'base-components/BaseCard.vue';
-import { useTopicHook } from 'jquery-components/topics';
+import { injectMarkdownContent } from 'compostables/courses/CourseSidebarDataInjector';
 import { computed, watch, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
@@ -21,7 +21,7 @@ const path = computed(() => {
 });
 
 // jquery usage
-useTopicHook(path.value);
+injectMarkdownContent(path.value);
 </script>
 
 <style lang="scss">

@@ -20,6 +20,7 @@ export default defineConfig({
 			setAlias('admins', './src/views/Admin/'),
 			setAlias('users', './src/views/User/'),
 			setAlias('views', './src/views/'),
+			setAlias('compostables', './src/compostables/'),
 			setAlias('base-components', './src/components/BaseComponents/'),
 			setAlias('form-components', './src/components/FormComponents/'),
 			setAlias('nav-components', './src/components/NavigationComponents/'),
@@ -32,7 +33,7 @@ export default defineConfig({
 	plugins: [
 		VueRouter({
 			routesFolder: 'src/views',
-		  }),
+		}),
 		vue(),
 
 	],

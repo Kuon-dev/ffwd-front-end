@@ -8,6 +8,7 @@ export const path = computed(() => {
 
 export const renderSidebarHook = watch(path, (newPath: any, oldPath: any) => {
 	if (path.value.params.topic) {
+		console.log('is show');
 		$('#page-sidebar').show();
 	}
 	else {
