@@ -4,7 +4,7 @@ import * as $ from 'jquery';
 import router from '@/router'; // @ refers to src
 import hljs from 'highlight.js';
 import showdown from 'showdown';
-import 'highlight.js/styles/stackoverflow-light.css';
+import 'highlight.js/styles/base16/material-darker.css';
 import scrollama from 'scrollama';
 
 // compostable
@@ -32,10 +32,32 @@ const converter = new showdown.Converter({
 	],
 });
 
+
+const injectClipboardAPI = () => {
+// Select all pre elements on the page
+	$('pre').each((index: number, el:any) => {
+		const pre = $(el);
+		const copyButton = $('<button>Copy</button>');
+
+		// Add a click event listener to the button
+		copyButton.click(() => {
+			const text = pre.text().split('\n').slice(0, -1).join('\n');
+			const textarea = $('<textarea></textarea>').val(text);
+			$('body').append(textarea);
+			textarea.select();
+			(document as any).execCommand('copy');
+			textarea.remove();
+		});
+
+		// Append the copy button to the pre element
+		pre.append(copyButton);
+	});
+};
+
 const injectScrollama = () => {
 
 	// Loop through each h2 element
-	$('#md-convert h2').each((index, h2) => {
+	$('#md-convert h2').each((index: number, h2: any) => {
 		const section = $('<section></section>');
 		$(h2).nextUntil('h2').appendTo(section);
 		section.insertBefore(h2);
@@ -54,6 +76,7 @@ const injectScrollama = () => {
 		const sidebarItem = $(`#page-sidebar-headers li a[href="#${id}"]`).parent();
 		sidebarItem.removeClass('active');
 	});
+
 };
 
 // this refers to the route path
@@ -61,7 +84,7 @@ export const path = computed(() => {
 	return router.currentRoute.value;
 });
 
-export const injectSidebarComponent = watch(path, (newPath: any, oldPath: any) => {
+export const injectSidebarComponent = watch(path, () => {
 	if (path.value.params.topic) {
 		$('#page-sidebar').show();
 	}
@@ -71,9 +94,7 @@ export const injectSidebarComponent = watch(path, (newPath: any, oldPath: any) =
 });
 
 export const injectMarkdownHeaders = () => {
-	const h2Values = <any>[];
-
-	$('#md-convert h2').each((index, el) => {
+	$('#md-convert h2').each((index: number, el: any) => {
 		const text = (el.innerText);
 		const filteredText = text.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
 		const wrapper = $('<li></li>');
@@ -100,6 +121,7 @@ export const injectMarkdownContent = (file: string) => {
 				$('#md-convert').html(html);
 				fetchedMd.value = true;
 				injectMarkdownHeaders();
+				injectClipboardAPI();
 
 			},
 			error: function(xhr: any, status: any, error: any) {

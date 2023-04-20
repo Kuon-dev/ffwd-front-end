@@ -447,7 +447,6 @@ ol {
 #md-convert blockquote,
 #md-convert dl,
 #md-convert table,
-#md-convert pre,
 #md-convert details {
 	margin-top: 0;
 	margin-bottom: 16px;
@@ -726,6 +725,7 @@ ol {
 	font-size: 85%;
 	white-space: break-spaces;
 	background-color: rgba(175, 184, 193, 0.2);
+	color: #7e81ff;
 	border-radius: 6px;
 }
 
@@ -751,7 +751,6 @@ ol {
 	margin: 0;
 	word-break: normal;
 	white-space: pre;
-	background: transparent;
 	border: 0;
 }
 
@@ -770,8 +769,24 @@ ol {
 	overflow: auto;
 	font-size: 85%;
 	line-height: 1.45;
-	background-color: #f6f8fa;
+	background-color: #251e2c;
+	position: relative;
 	border-radius: 6px;
+
+	& > button {
+		color: white;
+		position: absolute;
+		top: 5px;
+		right: 10px;
+		padding: 0.2rem 0.3rem;
+		border-radius: 5px;
+		background: #2e2f46;
+		user-select: none;
+
+		&:hover {
+			background: #7e81ff;
+		}
+	}
 }
 
 #md-convert pre code,
