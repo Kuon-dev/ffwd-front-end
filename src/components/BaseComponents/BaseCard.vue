@@ -1,7 +1,7 @@
 <template>
 	<div
-		class="bg-white rounded-lg drop-shadow-lg"
-		:class="[props.addClass, paddingSizeComputed]"
+		class="rounded-lg drop-shadow-lg"
+		:class="[props.addClass, paddingSizeComputed, bgComputed, acrlyicComputed]"
 	>
 		<div v-if="props.title" class="p-1 pb-3">
 			<h1>{{ props.title }}</h1>
@@ -26,6 +26,18 @@ const props = defineProps({
 		type: String,
 		default: 'sm',
 	},
+	bg: {
+		type: String,
+		default: '',
+	},
+	noBg: {
+		type: Boolean,
+		default: false,
+	},
+	acrlyic: {
+		type: Boolean,
+		default: false,
+	},
 });
 
 const paddingSizeComputed = computed(() => {
@@ -36,6 +48,17 @@ const paddingSizeComputed = computed(() => {
 	if (props.paddingSize === 'xl') return 'p-20';
 	if (props.paddingSize === '2xl') return 'p-32';
 	else return 'p-5';
+});
+
+const bgComputed = computed(() => {
+	if (props.bg) return `bg-${props.bg}`;
+	else return props.noBg ? null : 'bg-white';
+});
+
+const acrlyicComputed = computed(() => {
+	return props.acrlyic
+		? 'backdrop-saturate-200 backdrop-blur-2xl bg-opacity-50 border border-white/80 bg-white shadow-md shadow-blue-gray-500/10'
+		: null;
 });
 /*
 import { onMounted, onBeforeMount } from 'vue';
@@ -49,5 +72,14 @@ const store = useUserStore();
 h1 {
 	font-size: 1.7rem;
 	font-weight: 500;
+}
+
+.acrlyic {
+	-webkit-backdrop-filter: blur(20px) saturate(180%);
+	backdrop-filter: blur(20px) saturate(180%);
+	padding: 1rem 2rem;
+	border-radius: 4px;
+	box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.1);
+	background-color: #ffffff88;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-	<v-card class="mx-auto">
+	<v-card class="mx-auto pt-2 px-2">
 		<!--
     <v-toolbar color="secondary">
       <v-btn variant="text" icon="mdi-menu"></v-btn>
@@ -19,25 +19,34 @@
 			v-for="(sections, sectionIndex) in props.course"
 			:key="sectionIndex"
 		>
-			<v-list-subheader inset> {{ sections.title }} </v-list-subheader>
+			<v-list-item-title class="px-3 py-1 text-brand">
+				<h2 class="font-semibold text-lg">
+					{{ sections.title }}
+				</h2>
+			</v-list-item-title>
 
-			<v-list-item
+			<router-link
 				v-for="(item, itemIndex) in sections.lists"
 				:key="itemIndex"
-				:title="item"
+				:to="item?.path ?? '/'"
 			>
-				<template v-slot:prepend>
-					<v-avatar color="green-lighten-1">
-						<font-awesome-icon :icon="['fas', 'code']" />
-					</v-avatar>
-				</template>
+				<v-list-item
+					:title="item.topic"
+					class="hover:bg-slate-300 hover:cursor-pointer"
+				>
+					<template v-slot:prepend>
+						<v-avatar color="deep-purple-accent-2">
+							<font-awesome-icon :icon="['fas', 'code']" />
+						</v-avatar>
+					</template>
 
-				<template v-slot:append>
-					<v-btn color="grey-lighten-1" icon="fa:fas fa-code" variant="text"
-						>View</v-btn
-					>
-				</template>
-			</v-list-item>
+					<template v-slot:append>
+						<v-btn color="grey-lighten-1" icon="fa:fas fa-code" variant="text"
+							>View</v-btn
+						>
+					</template>
+				</v-list-item>
+			</router-link>
 			<v-divider
 				v-if="sectionIndex + 1 === props.course.length"
 				inset
@@ -50,9 +59,14 @@
 import Card from 'course-components/CourseDescCard.vue';
 import { PropType } from 'vue';
 
+interface CourseList {
+	title: string;
+	path: string;
+}
+
 interface CourseLang {
 	sectionTitle: string;
-	list: string[];
+	list: CourseList[];
 }
 
 const props = defineProps({
