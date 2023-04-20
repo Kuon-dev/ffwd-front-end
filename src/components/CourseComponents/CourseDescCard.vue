@@ -20,10 +20,6 @@
 						{{ props.cardText }}
 					</p>
 				</v-card-text>
-
-				<v-card-actions>
-					<v-btn color="#7E81FF"> View Course </v-btn>
-				</v-card-actions>
 			</div>
 		</div>
 	</v-card>

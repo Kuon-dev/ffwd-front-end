@@ -1,4 +1,4 @@
-export const topics = [
+export const languages = [
 	{
 		'topic': 'HTML',
 		'img': '',
@@ -20,47 +20,60 @@ export const topics = [
 		'path': '/course/php',
 	},
 	{
+		'topic': 'Ruby',
+		'img': '',
+		'path': '/course/ruby',
+	},
+	{
+		'topic': 'Python',
+		'img': '',
+		'path': '/course/python',
+	},
+	{
+		'topic': 'C++',
+		'img': '',
+		'path': '/course/cpp',
+	},
+	{
+		'topic': 'Java',
+		'img': '',
+		'path': '/course/Java',
+	},
+];
+
+const frameworks = [
+	{
+		'topic': 'React',
+		'img': '',
+		'path': '/course/react',
+	},
+	{
 		'topic': 'Vue',
 		'img': '',
 		'path': '/course/vue',
 	},
 	{
-		'topic': 'JavaScript',
+		'topic': 'Laravel',
 		'img': '',
-		'path': '/course/javascript',
+		'path': '/course/laravel',
 	},
 	{
-		'topic': 'JavaScript',
+		'topic': 'Ruby on Rails',
 		'img': '',
-		'path': '/course/javascript',
+		'path': '/course/rails',
 	},
 	{
-		'topic': 'JavaScript',
+		'topic': 'Ionic',
 		'img': '',
-		'path': '/course/javascript',
+		'path': '/course/ionic',
 	},
-	{
-		'topic': 'JavaScript',
-		'img': '',
-		'path': '/course/javascript',
-	},
-	{
-		'topic': 'JavaScript',
-		'img': '',
-		'path': '/course/javascript',
-	},
-	{
-		'topic': 'JavaScript',
-		'img': '',
-		'path': '/course/javascript',
-	},
-	{
-		'topic': 'JavaScript',
-		'img': '',
-		'path': '/course/javascript',
-	},
-
 ];
+
+export const topics = {
+	languages: languages,
+	frameworks: frameworks,
+};
+
 
 export const vue = [
 	{

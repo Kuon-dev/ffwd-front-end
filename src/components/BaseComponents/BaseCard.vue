@@ -51,7 +51,6 @@ const paddingSizeComputed = computed(() => {
 });
 
 const bgComputed = computed(() => {
-	console.log(props.noBg);
 	if (props.bg) return `bg-${props.bg}`;
 	else return props.noBg ? null : 'bg-white';
 });

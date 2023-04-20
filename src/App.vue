@@ -1,5 +1,5 @@
 <template>
-	<div class="flex-col min-h-screen">
+	<div class="flex-col min-h-screen w-full">
 		<Suspense>
 			<template #default>
 				<router-view />

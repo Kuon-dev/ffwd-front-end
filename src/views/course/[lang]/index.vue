@@ -1,7 +1,7 @@
 <template>
 	<div class="ml-10 mr-20 mb-10">
 		<Card
-			image="/Fotor_AI.png"
+			image="/img2.png"
 			title="Vue"
 			card-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore"
 		/>

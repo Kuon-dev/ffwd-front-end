@@ -1,20 +1,40 @@
 <template>
 	<BaseCard class="max-h-[48rem]" addClass="px-6 w-64 ">
-		<h2 class="text-brand text-lg font-semibold py-2">Topics</h2>
-		<ul v-if="!pathTopic">
-			<li
-				v-for="topic in topics"
-				:key="topic.path"
-				class="border-l-2 px-2 py-1"
-				:class="path === topic.path ? 'border-brand' : 'border-gray-300'"
-			>
-				<router-link :to="topic.path">
-					<p class="text-sm">
-						{{ topic.topic }}
-					</p>
-				</router-link>
-			</li>
-		</ul>
+		<div v-if="!pathTopic">
+			<h2 class="text-brand text-lg font-semibold py-2">Languages</h2>
+			<ul>
+				<li
+					v-for="lang in topics.languages"
+					:key="lang.path"
+					class="border-l-2 px-2 py-1"
+					:class="path === lang.path ? 'border-brand' : 'border-gray-300'"
+				>
+					<router-link :to="lang.path">
+						<p class="text-sm">
+							{{ lang.topic }}
+						</p>
+					</router-link>
+				</li>
+			</ul>
+
+			<br />
+
+			<h2 class="text-brand text-lg font-semibold py-2">Frameworks</h2>
+			<ul>
+				<li
+					v-for="lang in topics.frameworks"
+					:key="lang.path"
+					class="border-l-2 px-2 py-1"
+					:class="path === lang.path ? 'border-brand' : 'border-gray-300'"
+				>
+					<router-link :to="lang.path">
+						<p class="text-sm">
+							{{ lang.topic }}
+						</p>
+					</router-link>
+				</li>
+			</ul>
+		</div>
 
 		<ul v-else>
 			<li v-for="(chapter, chapterIndex) in lang" :key="chapter.path">
@@ -53,9 +73,6 @@ const path = computed(() => {
 	return router.currentRoute.value.path;
 });
 
-console.log(path.value);
-console.log(router.currentRoute.value);
-
 const pathTopic = computed(() => {
 	return router.currentRoute.value.params.topic;
 });
@@ -69,7 +86,6 @@ const dynamicImport = () => {
 		import('course-components/CourseTopics').then(
 			(module: { [key: string]: any }) => {
 				lang.value = module[pathLang.value as any];
-				console.log(lang.value);
 			},
 		);
 	}
