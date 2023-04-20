@@ -1,5 +1,5 @@
 <template>
-	<BaseCard class="fixed" addClass="px-6 pr-10 w-64 ml-5">
+	<BaseCard class="max-h-[48rem]" addClass="px-6 w-64 ">
 		<h2 class="text-brand text-lg font-semibold py-2">Topics</h2>
 		<ul v-if="!pathTopic">
 			<li
@@ -82,4 +82,20 @@ watch(pathTopic, () => {
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+::-webkit-scrollbar-track {
+	background-color: white;
+	border-top-right-radius: 8px;
+	border-bottom-right-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #7e81ff;
+	border-radius: 20px;
+	border: 6px solid transparent;
+	background-clip: content-box;
+}
+::-webkit-scrollbar {
+	width: 20px;
+}
+</style>
