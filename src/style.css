@@ -46,3 +46,11 @@ input {
 	-ms-transform: rotate(3deg) translate(0px, -4px);
 	transform: rotate(3deg) translate(0px, -4px);
 }
+
+#page-sidebar-headers li {
+	margin-bottom: 10px;
+}
+
+#page-sidebar-headers li.active a {
+	color: #7e81ff;
+}

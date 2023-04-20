@@ -5,12 +5,14 @@ import router from '@/router'; // @ refers to src
 import hljs from 'highlight.js';
 import showdown from 'showdown';
 import 'highlight.js/styles/stackoverflow-light.css';
+import scrollama from 'scrollama';
 
 // compostable
 import { watch, computed, ref } from 'vue';
 /* eslint-enable */
 
 const fetchedMd = ref(false);
+const scroller = scrollama();
 
 const converter = new showdown.Converter({
 	extensions: [
@@ -29,6 +31,30 @@ const converter = new showdown.Converter({
 		},
 	],
 });
+
+const injectScrollama = () => {
+
+	// Loop through each h2 element
+	$('#md-convert h2').each((index, h2) => {
+		const section = $('<section></section>');
+		$(h2).nextUntil('h2').appendTo(section);
+		section.insertBefore(h2);
+		section.prepend(h2);
+	});
+	// setup scrollama
+	scroller.setup({
+		step: '#md-convert section',
+		offset: 0.5,
+	}).onStepEnter(({ element }) => {
+		const id = $(element).find('h2').attr('id');
+		const sidebarItem = $(`#page-sidebar-headers li a[href="#${id}"]`).parent();
+		sidebarItem.addClass('active');
+	}).onStepExit(({ element }) => {
+		const id = $(element).find('h2').attr('id');
+		const sidebarItem = $(`#page-sidebar-headers li a[href="#${id}"]`).parent();
+		sidebarItem.removeClass('active');
+	});
+};
 
 // this refers to the route path
 export const path = computed(() => {
@@ -49,9 +75,14 @@ export const injectMarkdownHeaders = () => {
 
 	$('#md-convert h2').each((index, el) => {
 		const text = (el.innerText);
-		const html = $('<li></li>').html(text);
-		$('#page-sidebar-headers').append(html);
+		const filteredText = text.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+		const wrapper = $('<li></li>');
+		const html = $(`<a href="#${filteredText}"></a>`).html(text);
+		wrapper.append(html);
+		$('#page-sidebar-headers').append(wrapper);
 	});
+
+	injectScrollama();
 
 };
 
