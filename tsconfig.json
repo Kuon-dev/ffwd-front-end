@@ -22,8 +22,7 @@
 			"nav-components/*": ["./src/components/NavigationComponents/*"],
 			"course-components/*": ["./src/components/CourseComponents/*"],
 			"course-data/*": ["./src/data/courses/*"],
-			"payment-components/*": ["./src/components/PaymentComponents/*"],
-			"jquery-components/*": ["./src/jquery-components/*"]
+			"payment-components/*": ["./src/components/PaymentComponents/*"]
 		},
 
 		"lib": ["ESNext", "DOM"],
