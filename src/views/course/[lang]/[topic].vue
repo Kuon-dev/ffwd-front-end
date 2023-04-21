@@ -1,5 +1,5 @@
 <template>
-	<div class="ml-10 mr-20 mb-10">
+	<div class="mb-10">
 		<BaseCard paddingSize="md">
 			<div id="md-convert"></div>
 		</BaseCard>
@@ -8,20 +8,23 @@
 
 <script setup lang="ts">
 import BaseCard from 'base-components/BaseCard.vue';
-import { useTopicHook } from 'jquery-components/topics';
+import { injectMarkdownContent } from 'compostables/courses/CourseSidebarDataInjector';
 import { computed, watch, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-// const mdContent = mdConvert.makeHtml(MarkdownFile)
-// console.log(mdContent);
-
 const router = useRouter();
 const path = computed(() => {
-	return router.currentRoute.value.params.lang;
+	return router.currentRoute.value.params.topic;
 });
 
+injectMarkdownContent(path.value);
+
+watch(path, () => {
+	if (path.value) {
+		injectMarkdownContent(path.value);
+	}
+});
 // jquery usage
-useTopicHook(path.value);
 </script>
 
 <style lang="scss">
@@ -447,7 +450,6 @@ ol {
 #md-convert blockquote,
 #md-convert dl,
 #md-convert table,
-#md-convert pre,
 #md-convert details {
 	margin-top: 0;
 	margin-bottom: 16px;
@@ -726,6 +728,7 @@ ol {
 	font-size: 85%;
 	white-space: break-spaces;
 	background-color: rgba(175, 184, 193, 0.2);
+	color: #7e81ff;
 	border-radius: 6px;
 }
 
@@ -751,7 +754,6 @@ ol {
 	margin: 0;
 	word-break: normal;
 	white-space: pre;
-	background: transparent;
 	border: 0;
 }
 
@@ -770,8 +772,24 @@ ol {
 	overflow: auto;
 	font-size: 85%;
 	line-height: 1.45;
-	background-color: #f6f8fa;
+	background-color: #251e2c;
+	position: relative;
 	border-radius: 6px;
+
+	& > button {
+		color: white;
+		position: absolute;
+		top: 5px;
+		right: 10px;
+		padding: 0.2rem 0.3rem;
+		border-radius: 5px;
+		background: #2e2f46;
+		user-select: none;
+
+		&:hover {
+			background: #7e81ff;
+		}
+	}
 }
 
 #md-convert pre code,

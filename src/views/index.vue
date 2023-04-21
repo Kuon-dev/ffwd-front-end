@@ -7,12 +7,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import Test from '@/jquery-components/Example';
+// import Test from '@/jquery-components/Example';
 import QRCode from 'qrcode';
 
 import Nav from 'nav-components/NavTop.vue';
-
-Test;
 // With async/await
 const generateQR = async (text) => {
 	try {

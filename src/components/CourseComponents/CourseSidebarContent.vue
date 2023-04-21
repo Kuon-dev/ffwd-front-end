@@ -1,5 +1,7 @@
 <template>
-	<div></div>
+	<div>
+		<ul id="page-sidebar-headers"></ul>
+	</div>
 </template>
 
 <script setup lang="ts"></script>
