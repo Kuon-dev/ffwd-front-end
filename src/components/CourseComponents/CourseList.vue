@@ -15,7 +15,7 @@
     -->
 
 		<v-list
-			:lines="props.course.length.toString()"
+			lines="two"
 			v-for="(sections, sectionIndex) in props.course"
 			:key="sectionIndex"
 		>
@@ -48,7 +48,7 @@
 				</v-list-item>
 			</router-link>
 			<v-divider
-				v-if="sectionIndex + 1 === props.course.length"
+				v-if="sectionIndex + 1 === props.course?.length"
 				inset
 			></v-divider>
 		</v-list>
@@ -60,18 +60,19 @@ import Card from 'course-components/CourseDescCard.vue';
 import { PropType } from 'vue';
 
 interface CourseList {
-	title: string;
+	topic: string;
 	path: string;
 }
 
 interface CourseLang {
-	sectionTitle: string;
-	list: CourseList[];
+	title: string;
+	lists: CourseList[];
 }
 
 const props = defineProps({
 	course: {
-		type: Array as PropType<CourseLang[]>,
+		type: Array as PropType<CourseLang[] | null>,
+		default: null,
 	},
 });
 </script>

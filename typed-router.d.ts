@@ -31,7 +31,7 @@ import type {
   // data fetching
   _DataLoader,
   _DefineLoaderOptions,
-} from 'unplugin-vue-router'
+} from 'unplugin-vue-router/types'
 
 declare module 'vue-router/auto/routes' {
   export interface RouteNamedMap {
@@ -47,6 +47,7 @@ declare module 'vue-router/auto/routes' {
     '/forum/[id]': RouteRecordInfo<'/forum/[id]', '/forum/:id', { id: ParamValue<true> }, { id: ParamValue<false> }>,
     '/forum/create': RouteRecordInfo<'/forum/create', '/forum/create', Record<never, never>, Record<never, never>>,
     '/login': RouteRecordInfo<'/login', '/login', Record<never, never>, Record<never, never>>,
+    '/quiz/': RouteRecordInfo<'/quiz/', '/quiz', Record<never, never>, Record<never, never>>,
     '/quiz/[id]/': RouteRecordInfo<'/quiz/[id]/', '/quiz/:id', { id: ParamValue<true> }, { id: ParamValue<false> }>,
     '/quiz/[id]/feedback': RouteRecordInfo<'/quiz/[id]/feedback', '/quiz/:id/feedback', { id: ParamValue<true> }, { id: ParamValue<false> }>,
     '/register': RouteRecordInfo<'/register', '/register', Record<never, never>, Record<never, never>>,
@@ -111,7 +112,7 @@ declare module 'vue-router/auto' {
   export function onBeforeRouteUpdate(guard: NavigationGuard<RouteNamedMap>): void
 
   export const RouterLink: RouterLinkTyped<RouteNamedMap>
-  
+
   // Experimental Data Fetching
 
   export function defineLoader<

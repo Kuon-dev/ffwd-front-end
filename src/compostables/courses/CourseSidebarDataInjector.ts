@@ -1,6 +1,6 @@
 // dependencies
 /* eslint-disable */
-import * as $ from 'jquery';
+import $ from 'jquery';
 import router from '@/router'; // @ refers to src
 import hljs from 'highlight.js';
 import showdown from 'showdown';
@@ -109,7 +109,7 @@ export const injectMarkdownHeaders = () => {
 
 };
 
-export const injectMarkdownContent = (file: string) => {
+export const injectMarkdownContent = (file: string | string[]) => {
 	$(document).ready(() => {
 		fetchedMd.value = false;
 		$.ajax({

@@ -20,7 +20,7 @@ const router = useRouter();
 const topics = ref(null);
 
 const path = computed(() => {
-	return router.currentRoute.value.params.lang;
+	return (router.currentRoute.value as any).params.lang;
 });
 
 // eslint-disable-next-line

@@ -76,7 +76,7 @@ export const useUserStore = defineStore('userStore', {
 
 			window.sessionStorage.setItem(
 				'userSession',
-				JSON.stringify(userData?.data ?? null)
+				JSON.stringify(userData?.data ?? null),
 			);
 		},
 
@@ -131,7 +131,7 @@ export const useUserStore = defineStore('userStore', {
 			getToken();
 			await apiClient.post('/logout');
 			this.authUser = null;
-			this.router.push('/');
+			(this as any).router.push('/');
 		},
 
 		async handleForgotPassword(email: String) {
@@ -168,7 +168,8 @@ export const useUserStore = defineStore('userStore', {
 			await this.getUser();
 			const res = await apiClient.get('/dashboard');
 			const route = await (res?.data as any).route;
-			if (route) this.router.push(route);
+			if (route) {(this as any).router.push('/');}
+
 			return true;
 		},
 	},

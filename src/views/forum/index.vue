@@ -35,7 +35,7 @@
 				<v-skeleton-loader
 					v-if="!loading"
 					class="mx-auto border w-full"
-					type="article, button@2, text, avatar"
+					:type="['article', 'button', 'text', 'avatar']"
 					:elevation="10"
 				></v-skeleton-loader>
 
@@ -56,7 +56,7 @@
 							<!-- UpVote -->
 							<button
 								class="upvoteContainer likeButton"
-								@click="incrementUpVotes()"
+								@click="incrementUpVotes($event)"
 							>
 								<font-awesome-icon :icon="['fas', 'caret-up']" size="xl" />
 								<p class="upvoteCount">
@@ -99,7 +99,7 @@ import { ref } from 'vue';
 import SearchBarVue from 'base-components/BaseSearchBar.vue';
 import FilterDropDownVue from 'base-components/BaseDropDown.vue';
 import BaseCardVue from 'base-components/BaseCard.vue';
-import FormCarouselSectionVue from 'forum-components/FormCarouselSection.vue';
+import FormCarouselSectionVue from 'forum-components/ForumCarouselSection.vue';
 import { useForumStore } from 'stores/ForumStore';
 import { VSkeletonLoader } from 'vuetify/labs/VSkeletonLoader';
 
@@ -107,7 +107,7 @@ import { VSkeletonLoader } from 'vuetify/labs/VSkeletonLoader';
 const forumStore = useForumStore();
 
 // Define forum data
-const forums = ref((await forumStore.getAllForums()) ?? []);
+const forums = ref((await forumStore.getAllForums(0)) ?? []);
 const loading = ref(forums.value.length > 0);
 const totalPage = ref(Math.ceil((await forumStore.getPaginationCount()) / 10));
 const currentPage = ref(forumStore.forumCurrentPagination);
@@ -127,6 +127,10 @@ const formatDate = (date: string) => {
 	const newDate = new Date(date);
 
 	return newDate.toLocaleDateString();
+};
+
+const incrementUpVotes = (e: Event) => {
+	console.log(e);
 };
 
 const changePage = async (index: number) => {

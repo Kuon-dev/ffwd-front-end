@@ -37,7 +37,7 @@
 		</div>
 
 		<ul v-else>
-			<li v-for="(chapter, chapterIndex) in lang" :key="chapter.path">
+			<li v-for="(chapter, chapterIndex) in lang" :key="chapterIndex">
 				{{ chapter.title }}
 				<router-link
 					v-for="(topic, topicIndex) in chapter.lists"
@@ -65,18 +65,28 @@ import { computed, watch, ref } from 'vue';
 import { topics } from './CourseTopics';
 import { useRouter } from 'vue-router';
 
+interface CourseList {
+	topic: string;
+	path: string;
+}
+
+interface CourseLang {
+	title: string;
+	lists: CourseList[];
+}
+
 const router = useRouter();
-const lang = ref(null);
+const lang = ref<CourseLang[]>([]);
 const path = computed(() => {
 	return router.currentRoute.value.path;
 });
 
 const pathTopic = computed(() => {
-	return router.currentRoute.value.params.topic;
+	return (router.currentRoute.value as any).params.topic;
 });
 
 const pathLang = computed(() => {
-	return router.currentRoute.value.params.lang;
+	return (router.currentRoute.value as any).params.lang;
 });
 
 const dynamicImport = () => {

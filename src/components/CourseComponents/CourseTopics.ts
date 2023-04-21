@@ -1,4 +1,21 @@
-export const languages = [
+interface Languages {
+  topic: string,
+  img: string,
+  path: string,
+}
+
+interface Frameworks {
+  topic: string,
+  img: string,
+  path: string,
+}
+
+interface Topics {
+  languages: Languages[],
+  frameworks: Frameworks[],
+}
+
+export const languagesTopic: Languages[] = [
 	{
 		'topic': 'HTML',
 		'img': '',
@@ -41,7 +58,7 @@ export const languages = [
 	},
 ];
 
-const frameworks = [
+const frameworksTopic: Frameworks[] = [
 	{
 		'topic': 'React',
 		'img': '',
@@ -69,9 +86,9 @@ const frameworks = [
 	},
 ];
 
-export const topics = {
-	languages: languages,
-	frameworks: frameworks,
+export const topics: Topics = {
+	languages: languagesTopic,
+	frameworks: frameworksTopic,
 };
 
 
