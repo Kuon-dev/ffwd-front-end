@@ -1,5 +1,5 @@
 <template>
-	<div class="grid grid-cols-4 card-container gap-8">
+	<div class="grid grid-cols-3 card-container gap-8">
 		<Card
 			v-for="(lang, index) in languages"
 			:key="index"

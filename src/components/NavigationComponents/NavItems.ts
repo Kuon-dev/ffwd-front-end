@@ -25,3 +25,21 @@ export const landingNavigation:NavigationItem[] = [
 	},
 ];
 
+export const courseNavigation:NavgationItem[] = [
+	{
+		title: 'HTML',
+		icon: '',
+		path: '/course/html',
+
+	},
+	{
+		title: 'CSS',
+		icon: '',
+		path: '/course/css',
+	},
+	{
+		title: 'Vue',
+		icon: '',
+		path: '/course/vue',
+	},
+];

@@ -27,8 +27,6 @@ const vuetify = createVuetify({
 	directives,
 });
 
-createApp(App).use(vuetify).mount('#app');
-
 import NProgress from 'nprogress';
 
 NProgress.configure({ showSpinner: false });

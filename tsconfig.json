@@ -16,12 +16,13 @@
 			"admins/*": ["./src/views/Admin/*"],
 			"users/*": ["./src/views/User/*"],
 			"views/*": ["./src/views/*"],
+			"compostables/*": ["./src/compostables/*"],
 			"base-components/*": ["./src/components/BaseComponents/*"],
 			"form-components/*": ["./src/components/FormComponents/*"],
 			"nav-components/*": ["./src/components/NavigationComponents/*"],
 			"course-components/*": ["./src/components/CourseComponents/*"],
-			"payment-components/*": ["./src/components/PaymentComponents/*"],
-			"jquery-components/*": ["./src/jquery-components/*"]
+			"course-data/*": ["./src/data/courses/*"],
+			"payment-components/*": ["./src/components/PaymentComponents/*"]
 		},
 
 		"lib": ["ESNext", "DOM"],
