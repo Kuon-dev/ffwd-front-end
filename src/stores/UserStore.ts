@@ -42,12 +42,8 @@ export const useUserStore = defineStore('userStore', {
 		async permittedAccessLevel() {
 			if (!this.user) this.getUser();
 			getToken();
-			const userPerms = await apiClient.post(
-				'api/user',
-				this.user,
-			);
-			this.authUserAccessLevel =
-				userPerms?.data?.perm_level;
+			const userPerms = await apiClient.post('api/user', this.user);
+			this.authUserAccessLevel = userPerms?.data?.perm_level;
 		},
 
 		async getUser() {
@@ -64,12 +60,8 @@ export const useUserStore = defineStore('userStore', {
 					this.authErrors = errorMessage;
 				});
 			if (userData?.data) {
-				const userPerms = await apiClient.post(
-					'api/user',
-					userData?.data,
-				);
-				this.authUserAccessLevel = await userPerms?.data
-					?.perm_level;
+				const userPerms = await apiClient.post('api/user', userData?.data);
+				this.authUserAccessLevel = await userPerms?.data?.perm_level;
 				this.authUser = userData?.data;
 				/*
         if (userPerms.data.perm_level < accessType) {
@@ -84,7 +76,7 @@ export const useUserStore = defineStore('userStore', {
 
 			window.sessionStorage.setItem(
 				'userSession',
-				JSON.stringify(userData?.data ?? null),
+				JSON.stringify(userData?.data ?? null)
 			);
 		},
 
@@ -99,14 +91,11 @@ export const useUserStore = defineStore('userStore', {
 					name: credentials.name,
 					email: credentials.email,
 					password: credentials.password,
-					password_confirmation:
-						credentials.password_confirmation,
+					password_confirmation: credentials.password_confirmation,
 				})
 				.catch((err: Error | AxiosError) => {
 					const error = err as AxiosError;
-					this.authErrors = (
-						error?.response?.data as any
-					).errors;
+					this.authErrors = (error?.response?.data as any).errors;
 					console.log(this.authErrors);
 					return {
 						status: error?.response?.status,
@@ -125,9 +114,7 @@ export const useUserStore = defineStore('userStore', {
 				})
 				.catch((err: AxiosError) => {
 					const error = err as AxiosError;
-					this.authErrors = (
-						error?.response?.data as any
-					).errors;
+					this.authErrors = (error?.response?.data as any).errors;
 					return {
 						status: error?.response?.status,
 					};
@@ -155,9 +142,7 @@ export const useUserStore = defineStore('userStore', {
 				})
 				.catch((err: AxiosError) => {
 					const error = err as AxiosError;
-					this.authErrors = (
-						error?.response?.data as any
-					).errors;
+					this.authErrors = (error?.response?.data as any).errors;
 					return {
 						status: error?.response?.status,
 					};
@@ -166,27 +151,18 @@ export const useUserStore = defineStore('userStore', {
 			return res;
 		},
 
-		async handleResetPassword(
-			credentials: ResetPasswordCredentials,
-		) {
-			const res = await apiClient.post(
-				'/reset-password',
-				credentials,
-			);
+		async handleResetPassword(credentials: ResetPasswordCredentials) {
+			const res = await apiClient.post('/reset-password', credentials);
 			return res;
 		},
 
 		async handleResendEmailVerification() {
-			const res = await apiClient.post(
-				'/verification-notification',
-			);
+			const res = await apiClient.post('/verification-notification');
 			return res;
 		},
 
 		async loginRedirect() {
-			const data = window.sessionStorage.getItem(
-				'userSession',
-			);
+			const data = window.sessionStorage.getItem('userSession');
 			if (!data) return true;
 
 			await this.getUser();

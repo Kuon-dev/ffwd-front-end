@@ -19,6 +19,7 @@
 			"compostables/*": ["./src/compostables/*"],
 			"base-components/*": ["./src/components/BaseComponents/*"],
 			"form-components/*": ["./src/components/FormComponents/*"],
+			"forum-components/*": ["./src/components/ForumComponents/*"],
 			"nav-components/*": ["./src/components/NavigationComponents/*"],
 			"course-components/*": ["./src/components/CourseComponents/*"],
 			"course-data/*": ["./src/data/courses/*"],
