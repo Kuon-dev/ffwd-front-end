@@ -7,7 +7,7 @@
 		<section class="px-5 mb-5 lg:mb-0 lg:w-2/6 order-last lg:order-first">
 			<h3 class="font-semibold text-2xl">Hot Today</h3>
 			<!-- Carousel Section -->
-			<HotsTodayCarouselVue></HotsTodayCarouselVue>
+			<FormCarouselSectionVue></FormCarouselSectionVue>
 		</section>
 
 		<!-- QnA Discussions Section -->
@@ -99,7 +99,7 @@ import { ref } from 'vue';
 import SearchBarVue from 'base-components/BaseSearchBar.vue';
 import FilterDropDownVue from 'base-components/BaseDropDown.vue';
 import BaseCardVue from 'base-components/BaseCard.vue';
-import HotsTodayCarouselVue from 'forum-components/HotsTodayCarousel.vue';
+import FormCarouselSectionVue from 'forum-components/FormCarouselSection.vue';
 import { useForumStore } from 'stores/ForumStore';
 import { VSkeletonLoader } from 'vuetify/labs/VSkeletonLoader';
 
