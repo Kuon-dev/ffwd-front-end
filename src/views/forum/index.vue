@@ -7,6 +7,7 @@
 		<section class="px-5 mb-5 lg:mb-0 lg:w-2/6 order-last lg:order-first">
 			<h3 class="font-semibold text-2xl">Hot Today</h3>
 			<!-- Carousel Section -->
+			<HotsTodayCarouselVue></HotsTodayCarouselVue>
 		</section>
 
 		<!-- QnA Discussions Section -->
@@ -14,10 +15,7 @@
 			<h3 class="font-semibold">Q&A Discussions</h3>
 			<!-- Search Section -->
 			<div class="search-section flex justify-between gap-5 my-4">
-				<SearchBarVue
-					:searchBarId="searchBarId"
-					@search="performSearch"
-				></SearchBarVue>
+				<SearchBarVue @search="performSearch($event)"></SearchBarVue>
 			</div>
 
 			<!-- Filter Section -->
@@ -34,14 +32,19 @@
 
 			<!-- Forum Sections -->
 			<div class="forumContainer flex flex-col my-5 gap-5">
-				<BaseCardVue
-					v-for="forum in forums"
-					:key="forum.id"
-					:title="forum.title"
-				>
+				<v-skeleton-loader
+					v-if="!loading"
+					class="mx-auto border w-full"
+					type="article, button@2, text, avatar"
+					:elevation="10"
+				></v-skeleton-loader>
+
+				<BaseCardVue v-for="forum in forums" :key="forum.id">
+					<!-- Forum Title -->
+					<h2 class="text-xl mb-5">{{ forum.title }}</h2>
 					<!-- Forum Body -->
 					<p class="p-1 mb-5 hidden md:block">
-						{{ forum.body }}
+						{{ forum.content }}
 					</p>
 
 					<!-- Forum Bottom -->
@@ -53,10 +56,12 @@
 							<!-- UpVote -->
 							<button
 								class="upvoteContainer likeButton"
-								@click="incrementUpVotes"
+								@click="incrementUpVotes()"
 							>
 								<font-awesome-icon :icon="['fas', 'caret-up']" size="xl" />
-								<p class="upvoteCount">{{ forum.upVotes }} UpVotes</p>
+								<p class="upvoteCount">
+									{{ forum.upVotes - forum.downVotes }} UpVotes
+								</p>
 							</button>
 
 							<!-- Comment -->
@@ -67,25 +72,24 @@
 						</div>
 
 						<!-- Forum Post Date & Owner -->
-						<div class="flex md:justify-between gap-5 w-[10rem]">
-							<div
-								class="flex flex-col text-sm md:text-right order-last lg:order-first"
-							>
-								<!-- Forum Post Date -->
-								<p>{{ forum.postDate }}</p>
-								<!-- Forum Post Owner -->
-								<p>{{ forum.postOwner }}</p>
-							</div>
-							<!-- Forum Post Owner Profile Picture -->
-							<div
-								class="border-2 border-black w-10 h-10 rounded-full flex justify-center items-center"
-							>
-								<font-awesome-icon :icon="['fas', 'user']" size="xl" />
-							</div>
+						<div
+							class="flex flex-col text-sm md:text-right order-last lg:order-first"
+						>
+							<!-- Forum Post Date -->
+							<p>{{ formatDate(forum.updated_at) }}</p>
+							<!-- Forum Post Owner -->
+							<p>{{ forum.username }}</p>
 						</div>
 					</div>
 				</BaseCardVue>
 			</div>
+			<!-- Pagination -->
+			<v-pagination
+				v-model="currentPage"
+				:length="totalPage"
+				:total-visible="5"
+				@click="changePage(currentPage)"
+			></v-pagination>
 		</section>
 	</div>
 </template>
@@ -95,62 +99,39 @@ import { ref } from 'vue';
 import SearchBarVue from 'base-components/BaseSearchBar.vue';
 import FilterDropDownVue from 'base-components/BaseDropDown.vue';
 import BaseCardVue from 'base-components/BaseCard.vue';
-
-// Define props for the component
-const props = defineProps({});
-
-// Define emits for the component
-const emits = defineEmits([]);
+import HotsTodayCarouselVue from 'forum-components/HotsTodayCarousel.vue';
+import { useForumStore } from 'stores/ForumStore';
+import { VSkeletonLoader } from 'vuetify/labs/VSkeletonLoader';
 
 // Define data properties for the component
-const searchBarId = 'qnaSearchBar';
+const forumStore = useForumStore();
+
+// Define forum data
+const forums = ref((await forumStore.getAllForums()) ?? []);
+const loading = ref(forums.value.length > 0);
+const totalPage = ref(Math.ceil((await forumStore.getPaginationCount()) / 10));
+const currentPage = ref(forumStore.forumCurrentPagination);
+
 const filterOptions = [
 	{ value: 'Trending', label: 'Trending' },
 	{ value: 'Name', label: 'Name' },
 	{ value: 'Rating', label: 'Rating' },
 ];
 
-// Define forum data as an array
-const forums = ref([
-	{
-		id: 1,
-		title: 'Lorem ipsum dolor sit amet.',
-		body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis molestias distinctio earum nam asperiores ipsam corrupti cum? Debitis, quidem repellat...',
-		upVotes: 123,
-		comments: 12,
-		postDate: '4 April 2023',
-		postOwner: 'Ali Mohammad',
-	},
-	{
-		id: 2,
-		title: 'World Is Happppyyyyyy',
-		body: 'Happy happy happy happy',
-		upVotes: 4,
-		comments: 100,
-		postDate: '9 April 2023',
-		postOwner: 'Minions',
-	},
-	{
-		id: 3,
-		title: 'Obama VS Najib',
-		body: 'Nuke VS Cash kachingg KABOOOOOOOOMM ROUND 2 FIGHT BAM BAM BAM KACHING KACHING',
-		upVotes: 400,
-		comments: 600,
-		postDate: '11 April 2023',
-		postOwner: 'Donald Trump',
-	},
-]);
-
 // Define methods for the component
-function performSearch(query: string) {
-	console.log('Performing search with query:', query);
-}
+const performSearch = (query: Event) => {
+	console.log(query);
+};
 
-// Expose properties, props, emits, and methods to be used in template
-defineExpose({
-	searchBarId,
-	performSearch,
-});
+const formatDate = (date: string) => {
+	const newDate = new Date(date);
+
+	return newDate.toLocaleDateString();
+};
+
+const changePage = async (index: number) => {
+	forums.value = await forumStore.getAllForums(index - 1);
+};
 </script>
 
 <style lang="css" scoped></style>

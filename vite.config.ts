@@ -23,6 +23,7 @@ export default defineConfig({
 			setAlias('compostables', './src/compostables/'),
 			setAlias('base-components', './src/components/BaseComponents/'),
 			setAlias('form-components', './src/components/FormComponents/'),
+			setAlias('forum-components', './src/components/ForumComponents/'),
 			setAlias('nav-components', './src/components/NavigationComponents/'),
 			setAlias('payment-components', './src/components/PaymentComponents/'),
 			setAlias('course-components', './src/components/CourseComponents/'),
