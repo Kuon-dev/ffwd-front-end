@@ -12,7 +12,7 @@
 				</aside>
 				<div
 					class="mt-36 w-full lg:mt-24 lg:px-6"
-					:class="path.params.topic ? 'lg:w-[60%] ' : 'lg:w-[80%]'"
+					:class="hasSidebar ? 'lg:w-[60%] ' : 'lg:w-[80%]'"
 				>
 					<router-view></router-view>
 				</div>
@@ -39,6 +39,15 @@ import {
 	injectSidebarComponent,
 	path,
 } from 'compostables/courses/CourseSidebarDataInjector';
+import { watch, ref } from 'vue';
+
+const hasSidebar = ref(false);
+if (path?.value.params?.topic) hasSidebar.value = true;
+
+watch(path, () => {
+	if (path.value?.params?.topic) hasSidebar.value = true;
+	else hasSidebar.value = false;
+});
 
 injectSidebarComponent;
 </script>

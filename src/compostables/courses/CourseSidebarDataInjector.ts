@@ -12,7 +12,6 @@ import { watch, computed, ref } from 'vue';
 /* eslint-enable */
 
 const fetchedMd = ref(false);
-const scroller = scrollama();
 
 const converter = new showdown.Converter({
 	extensions: [
@@ -63,13 +62,16 @@ const injectScrollama = () => {
 		section.insertBefore(h2);
 		section.prepend(h2);
 	});
+	console.log('injecting scrollama');
 	// setup scrollama
+	const scroller = scrollama();
 	scroller.setup({
 		step: '#md-convert section',
 		offset: 0.5,
 	}).onStepEnter(({ element }) => {
 		const id = $(element).find('h2').attr('id');
 		const sidebarItem = $(`#page-sidebar-headers li a[href="#${id}"]`).parent();
+		console.log(sidebarItem);
 		sidebarItem.addClass('active');
 	}).onStepExit(({ element }) => {
 		const id = $(element).find('h2').attr('id');
@@ -94,6 +96,7 @@ export const injectSidebarComponent = watch(path, () => {
 });
 
 export const injectMarkdownHeaders = () => {
+	$('#page-sidebar-headers').empty();
 	$('#md-convert h2').each((index: number, el: any) => {
 		const text = (el.innerText);
 		const filteredText = text.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
@@ -103,7 +106,6 @@ export const injectMarkdownHeaders = () => {
 		$('#page-sidebar-headers').append(wrapper);
 	});
 
-	injectScrollama();
 
 };
 
@@ -122,6 +124,7 @@ export const injectMarkdownContent = (file: string) => {
 				fetchedMd.value = true;
 				injectMarkdownHeaders();
 				injectClipboardAPI();
+				injectScrollama();
 
 			},
 			error: function(xhr: any, status: any, error: any) {

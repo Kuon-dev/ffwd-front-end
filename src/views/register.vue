@@ -254,7 +254,6 @@ const submitRegister = async (e: Event) => {
 		password_confirmation: passwordConf.value,
 	};
 	const res = await store.handleRegister(body);
-	console.log(res);
 };
 </script>
 

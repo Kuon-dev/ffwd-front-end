@@ -79,7 +79,6 @@ const handleForgotPassword = async (e: Event) => {
 	responseStatus.value = '';
 	const status = await store.handleForgotPassword(email.value);
 	// debugging purpose
-	console.log(status);
 	emailError.value = store.errorList;
 	if (!store.errorList || store.errorList.length !== 0) {
 		responseStatus.value = (status as any).data.status;

@@ -12,16 +12,19 @@ import { injectMarkdownContent } from 'compostables/courses/CourseSidebarDataInj
 import { computed, watch, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-// const mdContent = mdConvert.makeHtml(MarkdownFile)
-// console.log(mdContent);
-
 const router = useRouter();
 const path = computed(() => {
-	return router.currentRoute.value.params.lang;
+	return router.currentRoute.value.params.topic;
 });
 
-// jquery usage
 injectMarkdownContent(path.value);
+
+watch(path, () => {
+	if (path.value) {
+		injectMarkdownContent(path.value);
+	}
+});
+// jquery usage
 </script>
 
 <style lang="scss">

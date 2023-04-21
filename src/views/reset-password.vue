@@ -104,7 +104,6 @@ const handleForgotPassword = async (e: Event) => {
 		token: (route.params as any).token,
 	});
 	// debugging purpose
-	console.log(res);
 	passwordError.value = store.errorList;
 	if (!store.errorList || store.errorList.length !== 0) {
 		responseStatus.value = res?.data.status;

@@ -23,12 +23,10 @@ const path = computed(() => {
 	return router.currentRoute.value.params.lang;
 });
 
-console.log(path.value);
 // eslint-disable-next-line
 const dynamicImport = () => {
 	import('course-components/CourseTopics').then(
 		(module: { [key: string]: any }) => {
-			console.log(module[path.value as any]);
 			topics.value = module[path.value as any];
 		},
 	);
@@ -36,8 +34,7 @@ const dynamicImport = () => {
 
 dynamicImport();
 // eslint-disable-next-line
-watch(path, (newVal, oldVal) => {
-	console.log(newVal);
+watch(path, () => {
 	dynamicImport();
 });
 </script>
