@@ -14,7 +14,7 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const path = computed(() => {
-	return router.currentRoute.value.params.topic;
+	return (router.currentRoute.value as any).params.topic;
 });
 
 injectMarkdownContent(path.value);

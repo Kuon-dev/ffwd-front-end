@@ -25,7 +25,7 @@ export const landingNavigation:NavigationItem[] = [
 	},
 ];
 
-export const courseNavigation:NavgationItem[] = [
+export const courseNavigation:NavigationItem[] = [
 	{
 		title: 'HTML',
 		icon: '',

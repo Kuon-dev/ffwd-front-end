@@ -1,14 +1,13 @@
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import { createRouter, createWebHistory } from 'vue-router/auto';
-import { useUserStore } from 'stores/UserStore'
+import { useUserStore } from 'stores/UserStore';
 
 const router = createRouter({
 	history: createWebHistory(),
-	routes: [] 
 });
 
-router.beforeEach(async (to) => {
+router.beforeEach(async (to: any) => {
 	NProgress.start();
 	console.info(`%c[Dev Vue Router] ${to.path}`, 'color: #bada55');
 	const store = useUserStore();

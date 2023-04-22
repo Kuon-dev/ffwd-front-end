@@ -23,14 +23,18 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, ref, watch } from 'vue';
-import jQueryIndexForum from 'jquery-components/forum/index';
+import { defineProps, defineEmits, ref, PropType } from 'vue';
+
+interface DropdownOptions {
+	value: string;
+	label: string;
+}
 
 const emits = defineEmits(['inputs']);
 
 const props = defineProps({
 	options: {
-		type: Array,
+		type: Array as PropType<DropdownOptions[]>,
 		required: true,
 	},
 	value: {
@@ -42,8 +46,6 @@ const props = defineProps({
 const see = (value: Event) => {
 	console.log(selectedValue.value);
 };
-
-jQueryIndexForum;
 
 const selectedValue = ref(props.value);
 

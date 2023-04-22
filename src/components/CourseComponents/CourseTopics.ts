@@ -11,7 +11,6 @@ interface Frameworks {
   path: string,
   desc: string,
 }
-
 interface Topics {
   languages: Languages[],
   frameworks: Frameworks[],
@@ -68,7 +67,7 @@ const languagesTopic: Languages[] = [
 	},
 ];
 
-const frameworksTopics: Frameworks[] = [
+const frameworksTopic: Frameworks[] = [
 	{
 		'topic': 'React',
 		'img': 'https://e1.pxfuel.com/desktop-wallpaper/948/473/desktop-wallpaper-react-js-reactjs.jpg',
@@ -101,9 +100,9 @@ const frameworksTopics: Frameworks[] = [
 	},
 ];
 
-export const topics = {
+export const topics: Topics = {
 	languages: languagesTopic,
-	frameworks: frameworksTopics,
+	frameworks: frameworksTopic,
 };
 
 
