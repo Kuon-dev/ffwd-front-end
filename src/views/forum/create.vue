@@ -44,9 +44,8 @@
 
 					<div class="form-check form-switch my-7 ml-1 flex items-end">
 						<button
-							class="middle none center rounded-lg bg-brand py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-brand/20 transition-all hover:shadow-lg hover:shadow-brand/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+							class="middle none center rounded-lg bg-brand py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-brand/20 transition-all hover:shadow-lg hover:shadow-brand/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none hidden"
 							data-ripple-light="true"
-							name="SignIn"
 						>
 							Post
 						</button>
