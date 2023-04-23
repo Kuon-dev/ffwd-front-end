@@ -41,12 +41,12 @@ export const useForumStore = defineStore('forumStore', {
 		forums: <any>[],
 		forumPagination: 0,
 		forumCurrentPgnt: 1,
-		forumErrors: <any>[] || <any>Object,
+		forumError: null,
 	}),
 	getters: {
 		allForums: (state) => state.forums,
 		forumCurrentPagination: (state) => state.forumCurrentPgnt,
-		errorList: (state) => state.forumErrors,
+		errorList: (state) => state.forumError,
 	},
 	actions: {
 		async getAllForums(forumIndex: number) {
@@ -64,22 +64,22 @@ export const useForumStore = defineStore('forumStore', {
 					index: forumIndex ?? 0,
 				})
 				.then((res) => {
-					this.forums = res.data;
 					user.value = res.data.users;
 					vote.value.upVotes = res.data.upVotes;
 					vote.value.downVotes = res.data.downVotes;
-					console.log(res);
+					return (res.data);
 				})
 				.catch((err: Error | AxiosError) => {
 					const error = err as AxiosError;
-					const errorMessage: SingleError = {
+					const errorMessage: SingleError | any = {
 						message: (error?.response?.data as any).message,
 						status: error?.response?.status,
 					};
-					this.forumErrors = errorMessage;
+					console.log(error);
+					this.forumError = errorMessage;
 				});
 
-			this.forums.data.forEach((forum: FetchedForum, index: number) => {
+			forumData?.data?.forEach((forum: FetchedForum, index: number) => {
 				const tempForum: Forum = {
 					...forum,
 					username: user.value[index],
@@ -93,8 +93,9 @@ export const useForumStore = defineStore('forumStore', {
 				? forumIndex + 1
 				: this.forumCurrentPgnt;
 
-			return this.forumErrors.length ? this.forumErrors : newForum.value;
+			return this.forumError ? this.forumError : newForum.value;
 		},
+
 		async getPaginationCount() {
 			await getToken();
 
@@ -106,6 +107,7 @@ export const useForumStore = defineStore('forumStore', {
 
 			return this.forumPagination;
 		},
+
 		getForum(id: number) {
 			getToken();
 

@@ -43,6 +43,7 @@ declare module 'vue-router/auto/routes' {
     '/course/[lang]/': RouteRecordInfo<'/course/[lang]/', '/course/:lang', { lang: ParamValue<true> }, { lang: ParamValue<false> }>,
     '/course/[lang]/[topic]': RouteRecordInfo<'/course/[lang]/[topic]', '/course/:lang/:topic', { lang: ParamValue<true>, topic: ParamValue<true> }, { lang: ParamValue<false>, topic: ParamValue<false> }>,
     '/forgot-password': RouteRecordInfo<'/forgot-password', '/forgot-password', Record<never, never>, Record<never, never>>,
+    '/forum': RouteRecordInfo<'/forum', '/forum', Record<never, never>, Record<never, never>>,
     '/forum/': RouteRecordInfo<'/forum/', '/forum', Record<never, never>, Record<never, never>>,
     '/forum/[id]': RouteRecordInfo<'/forum/[id]', '/forum/:id', { id: ParamValue<true> }, { id: ParamValue<false> }>,
     '/forum/create': RouteRecordInfo<'/forum/create', '/forum/create', Record<never, never>, Record<never, never>>,
