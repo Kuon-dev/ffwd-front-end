@@ -1,6 +1,9 @@
 <template>
 	<!--The whole page-->
-	<div class="h-full w-full bg-cover bg-center bg-no-repeat content-start p-1">
+	<div
+		class="h-full w-full bg-cover bg-center bg-no-repeat content-start p-1"
+		v-if="store.user"
+	>
 		<!--backgrond image-->
 		<!--Create Forum Card-->
 		<div class="justify-center flex gap-4 w-full">
@@ -26,7 +29,7 @@
 							<div class="relative h-10 w-full min-w-[200px]">
 								<input
 									type="Text"
-									class="text-brand peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-brand outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-brand focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+									class="text-brand peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-brand focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
 									placeholder=" "
 									max="200"
 								/>
@@ -37,7 +40,7 @@
 								</label>
 							</div>
 
-							<BaseEditor @text-value="getText($event)"></BaseEditor>
+							<BaseEditor server="/api/forums/create" :user="store.user" />
 							<!--https://tailwindcomponents.com/component/wysiwyg-->
 						</div>
 					</form>
@@ -70,15 +73,23 @@
 		</div>
 		<!-- https://www.material-tailwind.com/docs/html/card#pricing-card -->
 	</div>
+	<div v-else>Please log in</div>
 </template>
 
 <script setup lang="ts">
 import BaseCard from 'base-components/BaseCard.vue';
 import BaseEditor from 'base-components/BaseEditor.vue';
+import { onMounted, ref } from 'vue';
+import { useUserStore } from 'stores/UserStore';
 
+const store = useUserStore();
 const getText = (e: Event) => {
 	console.log(e);
 };
+
+onMounted(async () => {
+	const user = ref(await store.getUser());
+});
 </script>
 
 <style lang="scss" scoped></style>

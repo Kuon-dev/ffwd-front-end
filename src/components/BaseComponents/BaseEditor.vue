@@ -15,17 +15,23 @@ import EditorJS from '@editorjs/editorjs';
 import Code from '@editorjs/code';
 import Paragraph from '@editorjs/paragraph';
 import Header from '@editorjs/header';
+
 import { handleInputChange } from 'compostables/EditorJsInjector';
 import { ref, computed } from 'vue';
+import { apiClient, getToken } from 'stores/BackendAPI';
 
 const props = defineProps({
-	textContent: {
+	server: {
 		type: String,
 		default: null,
 	},
-	placeHolder: {
+	title: {
 		type: String,
-		default: null,
+		default: '',
+	},
+	user: {
+		type: Object,
+		required: true,
 	},
 });
 
@@ -51,12 +57,19 @@ const emitContent = () => {
 };
 */
 
-const handleSubmit = (e: Event) => {
+const handleSubmit = async (e: Event) => {
 	e.preventDefault();
 	editor
 		.save()
-		.then((output) => {
+		.then(async (output) => {
 			console.log(output);
+			if (!props.server) return;
+			const res = await apiClient.post(props.server, {
+				user_id: props.user.id,
+				title: props.title ?? 'Test title',
+				content: output,
+			});
+			console.log(res);
 		})
 		.catch((err) => {
 			console.log(err);

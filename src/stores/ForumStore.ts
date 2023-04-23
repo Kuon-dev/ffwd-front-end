@@ -60,7 +60,7 @@ export const useForumStore = defineStore('forumStore', {
 			const newForum = ref<Forum[]>([]);
 
 			const forumData = await apiClient
-				.post(`api/forums/${forumIndex ?? 0}`, {
+				.post(`api/forums/get/${forumIndex ?? 0}`, {
 					index: forumIndex ?? 0,
 				})
 				.then((res) => {
