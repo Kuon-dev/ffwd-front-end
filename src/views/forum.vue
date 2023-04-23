@@ -2,7 +2,7 @@
 	<div class="bg-cover top-0 h-full flex flex-col bg-gray-100 overflow-hidden">
 		<Nav />
 		<div class="flex flex-row w-full mt-10 justify-center">
-			<div class="rounded-lg flex-row flex xl:w-2/4 w-full xl:mx-0 mx-20">
+			<div class="rounded-lg flex-row flex xl:w-8/12 w-full xl:mx-0 mx-20">
 				<div class="w-full lg:mt-36 mt-20 lg:px-6 lg:ml-10 2xl:ml-0">
 					<Suspense>
 						<template #default>

@@ -1,15 +1,12 @@
 <template>
 	<!--The whole page-->
-	<div
-		class="h-full w-full bg-cover bg-center bg-no-repeat content-start p-1"
-		style="background-image: url('/public/img2.png')"
-	>
+	<div class="h-full w-full bg-cover bg-center bg-no-repeat content-start p-1">
 		<!--backgrond image-->
 		<!--Create Forum Card-->
-		<div class="justify-center flex m-20">
+		<div class="justify-center flex gap-4 w-full">
 			<!--form card-->
 			<div
-				class="w-full max-w-5xl p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+				class="w-full max-w-3xl p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
 			>
 				<!--Title box-->
 				<div class="mx-4 -mt-6 translate-y-0">
@@ -40,7 +37,7 @@
 								</label>
 							</div>
 
-							<BaseEditor></BaseEditor>
+							<BaseEditor @text-value="getText($event)"></BaseEditor>
 							<!--https://tailwindcomponents.com/component/wysiwyg-->
 						</div>
 					</form>
@@ -56,13 +53,33 @@
 					</div>
 				</div>
 			</div>
+
+			<div>
+				<BaseCard class="border-gray-200 w-full" paddingSize="sm">
+					<h2 class="text-brand font-semibold text-lg my-2">
+						Posting to CodeGeniuses
+					</h2>
+					<ol class="list-decimal px-5">
+						<li>Be civil to each other</li>
+						<li>Stay on-topic</li>
+						<li>Provide relevant information</li>
+						<li>Search before posting</li>
+						<li>Follow the rules</li>
+					</ol>
+				</BaseCard>
+			</div>
 		</div>
 		<!-- https://www.material-tailwind.com/docs/html/card#pricing-card -->
 	</div>
 </template>
 
 <script setup lang="ts">
+import BaseCard from 'base-components/BaseCard.vue';
 import BaseEditor from 'base-components/BaseEditor.vue';
+
+const getText = (e: Event) => {
+	console.log(e);
+};
 </script>
 
 <style lang="scss" scoped></style>

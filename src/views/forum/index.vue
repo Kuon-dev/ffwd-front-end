@@ -23,7 +23,9 @@
 						<div class="filter-section">
 							<FilterDropDownVue :options="filterOptions"></FilterDropDownVue>
 						</div>
-						<v-btn color="#7e81ee" class="text-white"> Ask a Question </v-btn>
+						<router-link to="/forum/create">
+							<v-btn color="#7e81ee" class="text-white"> Ask a Question </v-btn>
+						</router-link>
 					</div>
 				</BaseCard>
 

@@ -21,6 +21,8 @@
 					items: ['outdent', 'indent'],
 				},
 			]"
+			:text_patterns="mdPattern"
+			format="text"
 			v-model="textContent"
 			@keyup="emitContent()"
 		/>
@@ -29,7 +31,7 @@
 
 <script setup lang="ts">
 import Editor from '@tinymce/tinymce-vue';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
 const props = defineProps({
 	textContent: {
@@ -50,9 +52,25 @@ const apiKey = ref((import.meta as any).env.VITE_TINYMCE_API);
 const textContent = ref(props.textContent);
 
 const emitContent = () => {
-	console.log(textContent.value);
 	emits('text-value', textContent.value);
 };
+
+const mdPattern = computed(() => {
+	return [
+		{ start: '*', end: '*', format: 'italic' },
+		{ start: '**', end: '**', format: 'bold' },
+		{ start: '#', format: 'h1' },
+		{ start: '##', format: 'h2' },
+		{ start: '###', format: 'h3' },
+		{ start: '####', format: 'h4' },
+		{ start: '#####', format: 'h5' },
+		{ start: '######', format: 'h6' },
+		// The following text patterns require the `lists` plugin
+		{ start: '1. ', cmd: 'InsertOrderedList' },
+		{ start: '* ', cmd: 'InsertUnorderedList' },
+		{ start: '- ', cmd: 'InsertUnorderedList' },
+	];
+});
 
 /*
 import { onMounted, onBeforeMount } from 'vue';
