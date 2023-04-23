@@ -1,5 +1,5 @@
 <template>
-	<div class="ml-10 mr-20 mb-10">
+	<div class="px-3 md:ml-5 lg:md-10">
 		<Card
 			:image="renderTopicData?.img"
 			:title="renderTopicData?.topic"
@@ -49,6 +49,7 @@ const dynamicImport = () => {
 };
 
 dynamicImport();
+renderData();
 // eslint-disable-next-line
 watch(path, () => {
 	dynamicImport();

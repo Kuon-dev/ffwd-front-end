@@ -2,8 +2,8 @@
 	<v-card class="card">
 		<div class="flex flex-row">
 			<v-img
-				class="align-end basis-1/2"
-				height="500"
+				class="align-end basis-1/2 bg-cover"
+				height="300"
 				max-width="700"
 				:src="props.image"
 				cover
@@ -16,7 +16,7 @@
 					</h2>
 				</v-card-title>
 				<v-card-text class="">
-					<p class="text-black text-lg">
+					<p class="text-black lg:text-lg text-sm">
 						{{ props.cardText }}
 					</p>
 				</v-card-text>

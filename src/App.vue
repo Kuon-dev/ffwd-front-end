@@ -13,7 +13,6 @@
 
 <script setup lang="ts">
 import LoadingPage from 'base-components/BaseLoadingPage.vue';
-
 import 'animate.css';
 import { ref, watch, onMounted } from 'vue';
 
