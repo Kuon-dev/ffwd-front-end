@@ -11,7 +11,7 @@
 					/>
 				</aside>
 				<div
-					class="w-full lg:mt-36 mt-20 lg:px-6"
+					class="w-full lg:mt-36 mt-20 lg:px-6 lg:ml-10 2xl:ml-0"
 					:class="hasSidebar ? 'lg:w-[60%] ' : 'lg:w-[80%]'"
 				>
 					<router-view></router-view>

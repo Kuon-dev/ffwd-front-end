@@ -21,7 +21,7 @@ export const landingNavigation:NavigationItem[] = [
 	{
 		title: 'Forum',
 		icon: '',
-		path: '/about',
+		path: '/forum',
 	},
 ];
 

@@ -1,11 +1,14 @@
 <template>
-	<v-card class="card flex items-around" min-width="300">
+	<v-card
+		class="card flex items-around w-64 sm:w-64 lg:w-64 2xl:w-72"
+		min-width="200"
+	>
 		<v-img class="align-end" height="200" :src="props.image" cover />
 
 		<v-card-title class="text-brand font-bold"> {{ props.title }}</v-card-title>
 
-		<v-card-text class="h-32">
-			<p class="text-black">
+		<v-card-text class="h-48 lg:h-40">
+			<p class="text-black text-sm">
 				{{ props.cardText }}
 			</p>
 		</v-card-text>
