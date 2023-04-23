@@ -20,7 +20,7 @@
 				</div>
 
 				<!-- <div class="">test</div> -->
-				<div class="hidden">
+				<div class="hidden md:block">
 					<router-link
 						v-for="(item, index) in landingNavigation"
 						:key="index"
@@ -53,7 +53,7 @@
 						<font-awesome-icon icon="fa-solid fa-bars-staggered" size="lg" />
 					</button>
 					<ol
-						class="text-blue-gray-700 ml-4 flex min-w-0 whitespace-nowrap text-md leading-6 mr-4"
+						class="text-blue-gray-700 flex min-w-0 whitespace-nowrap text-md leading-6 mx-4 h-full my-0"
 					>
 						<li class="flex items-center">
 							<span class="">
@@ -68,9 +68,9 @@
 
 					<font-awesome-icon
 						icon="fa-solid fa-grip-lines-vertical"
-						class="sm:block hidden"
+						class="sm:block hidden md:hidden"
 					/>
-					<ul class="hidden flex-row ml-4 sm:flex">
+					<ul class="hidden flex-row ml-4 sm:flex md:hidden">
 						<li v-for="(item, index) in landingNavigation" :key="index">
 							<router-link :to="item.path" class="mx-2">
 								{{ item.title }}
