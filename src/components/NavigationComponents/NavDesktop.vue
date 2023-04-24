@@ -1,6 +1,6 @@
 <template>
 	<nav
-		class="absolute left-2/4 z-[999] my-4 flex w-full max-w-screen-2xl -translate-x-2/4 flex-wrap items-center px-4 lg:fixed undefined"
+		class="fixed left-2/4 z-[999] my-4 flex w-full max-w-screen-2xl -translate-x-2/4 flex-wrap items-center px-4 lg:fixed undefined"
 	>
 		<BaseCard
 			class="flex flex-row justify-space-between items-center w-full"
@@ -10,13 +10,15 @@
 			noBg
 		>
 			<div class="">
-				<v-avatar>
-					<v-img src="../../public/Logo2.png" alt="logo"></v-img>
-				</v-avatar>
+				<router-link to="/">
+					<v-avatar>
+						<v-img src="/Logo2.png" alt="logo"></v-img>
+					</v-avatar>
+				</router-link>
 			</div>
 
 			<!-- <div class="">test</div> -->
-			<div class="ml-[30rem]">
+			<div class="xl:ml-[30rem] ml-[20rem]">
 				<router-link
 					v-for="(item, index) in landingNavigation"
 					:key="index"

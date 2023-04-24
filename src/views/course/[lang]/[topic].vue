@@ -1,6 +1,6 @@
 <template>
 	<div class="mb-10">
-		<BaseCard paddingSize="md">
+		<BaseCard :paddingSize="isInMobile ? 'sm' : 'md'" class="mx-5">
 			<div id="md-convert"></div>
 		</BaseCard>
 	</div>
@@ -8,7 +8,10 @@
 
 <script setup lang="ts">
 import BaseCard from 'base-components/BaseCard.vue';
-import { injectMarkdownContent } from 'compostables/courses/CourseSidebarDataInjector';
+import {
+	injectMarkdownContent,
+	isInMobile,
+} from 'compostables/courses/CourseSidebarDataInjector';
 import { computed, watch, ref } from 'vue';
 import { useRouter } from 'vue-router';
 

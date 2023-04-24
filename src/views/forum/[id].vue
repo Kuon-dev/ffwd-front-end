@@ -1,14 +1,26 @@
 <template>
 	<!--The Whole Page-->
-	<div class="h-full w-full bg-[url('/public/img1.png')] bg-cover p-1">
+	<div class="h-full w-full bg-cover p-1">
 		<!--Forum-->
 		<div
 			class="bg-white flex justify-center border rounded-lg p-9 xl:w-3/5 md:w-5/6 sm:w-6/7 xl:mx-72 md:mx-16 sm:mx-2 grid grid-cols-1 my-15"
 		>
 			<!-- Forum Title -->
-			<h2 class="place-content-start flex text-2xl font-semibold leading-10">
-				How to make border-bottom line longer with CSS?
-			</h2>
+			<div class="flex flex-row gap-4">
+				<div class="flex flex-col">
+					<button variant="text">
+						1
+						<font-awesome-icon :icon="['fas', 'caret-up']" size="xl" />
+					</button>
+					<button>
+						2
+						<font-awesome-icon :icon="['fas', 'caret-down']" size="xl" />
+					</button>
+				</div>
+				<h2 class="place-content-start flex text-2xl font-semibold leading-10">
+					How to make border-bottom line longer with CSS?
+				</h2>
+			</div>
 
 			<!-- Author -->
 			<div class="h-14 my-4 ml-1">
@@ -51,73 +63,7 @@
 
 				<!-- Display Code -->
 				<div class="bg-slate-950 rounded h-auto max-h-96 overflow-y-auto">
-					<div class="flex justify-start mx-5 h-fit">
-						<!--<pre class="my-1">
-                            <code class="text-white grid ">
-                                <span class="flex gap-1">
-                                    <span class="gap-0">&lt;</span>
-                                    <span class="text-amber-500">table</span>
-                                    <span class="text-sky-500">id</span>
-                                    <span>=</span>
-                                    <span class="text-teal-400">"showRoom"</span>
-                                    <span>&gt;</span>
-                                </span>
-                                <span class="flex gap-1">
-                                    <span>&lt;</span>
-                                    <span class="text-amber-500">tr</span>
-                                    <span class="text-sky-500">class</span>
-                                    <span>=</span>
-                                    <span class="text-teal-400">"box_shadow"</span>
-                                    <span>&gt;</span>
-                                </span>
-                                <span class="flex gap-1">
-                                    <span>  &lt;</span>
-                                    <span class="text-amber-500">td</span>
-                                    <span class="text-sky-500">class</span>
-                                    <span>=</span>
-                                    <span class="text-teal-400">"text_plant_address"</span>
-                                    <span>&gt;</span>
-
-                                    <span>&lt;</span>
-                                    <span class="text-amber-500">span</span>
-                                    <span class="text-sky-500">class</span>
-                                    <span>=</span>
-                                    <span class="text-teal-400">"text_plant"</span>
-                                    <span>&gt;</span>
-
-                                    <span>"Plant 1"</span>
-
-                                    <span>&lt;/</span>
-                                    <span class="text-amber-500">span</span>
-                                    <span>&gt;</span>
-                                </span>
-                                <span class="flex gap-1">
-                                    <span>      &lt;</span>
-                                    <span class="text-amber-500">span</span>
-                                    <span class="text-sky-500">class</span>
-                                    <span>=</span>
-                                    <span class="text-teal-400">"text_address"</span>
-                                    <span>&gt;</span>
-
-                                    <span>Street 2, Dong An Industrial Park</span>
-
-                                    <span>&lt;/</span>
-                                    <span class="text-amber-500">span</span>
-                                    <span>&gt;</span>
-                                </span>
-                                <span class="flex gap-1">
-                                    <span>  &lt;/</span>
-                                    <span class="text-amber-500">td</span>
-                                    <span>&gt;</span>
-                                </span>
-                                <span class="flex gap-1">
-                                    <span>&lt;/</span>
-                                    <span class="text-amber-500">tr</span>
-                                    <span>&gt;</span>
-                                </span>
-                            </code>
-                        </pre>-->
-					</div>
+					<div class="flex justify-start mx-5 h-fit"></div>
 				</div>
 
 				<!-- Link -->
@@ -135,36 +81,6 @@
 					</strong>
 				</p>
 			</div>
-
-			<!-- Votes -->
-			<!--<div class="my-2">
-                <div class="grid grid-cols-2 grid-rows-1 flex justify-center items-center h-10 w-64">-->
-			<!-- Upvotes -->
-			<!--<div class="flex justify-start">
-                        <div class="h-10 w-11">
-                            <button name="upvote" class="flex justify-center h-8 w-8 m-1 cursor-pointer">
-                                <svg aria-hidden="true" width="36" height="36" viewBox="0 0 36 36">
-                                    <path d = "M2 25h32L18 9 2 25Z" fill="DarkBlue"></path>
-                                </svg>
-                            </button>
-                        </div>
-                        <div class="font-sm font-light text-slate-500 flex items-center"> 16 votes </div>
-                    </div>
-
-                    Downvotes
-                    <div class="flex justify-start">
-                        <div class="h-10 w-11">
-                            <button name="downvote" class="flex justify-center h-8 w-8 m-1 cursor-pointer">
-                                <svg aria-hidden="true" width="36" height="36" viewBox="0 0 36 36">
-                                    <path d = "M2 11h32L18 27 2 11Z" fill="DarkBlue"> </path>
-                                </svg>
-                            </button>
-                        </div>
-
-                        <div class="font-sm font-light text-slate-500 flex items-center"> 2 votes </div>
-                    </div>
-                </div>
-            </div>-->
 
 			<!-- Leave Comment Field -->
 			<div class="relative my-3 mx-1" data-te-input-wrapper-init>
@@ -192,107 +108,25 @@
 
 				<!-- Comments -->
 				<div class="my-1">
-					<!-- One of the Comments -->
-					<hr />
-
-					<div>
-						<!-- Author -->
-						<div class="h-14 my-4 ml-1">
-							<div class="h-14 w-full flex justify-start items-center">
-								<!-- Profile Image -->
-								<div class="h-14 w-12 flex justify-center items-center">
-									<img
-										src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/800px-Default_pfp.svg.png"
-										alt="Profile"
-										class="rounded-full h-12 w-12"
-									/>
-								</div>
-								<!-- Name -->
-								<div class="ml-5">
-									<div class="font-medium text-lg">Mary Maw</div>
-									<!-- Author username -->
-									<div class="font-light text-xs">3 days ago</div>
-									<!-- Time elapsed since forum post -->
-								</div>
-							</div>
-						</div>
-
-						<!--Answer-->
-						<div>
-							<p></p>
-							<p class="my-4">Just add Padding</p>
-
-							<!--Code Example-->
-							<div class="bg-slate-950 rounded h-auto max-h-96 overflow-y-auto">
-								<div class="flex justify-start mx-5 h-fit">
-									<!--<pre class="my-1">
-                                        <code class="text-white grid">
-                                            <span class="flex gap-1">
-                                                <span class="text-sky-500">table</span>
-                                                <span class="text-sky-500">tr</span>
-                                                <span class="text-sky-500">td</span>
-                                                <span class="text-sky-500">.text_plant</span>
-                                                <span> &#123; </span>
-                                            </span>
-                                            <span class="flex gap-1">
-                                                <span class="text-violet-500">border-bottom</span>
-                                                <span>: </span>
-                                                <span class="text-amber-500">1 px</span>
-                                                <span>solid</span>
-                                                <span class="text-amber-500">#D0D0D0</span>
-                                                <span>;</span>
-                                            </span>
-                                            <span class="flex gap-1">
-                                                <span class="text-violet-500">padding</span>
-                                                <span>: </span>
-                                                <span class="text-amber-500">0</span>
-                                                <span class="text-amber-500">20px</span>
-                                                <span>;</span>
-                                                <span class="text-neutral-400">/* or how longer you want */</span>
-                                            </span>
-                                            <span>&#125;</span>
-                                        </code>
-                                    </pre>-->
-								</div>
-							</div>
-
-							<!-- Votes
-                            <div class="my-2">
-                                <div class="grid grid-cols-2 grid-rows-1 flex justify-center items-center h-10 w-64">
-                                    Upvotes
-                                    <div class="flex justify-start">
-                                        <div class="h-10 w-11">
-                                            <button name="upvote" class="flex justify-center h-8 w-8 m-1 cursor-pointer">
-                                                <svg aria-hidden="true" width="36" height="36" viewBox="0 0 36 36">
-                                                    <path d = "M2 25h32L18 9 2 25Z" fill="DarkBlue"></path>
-                                                </svg>
-                                            </button>
-                                        </div>
-                                        <div class="font-sm font-light text-slate-500 flex items-center"> 16 votes </div>
-                                    </div>
-
-                                    Downvotes
-                                    <div class="flex justify-start">
-                                        <div class="h-10 w-11">
-                                            <button name="downvote" class="flex justify-center h-8 w-8 m-1 cursor-pointer">
-                                                <svg aria-hidden="true" width="36" height="36" viewBox="0 0 36 36">
-                                                    <path d = "M2 11h32L18 27 2 11Z" fill="DarkBlue"> </path>
-                                                </svg>
-                                            </button>
-                                        </div>
-
-                                        <div class="font-sm font-light text-slate-500 flex items-center"> 2 votes </div>
-                                    </div>
-                                </div>
-                            </div>-->
-						</div>
-					</div>
+					<Comments />
+					<Comments />
 				</div>
 			</div>
 		</div>
 	</div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { computed, watch, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { renderHTML } from 'compostables/EditorJsInjector';
+import Comments from 'forum-components/PostComment.vue';
+
+const router = useRouter();
+
+const path = computed(() => {
+	return router.currentRoute.value.path;
+});
+</script>
 
 <style lang="scss" scoped></style>
