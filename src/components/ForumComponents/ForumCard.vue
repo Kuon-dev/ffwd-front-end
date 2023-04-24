@@ -5,48 +5,53 @@
 	>
 		<div class="flex flex-col my-5 gap-5">
 			<BaseCard v-for="forum in forums" :key="forum.id">
-				<!-- Forum Title -->
-				<h2 class="text-xl mb-5 text-brand">{{ forum.title }}</h2>
-				<!-- Forum Body -->
-				<p class="p-1 mb-5 hidden md:block">
-					{{ forum.content }}
-				</p>
-
-				<!-- Forum Bottom -->
-				<div
-					class="forumBottom flex flex-col md:flex-row justify-between gap-5"
-				>
-					<!-- Forum UpVote & Comment -->
-					<div class="upvoteComment flex gap-5">
-						<!-- UpVote -->
-						<v-btn
-							color="#7e81ee"
-							class="text-white"
-							@click="incrementUpVotes($event)"
-						>
-							<font-awesome-icon
-								:icon="['fas', 'caret-up']"
-								size="lg"
-								class="mt-1"
-							/>
-							<p class="mx-1">
-								{{ forum.upVotes - forum.downVotes }}
-							</p>
-						</v-btn>
-
-						<!-- Comment -->
+				<router-link :to="`/forum/${forum.id}`">
+					<h2 class="text-xl mb-5 text-brand">{{ forum.title }}</h2>
+					<!-- Forum Body -->
+					<div class="p-1 mb-5 block">
+						<span
+							v-if="forum.content"
+							v-html="renderHTML(forum.content)"
+						></span>
 					</div>
 
-					<!-- Forum Post Date & Owner -->
+					<!-- Forum Bottom -->
 					<div
-						class="flex flex-col text-sm md:text-right order-last lg:order-first"
+						class="forumBottom flex flex-col md:flex-row justify-between gap-5"
 					>
-						<!-- Forum Post Date -->
-						<p>{{ formatDate(forum.updated_at) }}</p>
-						<!-- Forum Post Owner -->
-						<p>{{ forum.username }}</p>
+						<!-- Forum UpVote & Comment -->
+						<div class="upvoteComment flex gap-5">
+							<!-- UpVote -->
+							<v-btn
+								color="#7e81ee"
+								class="text-white"
+								@click="incrementUpVotes($event)"
+							>
+								<font-awesome-icon
+									:icon="['fas', 'caret-up']"
+									size="lg"
+									class="mt-1"
+								/>
+								<p class="mx-1">
+									{{ forum.upVotes - forum.downVotes }}
+								</p>
+							</v-btn>
+
+							<!-- Comment -->
+						</div>
+
+						<!-- Forum Post Date & Owner -->
+						<div
+							class="flex flex-col text-sm md:text-right order-last lg:order-first"
+						>
+							<!-- Forum Post Date -->
+							<p>{{ formatDate(forum.updated_at) }}</p>
+							<!-- Forum Post Owner -->
+							<p>{{ forum.username }}</p>
+						</div>
 					</div>
-				</div>
+				</router-link>
+				<!-- Forum Title -->
 			</BaseCard>
 		</div>
 	</transition>
@@ -55,6 +60,7 @@
 <script setup lang="ts">
 import BaseCard from 'base-components/BaseCard.vue';
 import { PropType } from 'vue';
+import { renderHTML } from 'compostables/EditorJsInjector';
 
 interface Forum {
 	id: number;

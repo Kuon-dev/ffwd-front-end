@@ -39,6 +39,7 @@ interface SingleError {
 export const useForumStore = defineStore('forumStore', {
 	state: () => ({
 		forums: <any>[],
+		forumSelected: null,
 		forumPagination: 0,
 		forumCurrentPgnt: 1,
 		forumError: null,
