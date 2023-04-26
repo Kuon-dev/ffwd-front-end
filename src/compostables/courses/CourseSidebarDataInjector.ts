@@ -11,8 +11,10 @@ import scrollama from 'scrollama';
 import { watch, computed, ref } from 'vue';
 /* eslint-enable */
 
+// this is used to know when to render the contents of the data of the sidebar
 const fetchedMd = ref(false);
 
+// check if the user is in ,obile
 const windowWidth = ref(window.innerWidth);
 const handleResize = () => {
 	windowWidth.value = window.innerWidth;
@@ -23,7 +25,7 @@ watch(windowWidth, () => {
 	isInMobile.value = windowWidth.value < 1024;
 });
 
-
+// Converter will re responsible to covert the md files into HTML Elements
 const converter = new showdown.Converter({
 	extensions: [
 		{
@@ -42,7 +44,8 @@ const converter = new showdown.Converter({
 	],
 });
 
-
+// clipboard API refers to the copyp button in each code section within the rendered
+// MD file
 const injectClipboardAPI = () => {
 // Select all pre elements on the page
 	$('pre').each((index: number, el:any) => {
@@ -64,6 +67,8 @@ const injectClipboardAPI = () => {
 	});
 };
 
+// Scrollama is a dependency used to highlight the sidebar title based on the user's
+// scrolled position on the screen
 const injectScrollama = () => {
 
 	// Loop through each h2 element
@@ -97,6 +102,7 @@ export const path = computed(() => {
 	return router.currentRoute.value;
 });
 
+// this will render the sidebar if the user is viewing a topic
 export const injectSidebarComponent = watch(path, () => {
 	if (path.value.params.topic) {
 		$('#page-sidebar').show();
@@ -106,6 +112,7 @@ export const injectSidebarComponent = watch(path, () => {
 	}
 });
 
+// this section is used to inject the scrollama headers
 export const injectMarkdownHeaders = () => {
 	$('#page-sidebar-headers').empty();
 	$('#md-convert h2').each((index: number, el: any) => {
@@ -120,6 +127,7 @@ export const injectMarkdownHeaders = () => {
 
 };
 
+// this section is used to render the md contents 
 export const injectMarkdownContent = (file: string | string[]) => {
 	$(document).ready(() => {
 		fetchedMd.value = false;
