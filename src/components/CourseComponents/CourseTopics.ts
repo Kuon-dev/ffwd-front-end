@@ -106,7 +106,28 @@ export const topics: Topics = {
 };
 
 
-export const vue = [
+/* --------------------------
+ * This section will consist of the topics
+ * it must be on 'export default ${variable name}'
+ *
+ * Below consist of the interfaces for writing the
+ * contents of each topic
+ *
+ */
+
+interface CourseList {
+  topic: string,
+  path: string,
+}
+
+interface Course {
+  title: string,
+  lists: CourseList[],
+}
+
+// Below will consist the contents of the topics
+
+export const vue: Course[] = [
 	{
 		'title': 'Chapter 1: Introduction',
 		'lists': [

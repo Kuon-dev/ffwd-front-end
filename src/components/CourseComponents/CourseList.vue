@@ -1,19 +1,5 @@
 <template>
 	<v-card class="mx-auto pt-2 px-2">
-		<!--
-    <v-toolbar color="secondary">
-      <v-btn variant="text" icon="mdi-menu"></v-btn>
-
-      <v-toolbar-title>Courses</v-toolbar-title>
-
-      <v-spacer></v-spacer>
-
-      <v-btn variant="text" icon="mdi-magnify"></v-btn>
-
-      <v-btn variant="text" icon="mdi-view-module"></v-btn>
-    </v-toolbar>
-    -->
-
 		<v-list
 			lines="two"
 			v-for="(sections, sectionIndex) in props.course"
