@@ -1,12 +1,12 @@
 interface Question {
 	questionText: string;
 	options: Option[];
+	correctAnswer: string;
 }
 
 interface Option {
 	label: string;
 	optionText: string;
-	isCorrect: boolean;
 }
 
 export const vue: Question[] = [
@@ -16,24 +16,21 @@ export const vue: Question[] = [
 			{
 				label: 'A',
 				optionText: '16',
-				isCorrect: true,
 			},
 			{
 				label: 'B',
 				optionText: '1',
-				isCorrect: false,
 			},
 			{
 				label: 'C',
 				optionText: '8',
-				isCorrect: false,
 			},
 			{
 				label: 'D',
 				optionText: '24',
-				isCorrect: false,
 			},
 		],
+		correctAnswer: 'A',
 	},
 	{
 		questionText: 'sqrt(64) * 9',
@@ -41,24 +38,21 @@ export const vue: Question[] = [
 			{
 				label: 'A',
 				optionText: '4',
-				isCorrect: false,
 			},
 			{
 				label: 'B',
 				optionText: '81',
-				isCorrect: false,
 			},
 			{
 				label: 'C',
 				optionText: '72',
-				isCorrect: true,
 			},
 			{
 				label: 'D',
 				optionText: '144',
-				isCorrect: false,
 			},
 		],
+		correctAnswer: 'C',
 	},
 	{
 		questionText: '3 + 3 x 3 ÷ 3 - 3',
@@ -66,23 +60,42 @@ export const vue: Question[] = [
 			{
 				label: 'A',
 				optionText: '3',
-				isCorrect: true,
 			},
 			{
 				label: 'B',
 				optionText: '1',
-				isCorrect: false,
 			},
 			{
 				label: 'C',
 				optionText: '8',
-				isCorrect: false,
 			},
 			{
 				label: 'D',
 				optionText: '24',
-				isCorrect: false,
 			},
 		],
+		correctAnswer: 'A',
+	},
+	{
+		questionText: '1 + 4',
+		options: [
+			{
+				label: 'A',
+				optionText: '3',
+			},
+			{
+				label: 'B',
+				optionText: '1',
+			},
+			{
+				label: 'C',
+				optionText: '8',
+			},
+			{
+				label: 'D',
+				optionText: '5',
+			},
+		],
+		correctAnswer: 'D',
 	},
 ];
