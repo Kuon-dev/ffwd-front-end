@@ -22,7 +22,12 @@
 		>
 			<p>Timer: {{ formattedTime }}</p>
 		</BaseCard>
-		<BaseCard v-for="(quiz, index) in selectedCourse" :key="quiz">
+		<BaseCard
+			v-for="(quiz, index) in selectedCourse"
+			:key="quiz"
+			:class="`question-${index + 1}`"
+		>
+			<div class="result w-full text-lg mb-3"></div>
 			<h3 class="text-xl mb-5">{{ `${index + 1}. ${quiz.questionText}` }}</h3>
 			<div v-for="option in quiz.options" :key="option" class="flex gap-5 mb-3">
 				<input
@@ -55,11 +60,12 @@ import BaseCard from 'base-components/BaseCard.vue';
 
 const quizStore = useQuizStore();
 const router = useRouter();
+
 const selectedCourse = ref(null);
 const formattedTime = ref('00:00');
 const submittedQuiz = ref(false);
 const numberOfQuestions = ref(0);
-const numberOfCorrectAnswers = ref(quizStore.correctAnswers);
+const numberOfCorrectAnswers = ref(quizStore.userCorrectAnswers);
 const score = ref(0);
 
 const path = computed(() => {
@@ -71,21 +77,62 @@ const dynamicImport = () => {
 	import('course-components/CourseQuiz').then(
 		(module: { [key: string]: any }) => {
 			selectedCourse.value = module[path.value.params.lang as any];
+
+			selectedCourse.value.forEach((answer: any) => {
+				quizStore.setCorrectAnswers(answer.correctAnswer);
+			});
+
 			numberOfQuestions.value = selectedCourse.value.length;
 		},
 	);
 };
 
+// submit quiz handler
 const submitQuiz = () => {
-	// stop timer
-	quizStore.stopTimer(intervalId);
-	// get time and send post request to db
-	quizStore.setTimeTaken(formattedTime.value);
-
+	// get all selected answers
 	document.querySelectorAll('input[type="radio"]:checked').forEach((answer) => {
 		quizStore.getChosenAnswers(answer.value);
 	});
 
+	console.log(quizStore.allChosenAnswers);
+
+	// check all question has answers
+	if (quizStore.allChosenAnswers.length !== numberOfQuestions.value) {
+		quizStore.clearChosenAnswers();
+
+		document.body.scrollTop = 0;
+		document.documentElement.scrollTop = 0;
+
+		alert('please check all questions and fill them up!');
+		return;
+	}
+
+	// stop timer
+	quizStore.stopTimer(intervalId);
+
+	// get time and send post request to db
+	quizStore.setTimeTaken(formattedTime.value);
+
+	// check whether answers are correct
+	for (let index = 0; index < numberOfQuestions.value; index++) {
+		if (
+			quizStore.allCorrectAnswers[index] === quizStore.allChosenAnswers[index]
+		) {
+			const result = document.querySelector(`.question-${index + 1} .result`);
+
+			result.innerHTML = 'Correct !';
+			result.style.color = 'green';
+			numberOfCorrectAnswers.value++;
+		}
+		else {
+			const result = document.querySelector(`.question-${index + 1} .result`);
+
+			result.innerHTML = `Wrong ! Answer: ${quizStore.correctAnswers[index]}`;
+			result.style.color = 'red';
+		}
+	}
+
+	// calculate scoring
 	score.value = calculateScore(
 		numberOfCorrectAnswers.value,
 		numberOfQuestions.value,
@@ -93,6 +140,7 @@ const submitQuiz = () => {
 
 	submittedQuiz.value = true;
 
+	// scroll user to top of page
 	document.body.scrollTop = 0;
 	document.documentElement.scrollTop = 0;
 };

@@ -6,11 +6,14 @@ export const useQuizStore = defineStore('quizStore', {
 		timer: 0,
 		timeTaken: '',
 		chosenAnswers: <any>[],
-		numberOfCorrectAnswers: 2,
+		correctAnswers: <any>[],
+		numberOfCorrectAnswers: 0,
 	}),
 	getters: {
-		allAnswers: (state) => state.chosenAnswers,
-		correctAnswers: (state) => state.numberOfCorrectAnswers,
+		allChosenAnswers: (state) => state.chosenAnswers,
+		allCorrectAnswers: (state) => state.correctAnswers,
+		userCorrectAnswers: (state) => state.numberOfCorrectAnswers,
+		durationTaken: (state) => state.timeTaken,
 	},
 	actions: {
 		// Start the timer
@@ -22,13 +25,24 @@ export const useQuizStore = defineStore('quizStore', {
 			window.clearInterval(intervalId);
 			// this.timer = 0;
 		},
-		// Get chosen answer by user
+		// Get chosen answers by user
 		getChosenAnswers(answer: string) {
 			this.chosenAnswers.push(answer);
+		},
+		// Clear all chosen answers by user
+		clearChosenAnswers() {
+			this.chosenAnswers = [];
 		},
 		// Set time taken to complete quiz
 		setTimeTaken(time: string) {
 			this.timeTaken = time;
+		},
+		// Set correct answers of the quiz
+		setCorrectAnswers(answer: string) {
+			this.correctAnswers.push(answer);
+		},
+		setUserCorrectCount(count: number) {
+			this.numberOfCorrectAnswers = count;
 		},
 	},
 });
