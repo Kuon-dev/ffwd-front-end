@@ -31,7 +31,7 @@ import type {
 	// data fetching
 	_DataLoader,
 	_DefineLoaderOptions,
-} from 'unplugin-vue-router/types';
+} from 'unplugin-vue-router/types'
 
 declare module 'vue-router/auto/routes' {
 	export interface RouteNamedMap {
@@ -45,18 +45,6 @@ declare module 'vue-router/auto/routes' {
 		'/about': RouteRecordInfo<
 			'/about',
 			'/about',
-			Record<never, never>,
-			Record<never, never>
-		>;
-		'/admin/': RouteRecordInfo<
-			'/admin/',
-			'/admin',
-			Record<never, never>,
-			Record<never, never>
-		>;
-		'/admin/profile/': RouteRecordInfo<
-			'/admin/profile/',
-			'/admin/profile',
 			Record<never, never>,
 			Record<never, never>
 		>;
