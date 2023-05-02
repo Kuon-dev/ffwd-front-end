@@ -6,12 +6,27 @@
 			:card-text="renderTopicData?.desc"
 		/>
 
-		<List :course="selectedTopic" class="mt-10"> </List>
+		<List :course="selectedTopic" class="mt-10"></List>
+
+		<BaseCard class="mt-10">
+			<p>
+				Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium,
+				ullam, consectetur itaque quibusdam accusamus nobis modi neque corporis
+				perspiciatis dignissimos suscipit est, tenetur autem doloremque ad et!
+				Deleniti, laborum iure?
+			</p>
+			<v-btn color="#7E81FF" class="mt-5">
+				<router-link :to="`${path.fullPath}/quiz`" class="text-white">
+					Attemp Quiz
+				</router-link>
+			</v-btn>
+		</BaseCard>
 	</div>
 </template>
 
 <script setup lang="ts">
 import Card from 'course-components/CourseDescCard.vue';
+import BaseCard from 'base-components/BaseCard.vue';
 import List from 'course-components/CourseList.vue';
 import { computed, watch, ref } from 'vue';
 import { useRouter } from 'vue-router';
@@ -50,6 +65,7 @@ const dynamicImport = () => {
 
 dynamicImport();
 renderData();
+
 // eslint-disable-next-line
 watch(path, () => {
 	dynamicImport();
