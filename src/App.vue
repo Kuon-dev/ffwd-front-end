@@ -48,7 +48,7 @@ onMounted(() => {
 }
 
 ::-webkit-scrollbar-track {
-	background-color: black;
+	background-color: #f3f3f3;
 }
 
 ::-webkit-scrollbar-thumb {

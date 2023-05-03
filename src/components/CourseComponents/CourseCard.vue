@@ -1,14 +1,16 @@
 <template>
 	<v-card
-		class="card flex items-around w-64 sm:w-64 lg:w-64 2xl:w-72"
-		min-width="200"
+		class="card flex items-around w-64 sm:w-64 lg:w-64 2xl:w-72 my-1"
+		:min-width="path?.path !== '/' ? 200 : 250"
 	>
 		<v-img class="align-end" height="200" :src="props.image" cover />
 
-		<v-card-title class="text-brand font-bold"> {{ props.title }}</v-card-title>
+		<v-card-title class="text-brand font-bold text-left">
+			{{ props.title }}</v-card-title
+		>
 
 		<v-card-text class="h-48 lg:h-40">
-			<p class="text-black text-sm">
+			<p class="text-black text-sm text-left">
 				{{ props.cardText }}
 			</p>
 		</v-card-text>
@@ -22,6 +24,10 @@
 </template>
 
 <script setup lang="ts">
+import { isInMobile } from 'compostables/UserDevice';
+import router from '@/router';
+import { computed } from 'vue';
+
 const props = defineProps({
 	image: {
 		type: String,
@@ -39,6 +45,10 @@ const props = defineProps({
 		type: String,
 		default: null,
 	},
+});
+
+const path = computed(() => {
+	return router.currentRoute.value;
 });
 </script>
 
