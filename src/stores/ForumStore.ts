@@ -42,7 +42,7 @@ export const useForumStore = defineStore('forumStore', {
 		forumSelected: null,
 		forumPagination: 0,
 		forumCurrentPgnt: 1,
-		forumError: null,
+		forumError: <SingleError>{} || <any>{},
 	}),
 	getters: {
 		allForums: (state) => state.forums,
@@ -68,7 +68,7 @@ export const useForumStore = defineStore('forumStore', {
 					user.value = res.data.users;
 					vote.value.upVotes = res.data.upVotes;
 					vote.value.downVotes = res.data.downVotes;
-					return (res.data);
+					return res.data;
 				})
 				.catch((err: Error | AxiosError) => {
 					const error = err as AxiosError;
@@ -111,7 +111,6 @@ export const useForumStore = defineStore('forumStore', {
 
 		getForum(id: number) {
 			getToken();
-
 			this.forums.forEach((frm: Forum) => {
 				if (frm.id === id) {
 					return frm;
@@ -120,13 +119,17 @@ export const useForumStore = defineStore('forumStore', {
 					message: 'Forum not found',
 					status: 400,
 				};
-				this.forumErrors = errorMessage;
+				this.forumError = errorMessage;
 			});
 		},
 		async getForumError() {
 			await getToken();
 
 			return this.errorList;
+		},
+
+		async getSpecificForum(id: number) {
+			// const res = await
 		},
 	},
 });

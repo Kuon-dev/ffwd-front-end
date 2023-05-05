@@ -136,7 +136,7 @@ const loaded = ref(false);
 const rememberMeCheckbox = ref(false);
 
 // const backendAPI = ref(import.meta.env.VITE_DEV_API)
-// const getUser = ref(await store.getUser());
+const getUser = ref(await store.getUser());
 
 const togglePeek = (e: Event) => {
 	e.preventDefault();
