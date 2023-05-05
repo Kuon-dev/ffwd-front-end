@@ -49,7 +49,7 @@
 					v-if="isChecked"
 					class="flex flex-row items-center border-blue-gray-50 mt-2 border-t pt-3 justify-center"
 				>
-					<button @click="[injectSidebar(), toggleShowSidebar()]">
+					<button @click="[toggleShowSidebar()]">
 						<font-awesome-icon icon="fa-solid fa-bars-staggered" size="lg" />
 					</button>
 					<ol
@@ -90,7 +90,6 @@ import MobileComponent from './NavSidebarMobile.vue';
 import { landingNavigation } from 'nav-components/NavItems';
 import {
 	injectRenderNav,
-	injectSidebar,
 	toggleShowSidebar,
 	isChecked,
 	path,
