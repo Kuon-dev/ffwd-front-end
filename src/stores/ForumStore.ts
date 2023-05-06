@@ -30,6 +30,19 @@ interface FetchedForum {
 	user_id: number;
 }
 
+// Comment Interface with username (Work inprogress)
+interface Comment {
+	id: number;
+	message: string;
+	created_at: string;
+	updated_at: string;
+	is_deleted_by_user: number;
+	is_removed_by_admin: number;
+	forum_id: number;
+	user_id: number;
+	username: any;
+}
+
 // Error Interface
 interface SingleError {
 	message: string;
@@ -132,6 +145,21 @@ export const useForumStore = defineStore('forumStore', {
 
 		async getSpecificForum(id: number) {
 			// const res = await
+		},
+		// Work in progress
+		async getAllComments(forum: Forum, commentIndex: number) {
+			await getToken();
+
+			const user = ref<String[]>([]);
+			const res = await apiClient.post('api/comments/get', {
+				index: commentIndex ?? 0,
+				forum: this.forumSelected,
+			});
+			console.log(res);
+
+			return res;
+			// Help...
+			// return this.forumPagination;
 		},
 	},
 });
