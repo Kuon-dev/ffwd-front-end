@@ -1,10 +1,10 @@
 <template>
 	<!--The whole page-->
-	<div class="top-1 h-full flex flex-col bg-gray-100">
+	<div class="top-1 h-screen flex flex-col bg-gray-100">
 		<!--Side Nav-->
 		<Side />
 
-		<main class="fixed top-32 md:w-3/4">
+		<main class="main fixed top-32 left-72 h-4/5">
 			<!--Admin Dashboard-->
 			<section>
 				<h1 class="mb-5 text-2xl font-semibold">Admin Dashboard</h1>
@@ -12,46 +12,50 @@
 			<!--Manage User and Admin-->
 			<section class="flex">
 				<div>
-					<!--User Number-->
-					<div
-						class="border rounded-md bg-white p-2 flex md:w-64 h-28 justify-between mb-4"
+					<!--Manage User-->
+					<a
+						href="#!"
+						class="box border rounded-md p-2 flex md:w-64 h-28 justify-between mb-4"
 					>
 						<img
 							src="https://cdn4.iconfinder.com/data/icons/aircraft-blue-line/64/165_passengers-people-group-crowd-512.png"
 							alt="User Logo"
-							class="w-20 h-16 my-auto ml-3"
+							class="icon w-20 h-20 my-auto"
 						/>
-						<div class="my-auto text-right mr-3">
+						<div class="label my-auto text-right mr-3">
 							<div class="font-light">User</div>
 							<div class="font-semibold text-2xl">1357</div>
 						</div>
-					</div>
+					</a>
 
-					<div
-						class="border rounded-md bg-white p-2 flex md:w-64 h-28 justify-between"
+					<a
+						href="#!"
+						class="box border rounded-md p-2 flex md:w-64 h-28 justify-between mb-4"
 					>
 						<img
 							src="https://cdn-icons-png.flaticon.com/512/10106/10106294.png"
 							alt="Manage Admin Logo"
-							class="w-20 h-20 my-auto ml-3"
+							class="icon w-20 h-20 my-auto"
 						/>
-						<div class="my-auto text-right mr-3">
+						<div class="label my-auto text-right mr-3">
 							<div class="font-light">Admin</div>
 							<div class="font-semibold text-2xl">20</div>
 						</div>
-					</div>
+					</a>
 				</div>
 
 				<!--forum today-->
 				<div
-					class="border rounded-md bg-white p-2 flex-column ml-5 overflow-hidden h-60"
+					class="forum border rounded-md bg-white p-2 flex-column ml-5 overflow-hidden h-60 transition ease-in-out delay-150"
 				>
 					<div class="w-full h-10 flex justify-between">
-						<a href="#!"
-							><h1 class="font-medium mt-1 ml-1 text-2xl text-brand">
+						<a href="#!">
+							<h1
+								class="font-medium mt-1 ml-1 text-2xl text-brand transition ease-in-out delay-150 hover:scale-105 hover:translate-x-1"
+							>
 								Forum Today
-							</h1></a
-						>
+							</h1>
+						</a>
 						<button>
 							<img
 								src="https://cdn-icons-png.flaticon.com/512/3580/3580266.png"
@@ -136,12 +140,14 @@
 
 			<!--Feedback overview-->
 			<section class="flex h-72">
-				<div class="border rounded-md bg-white md:w-full mt-3 flex flex-col">
-					<a href="#!"
-						><h1 class="font-medium mt-1 ml-1 text-2xl text-brand p-2">
+				<div class="border rounded-md bg-white mt-3 flex flex-col w-full">
+					<a href="#!">
+						<h1
+							class="font-medium mt-1 ml-1 text-2xl text-brand p-2 transition ease-in-out delay-150 hover:scale-105 hover:translate-x-7"
+						>
 							Quiz Feedback
-						</h1></a
-					>
+						</h1>
+					</a>
 					<div class="w-11/12 flex flex-row mb-2">
 						<!--Chart-->
 						<div class="w-3/4 flex">
@@ -190,4 +196,63 @@
 import Side from 'nav-components/NavSidebarAdmin.vue';
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.main {
+	width: 77%;
+	left: 18rem;
+	transition: transform 0.3s ease-in-out;
+	overflow-y: auto;
+} //problem:scrollbar better not appear
+
+.box {
+	background-color: white;
+	transition: all 0.3s ease-in-out;
+}
+
+.box:hover {
+	background-color: rgb(229 231 235);
+}
+.icon {
+	margin-left: 0.75rem;
+	transition: all 0.3s ease-in-out;
+}
+.label {
+	animation-name: fadeIn;
+	animation-duration: 0.3s;
+	animation-delay: 0.3s; /* adjust this value as needed */
+	animation-fill-mode: forwards;
+	opacity: 0;
+}
+
+@keyframes fadeIn {
+	to {
+		opacity: 1;
+	}
+}
+
+@media only screen and (max-width: 992px) {
+	.main {
+		left: 7rem;
+		transition: all 0.3s ease-in-out;
+		min-width: 30rem;
+	}
+
+	.box {
+		width: 7rem;
+		transition: all 0.3s ease-in-out;
+	}
+
+	.icon {
+		transition: all 0.3s ease-in-out;
+		transform: scale(0.8);
+		margin: 0 auto;
+	}
+
+	.label {
+		display: none;
+		transition: all 0.3s ease-in-out;
+	}
+}
+
+//more: mobile phone version
+</style>
