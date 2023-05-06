@@ -62,14 +62,14 @@ import SearchBarVue from 'base-components/BaseSearchBar.vue';
 import FilterDropDownVue from 'base-components/BaseDropDown.vue';
 import FormCarouselSectionVue from 'forum-components/ForumCarouselSection.vue';
 import ForumCard from 'forum-components/ForumCard.vue';
-import { useForumStore } from 'stores/ForumStore';
+import { useForumStore, Forum } from 'stores/ForumStore';
 import { VSkeletonLoader } from 'vuetify/labs/VSkeletonLoader';
 
 // Define data properties for the component
 const forumStore = useForumStore();
 
 // Define forum data
-const forums = ref((await forumStore.getAllForums(0)) ?? []);
+const forums = ref<Forum>((await forumStore.getAllForums(0)) ?? []);
 const totalPage = ref(Math.ceil((await forumStore.getPaginationCount()) / 10));
 const currentPage = ref(forumStore.forumCurrentPagination);
 
