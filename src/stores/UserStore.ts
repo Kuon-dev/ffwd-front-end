@@ -1,6 +1,7 @@
 import { AxiosError } from 'axios';
 import { defineStore } from 'pinia';
 import { getToken, apiClient } from './BackendAPI';
+import { post } from 'jquery';
 
 interface LoginCredentials {
 	email: String;
@@ -20,6 +21,14 @@ interface ResetPasswordCredentials {
 	password_confirmation: String;
 	email: any;
 	token: any;
+}
+
+interface newUserData {
+	name: string;
+	email: string;
+	phoneNumber: string;
+	password: string;
+	bio: string;
 }
 
 interface SingleError {
@@ -48,7 +57,6 @@ export const useUserStore = defineStore('userStore', {
 
 		async getUser() {
 			getToken();
-
 			const userData = await apiClient
 				.get('api/user')
 				.catch((err: Error | AxiosError) => {
@@ -70,14 +78,8 @@ export const useUserStore = defineStore('userStore', {
         }
 
         */
-
 				return userData?.data ?? null;
 			}
-
-			window.sessionStorage.setItem(
-				'userSession',
-				JSON.stringify(userData?.data ?? null),
-			);
 		},
 
 		async setUser() {
@@ -111,6 +113,7 @@ export const useUserStore = defineStore('userStore', {
 				.post('/login', {
 					email: credentials.email,
 					password: credentials.password,
+					remember: credentials.remember_me,
 				})
 				.catch((err: AxiosError) => {
 					const error = err as AxiosError;
@@ -119,7 +122,7 @@ export const useUserStore = defineStore('userStore', {
 						status: error?.response?.status,
 					};
 				});
-			console.log(res);
+			console.log(this.errorList);
 			if (res.status === 204) {
 				await this.loginRedirect();
 			}
@@ -131,7 +134,7 @@ export const useUserStore = defineStore('userStore', {
 			getToken();
 			await apiClient.post('/logout');
 			this.authUser = null;
-			(this as any).router.push('/');
+			this.router.push('/');
 		},
 
 		async handleForgotPassword(email: String) {
@@ -162,15 +165,26 @@ export const useUserStore = defineStore('userStore', {
 		},
 
 		async loginRedirect() {
-			const data = window.sessionStorage.getItem('userSession');
-			if (!data) return true;
-
 			await this.getUser();
 			const res = await apiClient.get('/dashboard');
 			const route = await (res?.data as any).route;
-			if (route) {(this as any).router.push('/');}
-
+			if (route) this.router.push(route);
 			return true;
+		},
+		async editUser(newUser: Object) {
+			await getToken();
+
+			const res = await apiClient
+				.post('api/user/update', newUser)
+				.catch((err: AxiosError) => {
+					const error = err as AxiosError;
+					this.authErrors = (error?.response?.data as any).errors;
+					return {
+						status: error?.response?.status,
+					};
+				});
+
+			return res;
 		},
 	},
 });

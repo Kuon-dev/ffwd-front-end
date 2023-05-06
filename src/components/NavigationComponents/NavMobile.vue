@@ -32,13 +32,62 @@
 					</router-link>
 				</div>
 
-				<div class="flex max-w-[2.5rem]">
-					<label for="check">
-						<input type="checkbox" id="check" @click="injectRenderNav()" />
-						<span></span>
-						<span></span>
-						<span></span>
-					</label>
+				<div class="flex flex-row items-center gap-4">
+					<div class="flex gap-4 text-sm" v-if="!store.user">
+						<v-btn color="white">
+							<router-link to="/login"> Login </router-link>
+						</v-btn>
+					</div>
+					<div v-else>
+						<v-container fluid>
+							<v-row justify="center">
+								<v-menu min-width="200px" rounded>
+									<template v-slot:activator="{ props }">
+										<v-btn icon v-bind="props">
+											<v-avatar color="#7E81FF" size="large">
+												<span class="text-sm text-white">{{
+													store.user.name
+												}}</span>
+											</v-avatar>
+										</v-btn>
+									</template>
+									<v-card>
+										<v-card-text>
+											<div class="mx-auto text-center">
+												<v-avatar color="#7E81FF" size="large">
+													<span class="text-sm text-white">{{
+														store.user.name
+													}}</span>
+												</v-avatar>
+												<h3 class="mt-2">{{ store.user.name }}</h3>
+												<p class="text-caption mt-1">
+													{{ store.user.email }}
+												</p>
+												<v-divider class="my-1"></v-divider>
+												<v-btn rounded variant="text"> Edit Account </v-btn>
+												<v-divider class="my-1"></v-divider>
+												<v-btn
+													rounded
+													variant="text"
+													@click="store.handleLogout()"
+												>
+													Logout
+												</v-btn>
+											</div>
+										</v-card-text>
+									</v-card>
+								</v-menu>
+							</v-row>
+						</v-container>
+					</div>
+					<div class="flex max-w-[2.5rem]">
+						<label for="check">
+							<input type="checkbox" id="check" @click="injectRenderNav()" />
+							<span></span>
+							<span></span>
+							<span></span>
+						</label>
+					</div>
 				</div>
 			</div>
 			<transition
@@ -49,28 +98,15 @@
 					v-if="isChecked"
 					class="flex flex-row items-center border-blue-gray-50 mt-2 border-t pt-3 justify-center"
 				>
-					<button @click="[injectSidebar(), toggleShowSidebar()]">
+					<button @click="[toggleShowSidebar(true)]">
 						<font-awesome-icon icon="fa-solid fa-bars-staggered" size="lg" />
 					</button>
-					<ol
-						class="text-blue-gray-700 flex min-w-0 whitespace-nowrap text-md leading-6 mx-4 h-full my-0"
-					>
-						<li class="flex items-center">
-							<span class="">
-								<router-link to="/course"> course </router-link>
-							</span>
-							<span class="ml-2"
-								>{{ path.params.lang ? ' >' : '' }} {{ path.params.lang }}</span
-							>
-						</li>
-						<li></li>
-					</ol>
 
 					<font-awesome-icon
 						icon="fa-solid fa-grip-lines-vertical"
 						class="sm:block hidden md:hidden"
 					/>
-					<ul class="hidden flex-row ml-4 sm:flex md:hidden">
+					<ul class="flex flex-row ml-4">
 						<li v-for="(item, index) in landingNavigation" :key="index">
 							<router-link :to="item.path" class="mx-2">
 								{{ item.title }}
@@ -86,16 +122,22 @@
 
 <script setup lang="ts">
 import BaseCard from 'base-components/BaseCard.vue';
+import { ref, onMounted } from 'vue';
 import MobileComponent from './NavSidebarMobile.vue';
 import { landingNavigation } from 'nav-components/NavItems';
 import {
 	injectRenderNav,
-	injectSidebar,
 	toggleShowSidebar,
 	isChecked,
 	path,
 } from 'compostables/NavInjector';
-import { ref } from 'vue';
+import { useUserStore } from 'stores/UserStore';
+
+const store = useUserStore();
+
+onMounted(async () => {
+	await store.getUser();
+});
 </script>
 
 <style lang="scss" scoped>
@@ -132,7 +174,7 @@ input[type='checkbox'] {
 
 input[type='checkbox']:checked ~ span:nth-of-type(1) {
 	transform-origin: bottom;
-	transform: rotatez(45deg) translate(8px, 0px);
+	transform: rotatez(45deg) translate(6px, 0px);
 }
 
 input[type='checkbox']:checked ~ span:nth-of-type(2) {

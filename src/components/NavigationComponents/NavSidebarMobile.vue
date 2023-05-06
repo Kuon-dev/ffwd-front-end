@@ -108,7 +108,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import {
 	injectRenderNav,
 	toggleShowSidebar,
@@ -118,6 +118,14 @@ import {
 
 import { topics } from 'course-components/CourseTopics';
 import { landingNavigation } from 'nav-components/NavItems';
+import { useUserStore } from 'stores/UserStore';
+
+const store = useUserStore();
+
+onMounted(async () => {
+	await store.getUser();
+});
+
 /*
 import BaseCard from 'base-components/BaseCard.vue';
 import { landingNavigation } from 'nav-components/NavItems';

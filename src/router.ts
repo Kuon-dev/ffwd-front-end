@@ -14,15 +14,15 @@ router.beforeEach(async (to: any) => {
 
 	const admin = /^\/admin(\/\w+)*$/;
 	// router guard, as long as there is /admim, redirect if the user is not authorized
-	if (to.fullPath.match(admin)) {
-		await store.getUser();
-		const accessLevel = store.accessLevel;
-		if (accessLevel < 2) {
-			return {
-				name: '404',
-			};
-		}
-	}
+	// if (to.fullPath.match(admin)) {
+	// 	await store.getUser();
+	// 	const accessLevel = store.accessLevel;
+	// 	if (accessLevel < 2) {
+	// 		return {
+	// 			name: '404',
+	// 		};
+	// 	}
+	// }
 
 	if (to.path === '/admin') return '/admin/listing/view';
 	/*
