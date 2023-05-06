@@ -158,10 +158,8 @@ export const useUserStore = defineStore('userStore', {
 		async loginRedirect() {
 			await this.getUser();
 			const res = await apiClient.get('/dashboard');
-			console.log(res);
 			const route = await (res?.data as any).route;
 			if (route) this.router.push(route);
-			console.log(route);
 			return true;
 		},
 	},
