@@ -30,6 +30,19 @@ interface FetchedForum {
 	user_id: number;
 }
 
+// Comment Interface with username (Work inprogress)
+interface Comment {
+	id: number;
+	message: string;
+	created_at: string;
+	updated_at: string;
+	is_deleted_by_user: number;
+	is_removed_by_admin: number;
+	forum_id: number;
+	user_id: number;
+	username: any;
+}
+
 // Error Interface
 interface SingleError {
 	message: string;
@@ -68,7 +81,9 @@ export const useForumStore = defineStore('forumStore', {
 					user.value = res.data.users;
 					vote.value.upVotes = res.data.upVotes;
 					vote.value.downVotes = res.data.downVotes;
-					return (res.data);
+					console.log(res);
+					console.log(res.data);
+					return res.data;
 				})
 				.catch((err: Error | AxiosError) => {
 					const error = err as AxiosError;
@@ -128,5 +143,59 @@ export const useForumStore = defineStore('forumStore', {
 
 			return this.errorList;
 		},
+
+		// Work in progress
+		async getAllComments(forum: Forum, commentIndex: number) {
+			await getToken();
+
+			const user = ref<String[]>([]);
+			const res = await apiClient.post('api/comments/get', {
+				index: commentIndex ?? 0,
+				forum: this.forumSelected,
+			});
+			console.log(res);
+
+			return res;
+			// Help...
+			// return this.forumPagination;
+		},
+		// Alternative code? 9Work in progress)
+		// async getAllComments(forum: Forum, commentIndex: number) {
+		// 	await getToken();
+
+		// 	const user = ref<String[]>([]);
+		// 	const newComments = ref<Comment[]>([]);
+
+		// 	const commentData = await apiClient
+		// 	  .post('api/comments/get', {
+		// 		index: commentIndex ?? 0,
+		// 		forum: forum,
+		// 	  })
+		// 	  .then((res) => {
+		// 		user.value = res.data.users;
+		// 		console.log(res);
+		// 		console.log(res.data);
+		// 		return res.data;
+		// 	  })
+		// 	  .catch((err: Error | AxiosError) => {
+		// 		const error = err as AxiosError;
+		// 		const errorMessage: SingleError | any = {
+		// 		  message: (error?.response?.data as any).message,
+		// 		  status: error?.response?.status,
+		// 		};
+		// 		console.log(error);
+		// 		this.forumError = errorMessage;
+		// 	  });
+
+		// 	commentData?.data?.forEach((comment: Comment, index: number) => {
+		// 	  const tempComment: Comment = {
+		// 		...comment,
+		// 		username: user.value[index],
+		// 	  };
+		// 	  newComments.value.push(tempComment);
+		// 	});
+
+		// 	return this.forumError ? this.forumError : newComments.value;
+		// },
 	},
 });
