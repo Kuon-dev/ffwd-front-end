@@ -9,24 +9,35 @@
 		"resolveJsonModule": true,
 		"isolatedModules": true,
 		"esModuleInterop": true,
-		"baseUrl": "src",
+		"rootDir": "./src",
+		"outDir": "build",
+		"baseUrl": "./",
 		"paths": {
 			"@/*": ["./src/*"],
 			"stores/*": ["./src/stores/*"],
 			"admins/*": ["./src/views/Admin/*"],
 			"users/*": ["./src/views/User/*"],
 			"views/*": ["./src/views/*"],
+			"compostables/*": ["./src/compostables/*"],
 			"base-components/*": ["./src/components/BaseComponents/*"],
 			"form-components/*": ["./src/components/FormComponents/*"],
+			"forum-components/*": ["./src/components/ForumComponents/*"],
 			"nav-components/*": ["./src/components/NavigationComponents/*"],
-			"payment-components/*": ["./src/components/PaymentComponents/*"],
-			"jquery-components/*": ["./src/jquery-components/*"]
+			"course-components/*": ["./src/components/CourseComponents/*"],
+			"course-data/*": ["./src/data/courses/*"],
+			"payment-components/*": ["./src/components/PaymentComponents/*"]
 		},
 
 		"lib": ["ESNext", "DOM"],
 		"skipLibCheck": true,
 		"noEmit": true
 	},
-	"include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+	"include": [
+		"src/**/*.ts",
+		"src/**/*.d.ts",
+		"src/**/*.tsx",
+		"src/**/*.vue",
+		"typed-router.d.ts"
+	],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }

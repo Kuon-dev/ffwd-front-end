@@ -1,5 +1,5 @@
 <template>
-	<div class="flex-col w-full min-h-screen">
+	<div class="flex-col min-h-screen w-full">
 		<Suspense>
 			<template #default>
 				<router-view />
@@ -13,7 +13,6 @@
 
 <script setup lang="ts">
 import LoadingPage from 'base-components/BaseLoadingPage.vue';
-
 import 'animate.css';
 import { ref, watch, onMounted } from 'vue';
 
@@ -49,11 +48,11 @@ onMounted(() => {
 }
 
 ::-webkit-scrollbar-track {
-	background-color: transparent;
+	background-color: #f3f3f3;
 }
 
 ::-webkit-scrollbar-thumb {
-	background-color: #60246c;
+	background-color: #7e81ff;
 	border-radius: 20px;
 	border: 6px solid transparent;
 	background-clip: content-box;

@@ -93,7 +93,6 @@ import { ref, onMounted, computed } from 'vue';
 import { useUserStore } from 'stores/UserStore';
 
 const store = useUserStore();
-console.log(store);
 
 const emailError = ref();
 const responseStatus = ref();
