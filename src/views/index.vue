@@ -115,6 +115,40 @@
 			</div>
 		</section>
 	</div>
+
+	<footer>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4">
+					<p class="text-4xl">CodeGenius</p>
+					<div class="flex flex-col gap-4 bg-black">
+						<ul>
+							<div class="flex flex-row gap-4">
+								<div class="w-1/5">
+									<li><a href="#">Home</a></li>
+								</div>
+								<div class="w-1/5">
+									<li><a href="#">About</a></li>
+								</div>
+								<div class="w-1/5">
+									<li><a href="#">Course</a></li>
+								</div>
+								<div class="w-1/5">
+									<li><a href="#">Forum</a></li>
+								</div>
+								<div class="w-1/5">
+									<li><a href="#">Contact</a></li>
+								</div>
+							</div>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="bottom-bar">
+			<p>&copy; 2023 Learn Coding. All rights reserved.</p>
+		</div>
+	</footer>
 </template>
 
 <script setup lang="ts">

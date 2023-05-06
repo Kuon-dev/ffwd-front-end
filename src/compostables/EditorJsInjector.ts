@@ -2,7 +2,6 @@ import { ref } from 'vue';
 import { OutputData } from '@editorjs/editorjs';
 import editorJsHtml from 'editorjs-html';
 
-
 const timeoutId = ref<any>(null);
 const EditorJsToHtml = editorJsHtml();
 

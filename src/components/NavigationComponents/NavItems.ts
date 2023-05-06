@@ -1,17 +1,14 @@
-interface NavigationItem
-{
-    title: string
-    icon: string
-    path: string
-
+interface NavigationItem {
+	title: string;
+	icon: string;
+	path: string;
 }
 
-export const landingNavigation:NavigationItem[] = [
+export const landingNavigation: NavigationItem[] = [
 	{
 		title: 'About',
 		icon: '',
 		path: '/about',
-
 	},
 	{
 		title: 'Course',
@@ -25,12 +22,11 @@ export const landingNavigation:NavigationItem[] = [
 	},
 ];
 
-export const courseNavigation:NavigationItem[] = [
+export const courseNavigation: NavigationItem[] = [
 	{
 		title: 'HTML',
 		icon: '',
 		path: '/course/html',
-
 	},
 	{
 		title: 'CSS',
