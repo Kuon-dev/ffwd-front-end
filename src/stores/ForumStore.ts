@@ -94,7 +94,9 @@ export const useForumStore = defineStore('forumStore', {
 				? forumIndex + 1
 				: this.forumCurrentPgnt;
 
-			return this.forumError ? this.forumError : newForum.value;
+			return Object.keys(this.forumError).length !== 0
+				? this.forumError
+				: newForum.value;
 		},
 
 		async getPaginationCount() {
