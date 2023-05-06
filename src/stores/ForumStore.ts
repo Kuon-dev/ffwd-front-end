@@ -30,7 +30,7 @@ interface FetchedForum {
 	user_id: number;
 }
 
-// Comment Interface with username (Work inprogress)
+// Comment Interface with username (Work in progress)
 interface Comment {
 	id: number;
 	message: string;
@@ -41,6 +41,17 @@ interface Comment {
 	forum_id: number;
 	user_id: number;
 	username: any;
+}
+
+interface FetchedComment {
+	id: number;
+	message: string;
+	created_at: string;
+	updated_at: string;
+	is_deleted_by_user: number;
+	is_removed_by_admin: number;
+	forum_id: number;
+	user_id: number;
 }
 
 export interface Post {
@@ -61,8 +72,10 @@ export const useForumStore = defineStore('forumStore', {
 		forums: <any>[],
 		forumSelected: <Post>{} || <any>{},
 		forumPagination: 0,
+		postCommentPagination: 0,
 		forumCurrentPgnt: 1,
 		forumError: <SingleError>{} || <any>{},
+		commentError: <SingleError>{} || <any>{},
 	}),
 	getters: {
 		allForums: (state) => state.forums,
@@ -152,7 +165,6 @@ export const useForumStore = defineStore('forumStore', {
 		},
 
 		async getSpecificForum(id: any) {
-			await getToken();
 			const res = await apiClient
 				.post(`api/forums/get/specific/${id}`, {
 					forum_id: id,
@@ -172,19 +184,50 @@ export const useForumStore = defineStore('forumStore', {
 		},
 
 		// Work in progress
-		async getAllComments(forum: Forum, commentIndex: number) {
+		// Get all comments of the selected forum
+		async getAllComments(commentIndex: number) {
 			await getToken();
 
 			const user = ref<String[]>([]);
-			const res = await apiClient.post('api/comments/get', {
-				index: commentIndex ?? 0,
-				forum: this.forumSelected,
-			});
-			console.log(res);
+			const newComment = ref<Forum[]>([]);
 
-			return res;
-			// Help...
-			// return this.forumPagination;
+			const body = {
+				index: commentIndex ?? 0,
+				// how to get get the forum_id?
+				forum: this.forumSelected.forum.id,
+			};
+
+			const commentData = await apiClient
+				.post(`api/comments/get/${commentIndex ?? 0}`, body)
+				.then((res) => {
+					user.value = res.data.users;
+					return res.data;
+				})
+				.catch((err: Error | AxiosError) => {
+					const error = err as AxiosError;
+					const errorMessage: SingleError | any = {
+						message: (error?.response?.data as any).message,
+						status: error?.response?.status,
+					};
+					console.log(error);
+					this.commentError = errorMessage;
+				});
+
+			commentData?.data?.forEach((comment: FetchedComment, index: number) => {
+				// The Comment is from the interface Comment defined above
+				const tempComment: Comment = {
+					...comment,
+					username: user.value[index],
+				};
+				newComment.value.push(tempComment);
+			});
+
+			console.log(commentData);
+			console.log(this.forumSelected.id);
+
+			return Object.keys(this.commentError).length !== 0
+				? this.commentError
+				: newComment.value;
 		},
 	},
 });
