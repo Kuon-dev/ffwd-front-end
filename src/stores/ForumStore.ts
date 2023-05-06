@@ -152,6 +152,7 @@ export const useForumStore = defineStore('forumStore', {
 		},
 
 		async getSpecificForum(id: any) {
+			await getToken();
 			const res = await apiClient
 				.post(`api/forums/get/specific/${id}`, {
 					forum_id: id,
