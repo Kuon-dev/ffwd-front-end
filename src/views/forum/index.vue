@@ -34,8 +34,8 @@
 					enter-active-class="animate__animated animate__slideInRight animate__fast"
 					leave-active-class="animate__animated animate__slideOutRight animate__fast"
 				>
-					<div v-if="!forumStore.errorList">
-						<ForumCard :forums="forums" v-if="forums" />
+					<div v-if="Object.keys(forumStore.errorList).length === 0">
+						<ForumCard :forums="forums" />
 					</div>
 					<BaseCard v-else class="mt-4">
 						<div class="text-red-500">

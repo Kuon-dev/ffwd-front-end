@@ -3,7 +3,7 @@
 	<div class="h-full w-full bg-cover p-1">
 		<!--Forum-->
 		<div
-			class="bg-white flex justify-center border rounded-lg p-9 xl:w-3/5 md:w-5/6 sm:w-6/7 xl:mx-72 md:mx-16 sm:mx-2 grid grid-cols-1 my-15"
+			class="bg-white flex justify-center border rounded-lg p-9 xl:w-3/5 md:w-5/6 sm:w-6/7 xl:mx-72 md:mx-16 sm:mx-2 grid grid-cols-1 my-5"
 		>
 			<!-- Forum Title -->
 			<div class="flex flex-row gap-4">
