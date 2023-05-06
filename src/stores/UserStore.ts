@@ -1,6 +1,7 @@
 import { AxiosError } from 'axios';
 import { defineStore } from 'pinia';
 import { getToken, apiClient } from './BackendAPI';
+import { post } from 'jquery';
 
 interface LoginCredentials {
 	email: String;
@@ -20,6 +21,14 @@ interface ResetPasswordCredentials {
 	password_confirmation: String;
 	email: any;
 	token: any;
+}
+
+interface newUserData {
+	name: string;
+	email: string;
+	phoneNumber: string;
+	password: string;
+	bio: string;
 }
 
 interface SingleError {
@@ -161,6 +170,21 @@ export const useUserStore = defineStore('userStore', {
 			const route = await (res?.data as any).route;
 			if (route) this.router.push(route);
 			return true;
+		},
+		async editUser(newUser: Object) {
+			await getToken();
+
+			const res = await apiClient
+				.post('api/user/update', newUser)
+				.catch((err: AxiosError) => {
+					const error = err as AxiosError;
+					this.authErrors = (error?.response?.data as any).errors;
+					return {
+						status: error?.response?.status,
+					};
+				});
+
+			return res;
 		},
 	},
 });

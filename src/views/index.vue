@@ -162,6 +162,7 @@ import { defineComponent } from 'vue';
 import { Carousel, Navigation, Slide } from 'vue3-carousel';
 
 import 'vue3-carousel/dist/carousel.css';
+import { useUserStore } from '@/stores/UserStore';
 
 const data = computed(() => {
 	const newArr: any = [];
