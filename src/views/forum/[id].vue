@@ -3,22 +3,32 @@
 	<div class="h-full w-full bg-cover p-1">
 		<!--Forum-->
 		<div
-			class="bg-white flex justify-center border rounded-lg p-9 xl:w-3/5 md:w-5/6 sm:w-6/7 xl:mx-72 md:mx-16 sm:mx-2 grid grid-cols-1 my-15"
+			class="bg-white justify-center border rounded-lg p-9 xl:w-3/5 md:w-5/6 sm:w-6/7 xl:mx-72 md:mx-16 sm:mx-2 grid grid-cols-1 my-5"
+			v-if="Object.keys(forumStore.errorList).length === 0"
 		>
 			<!-- Forum Title -->
-			<div class="flex flex-row gap-4">
-				<div class="flex flex-col">
+			<div class="flex flex-row gap-4 align-center">
+				<div class="flex flex-col justify-center">
 					<button variant="text">
-						1
-						<font-awesome-icon :icon="['fas', 'caret-up']" size="xl" />
+						<font-awesome-icon
+							:icon="['fas', 'caret-up']"
+							size="xl"
+							color="green"
+						/>
 					</button>
+					<p class="text-center">
+						{{ forumStore?.forum?.votes }}
+					</p>
 					<button>
-						2
-						<font-awesome-icon :icon="['fas', 'caret-down']" size="xl" />
+						<font-awesome-icon
+							:icon="['fas', 'caret-down']"
+							size="xl"
+							color="red"
+						/>
 					</button>
 				</div>
 				<h2 class="place-content-start flex text-2xl font-semibold leading-10">
-					How to make border-bottom line longer with CSS?
+					{{ forumStore?.forum?.forum?.title }}
 				</h2>
 			</div>
 
@@ -35,7 +45,9 @@
 					</div>
 					<!-- Name -->
 					<div class="ml-5">
-						<div class="font-medium text-lg">Mary Maw</div>
+						<div class="font-medium text-lg">
+							{{ forumStore?.forum?.user?.name }}
+						</div>
 						<!-- Author username -->
 						<div class="font-light text-xs">3 days ago</div>
 						<!-- Time elapsed since forum post -->
@@ -95,7 +107,7 @@
 					class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
 					>Comment</label
 				>
-				<v-btn>SUBMIT</v-btn>
+				<v-btn class="mt-5">SUBMIT</v-btn>
 			</form>
 
 			<!-- Comment Area -->
@@ -114,6 +126,17 @@
 				</div>
 			</div>
 		</div>
+		<div v-else>
+			<BaseCard class="mt-4">
+				<div class="text-red-500 div-center flex-col">
+					<h3 class="text-xl font-semibold">An error has occurred</h3>
+					<br />
+					<p>Error: {{ forumStore.errorList.message }}</p>
+					<p>Status: {{ forumStore.errorList.status }}</p>
+					<br />
+				</div>
+			</BaseCard>
+		</div>
 	</div>
 </template>
 
@@ -122,8 +145,13 @@ import { computed, watch, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { renderHTML } from 'compostables/EditorJsInjector';
 import Comments from 'forum-components/PostComment.vue';
+import { useForumStore } from 'stores/ForumStore';
+import BaseCard from 'base-components/BaseCard.vue';
 
+const forumStore = useForumStore();
 const router = useRouter();
+
+forumStore.getSpecificForum(router.currentRoute.value.params.id);
 
 const path = computed(() => {
 	return router.currentRoute.value.path;

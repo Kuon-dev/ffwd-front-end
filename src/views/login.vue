@@ -93,7 +93,7 @@
 
 						<p class="text-sm text-gray-500">
 							No account?
-							<router-link :to="'/register'" class="underline" href=""
+							<router-link :to="'/signup'" class="underline" href=""
 								>Sign up</router-link
 							>
 						</p>
@@ -150,6 +150,12 @@ const togglePeek = (e: Event) => {
 };
 // get user details and redirect the user
 // if the token is already set, immediately redirect to dashboard
+const res = await store.loginRedirect();
+if (res) {
+	setTimeout(() => {
+		loaded.value = true;
+	}, 3000);
+}
 
 const email = ref('');
 const password = ref('');
@@ -178,24 +184,6 @@ const handleLogin = async (e: Event) => {
 		return;
 	}
 };
-
-onMounted(async () => {
-	const data = JSON.parse(
-		(window.sessionStorage as any).getItem('userSession'),
-	);
-	if (data) {
-		const res = await store.loginRedirect();
-		console.log(res);
-		if (res && data) {
-			setTimeout(() => {
-				loaded.value = true;
-			}, 3000);
-		}
-	}
-	else {
-		loaded.value = true;
-	}
-});
 </script>
 
 <style scoped>

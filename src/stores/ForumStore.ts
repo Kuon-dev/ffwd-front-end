@@ -4,7 +4,7 @@ import { AxiosError } from 'axios';
 import { ref } from 'vue';
 
 // Forum Interface with username
-interface Forum {
+export interface Forum {
 	id: number;
 	title: string;
 	content: string;
@@ -43,6 +43,13 @@ interface Comment {
 	username: any;
 }
 
+export interface Post {
+	comment: Comment;
+	forum: Forum;
+	user: any;
+	votes: number;
+}
+
 // Error Interface
 interface SingleError {
 	message: string;
@@ -52,15 +59,16 @@ interface SingleError {
 export const useForumStore = defineStore('forumStore', {
 	state: () => ({
 		forums: <any>[],
-		forumSelected: null,
+		forumSelected: <Post>{} || <any>{},
 		forumPagination: 0,
 		forumCurrentPgnt: 1,
-		forumError: null,
+		forumError: <SingleError>{} || <any>{},
 	}),
 	getters: {
 		allForums: (state) => state.forums,
 		forumCurrentPagination: (state) => state.forumCurrentPgnt,
 		errorList: (state) => state.forumError,
+		forum: (state) => state.forumSelected,
 	},
 	actions: {
 		async getAllForums(forumIndex: number) {
@@ -81,8 +89,6 @@ export const useForumStore = defineStore('forumStore', {
 					user.value = res.data.users;
 					vote.value.upVotes = res.data.upVotes;
 					vote.value.downVotes = res.data.downVotes;
-					console.log(res);
-					console.log(res.data);
 					return res.data;
 				})
 				.catch((err: Error | AxiosError) => {
@@ -109,7 +115,9 @@ export const useForumStore = defineStore('forumStore', {
 				? forumIndex + 1
 				: this.forumCurrentPgnt;
 
-			return this.forumError ? this.forumError : newForum.value;
+			return Object.keys(this.forumError).length !== 0
+				? this.forumError
+				: newForum.value;
 		},
 
 		async getPaginationCount() {
@@ -126,7 +134,6 @@ export const useForumStore = defineStore('forumStore', {
 
 		getForum(id: number) {
 			getToken();
-
 			this.forums.forEach((frm: Forum) => {
 				if (frm.id === id) {
 					return frm;
@@ -135,13 +142,32 @@ export const useForumStore = defineStore('forumStore', {
 					message: 'Forum not found',
 					status: 400,
 				};
-				this.forumErrors = errorMessage;
+				this.forumError = errorMessage;
 			});
 		},
 		async getForumError() {
 			await getToken();
 
 			return this.errorList;
+		},
+
+		async getSpecificForum(id: any) {
+			const res = await apiClient
+				.post(`api/forums/get/specific/${id}`, {
+					forum_id: id,
+				})
+				.catch((err: Error | AxiosError) => {
+					const error = err as AxiosError;
+					const errorMessage: SingleError | any = {
+						message: (error?.response?.data as any).message,
+						status: error?.response?.status,
+					};
+					console.log(error);
+					this.forumError = errorMessage;
+				});
+
+			this.forumSelected = res?.data;
+			return res?.data;
 		},
 
 		// Work in progress
@@ -159,43 +185,5 @@ export const useForumStore = defineStore('forumStore', {
 			// Help...
 			// return this.forumPagination;
 		},
-		// Alternative code? 9Work in progress)
-		// async getAllComments(forum: Forum, commentIndex: number) {
-		// 	await getToken();
-
-		// 	const user = ref<String[]>([]);
-		// 	const newComments = ref<Comment[]>([]);
-
-		// 	const commentData = await apiClient
-		// 	  .post('api/comments/get', {
-		// 		index: commentIndex ?? 0,
-		// 		forum: forum,
-		// 	  })
-		// 	  .then((res) => {
-		// 		user.value = res.data.users;
-		// 		console.log(res);
-		// 		console.log(res.data);
-		// 		return res.data;
-		// 	  })
-		// 	  .catch((err: Error | AxiosError) => {
-		// 		const error = err as AxiosError;
-		// 		const errorMessage: SingleError | any = {
-		// 		  message: (error?.response?.data as any).message,
-		// 		  status: error?.response?.status,
-		// 		};
-		// 		console.log(error);
-		// 		this.forumError = errorMessage;
-		// 	  });
-
-		// 	commentData?.data?.forEach((comment: Comment, index: number) => {
-		// 	  const tempComment: Comment = {
-		// 		...comment,
-		// 		username: user.value[index],
-		// 	  };
-		// 	  newComments.value.push(tempComment);
-		// 	});
-
-		// 	return this.forumError ? this.forumError : newComments.value;
-		// },
 	},
 });

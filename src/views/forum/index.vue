@@ -34,8 +34,8 @@
 					enter-active-class="animate__animated animate__slideInRight animate__fast"
 					leave-active-class="animate__animated animate__slideOutRight animate__fast"
 				>
-					<div v-if="!forumStore.errorList">
-						<ForumCard :forums="forums" v-if="forums" />
+					<div v-if="Object.keys(forumStore.errorList).length === 0">
+						<ForumCard :forums="forums" />
 					</div>
 					<BaseCard v-else class="mt-4">
 						<div class="text-red-500">
@@ -62,14 +62,14 @@ import SearchBarVue from 'base-components/BaseSearchBar.vue';
 import FilterDropDownVue from 'base-components/BaseDropDown.vue';
 import FormCarouselSectionVue from 'forum-components/ForumCarouselSection.vue';
 import ForumCard from 'forum-components/ForumCard.vue';
-import { useForumStore } from 'stores/ForumStore';
+import { useForumStore, Forum } from 'stores/ForumStore';
 import { VSkeletonLoader } from 'vuetify/labs/VSkeletonLoader';
 
 // Define data properties for the component
 const forumStore = useForumStore();
 
 // Define forum data
-const forums = ref((await forumStore.getAllForums(0)) ?? []);
+const forums = ref<Forum>((await forumStore.getAllForums(0)) ?? []);
 const totalPage = ref(Math.ceil((await forumStore.getPaginationCount()) / 10));
 const currentPage = ref(forumStore.forumCurrentPagination);
 
