@@ -4,7 +4,7 @@ import { AxiosError } from 'axios';
 import { ref } from 'vue';
 
 // Forum Interface with username
-interface Forum {
+export interface Forum {
 	id: number;
 	title: string;
 	content: string;
@@ -43,6 +43,13 @@ interface Comment {
 	username: any;
 }
 
+export interface Post {
+	comment: Comment;
+	forum: Forum;
+	user: any;
+	votes: number;
+}
+
 // Error Interface
 interface SingleError {
 	message: string;
@@ -52,7 +59,7 @@ interface SingleError {
 export const useForumStore = defineStore('forumStore', {
 	state: () => ({
 		forums: <any>[],
-		forumSelected: null,
+		forumSelected: <Post>{} || <any>{},
 		forumPagination: 0,
 		forumCurrentPgnt: 1,
 		forumError: <SingleError>{} || <any>{},
@@ -61,6 +68,7 @@ export const useForumStore = defineStore('forumStore', {
 		allForums: (state) => state.forums,
 		forumCurrentPagination: (state) => state.forumCurrentPgnt,
 		errorList: (state) => state.forumError,
+		forum: (state) => state.forumSelected,
 	},
 	actions: {
 		async getAllForums(forumIndex: number) {
@@ -143,9 +151,25 @@ export const useForumStore = defineStore('forumStore', {
 			return this.errorList;
 		},
 
-		async getSpecificForum(id: number) {
-			// const res = await
+		async getSpecificForum(id: any) {
+			const res = await apiClient
+				.post(`api/forums/get/specific/${id}`, {
+					forum_id: id,
+				})
+				.catch((err: Error | AxiosError) => {
+					const error = err as AxiosError;
+					const errorMessage: SingleError | any = {
+						message: (error?.response?.data as any).message,
+						status: error?.response?.status,
+					};
+					console.log(error);
+					this.forumError = errorMessage;
+				});
+
+			this.forumSelected = res?.data;
+			return res?.data;
 		},
+
 		// Work in progress
 		async getAllComments(forum: Forum, commentIndex: number) {
 			await getToken();
