@@ -67,6 +67,8 @@
 	</div>
 </template>
 
+<script lang="ts" setup></script>
+
 <style scoped>
 .jumbotron {
 	background-color: #3f51b5;
