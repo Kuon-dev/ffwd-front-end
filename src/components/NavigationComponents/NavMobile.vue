@@ -32,13 +32,62 @@
 					</router-link>
 				</div>
 
-				<div class="flex max-w-[2.5rem]">
-					<label for="check">
-						<input type="checkbox" id="check" @click="injectRenderNav()" />
-						<span></span>
-						<span></span>
-						<span></span>
-					</label>
+				<div class="flex flex-row items-center gap-4">
+					<div class="flex gap-4 text-sm" v-if="!store.user">
+						<v-btn color="white">
+							<router-link to="/login"> Login </router-link>
+						</v-btn>
+					</div>
+					<div v-else>
+						<v-container fluid>
+							<v-row justify="center">
+								<v-menu min-width="200px" rounded>
+									<template v-slot:activator="{ props }">
+										<v-btn icon v-bind="props">
+											<v-avatar color="#7E81FF" size="large">
+												<span class="text-sm text-white">{{
+													store.user.name
+												}}</span>
+											</v-avatar>
+										</v-btn>
+									</template>
+									<v-card>
+										<v-card-text>
+											<div class="mx-auto text-center">
+												<v-avatar color="#7E81FF" size="large">
+													<span class="text-sm text-white">{{
+														store.user.name
+													}}</span>
+												</v-avatar>
+												<h3 class="mt-2">{{ store.user.name }}</h3>
+												<p class="text-caption mt-1">
+													{{ store.user.email }}
+												</p>
+												<v-divider class="my-1"></v-divider>
+												<v-btn rounded variant="text"> Edit Account </v-btn>
+												<v-divider class="my-1"></v-divider>
+												<v-btn
+													rounded
+													variant="text"
+													@click="store.handleLogout()"
+												>
+													Logout
+												</v-btn>
+											</div>
+										</v-card-text>
+									</v-card>
+								</v-menu>
+							</v-row>
+						</v-container>
+					</div>
+					<div class="flex max-w-[2.5rem]">
+						<label for="check">
+							<input type="checkbox" id="check" @click="injectRenderNav()" />
+							<span></span>
+							<span></span>
+							<span></span>
+						</label>
+					</div>
 				</div>
 			</div>
 			<transition
@@ -73,6 +122,7 @@
 
 <script setup lang="ts">
 import BaseCard from 'base-components/BaseCard.vue';
+import { ref, onMounted } from 'vue';
 import MobileComponent from './NavSidebarMobile.vue';
 import { landingNavigation } from 'nav-components/NavItems';
 import {
@@ -81,7 +131,13 @@ import {
 	isChecked,
 	path,
 } from 'compostables/NavInjector';
-import { ref } from 'vue';
+import { useUserStore } from 'stores/UserStore';
+
+const store = useUserStore();
+
+onMounted(async () => {
+	await store.getUser();
+});
 </script>
 
 <style lang="scss" scoped>

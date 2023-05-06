@@ -46,6 +46,15 @@
 
 <script setup lang="ts">
 import { landingNavigation } from 'nav-components/NavItems';
+import { onMounted } from 'vue';
+import BaseCard from 'base-components/BaseCard.vue';
+import { useUserStore } from 'stores/UserStore';
+
+const store = useUserStore();
+
+onMounted(async () => {
+	await store.getUser();
+});
 </script>
 
 <style lang="scss" scoped></style>
