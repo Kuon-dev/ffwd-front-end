@@ -23,11 +23,16 @@ interface ResetPasswordCredentials {
 	token: any;
 }
 
-interface newUserData {
+interface User {
+	id: string | any;
+	created_at: string | any;
+	email_verified_at: string | any;
+	is_banned: string | any;
+	updated_at: string | any;
 	name: string;
 	email: string;
-	phoneNumber: string;
-	password: string;
+	phone_number: string;
+	password: string | any;
 	bio: string;
 }
 
@@ -35,10 +40,9 @@ interface SingleError {
 	message: String;
 	status: number | any;
 }
-
 export const useUserStore = defineStore('userStore', {
 	state: () => ({
-		authUser: null,
+		authUser: null as User | null,
 		authUserAccessLevel: 0,
 		authErrors: <any>[] || <any>Object,
 	}),
@@ -171,7 +175,7 @@ export const useUserStore = defineStore('userStore', {
 			if (route) this.router.push(route);
 			return true;
 		},
-		async editUser(newUser: Object) {
+		async editUser(newUser: User) {
 			await getToken();
 
 			const res = await apiClient
