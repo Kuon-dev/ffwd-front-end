@@ -9,6 +9,7 @@ import router from '@/router';
  */
 export const isChecked = ref(false);
 export const isShowSidebar = ref(false);
+export const isShowProfile = ref(false);
 
 export const path = computed(() => {
 	return router.currentRoute.value;
@@ -33,6 +34,16 @@ export const toggleShowSidebar = (value: boolean) => {
 	}
 	if (isShowSidebar.value) isShowSidebar.value = false;
 	else isShowSidebar.value = true;
+};
+
+export const toggleProfileOverlay = (value: boolean) => {
+	console.log(value);
+	if (value) {
+		isShowProfile.value = value;
+		return;
+	}
+	if (isShowProfile.value) isShowProfile.value = false;
+	else isShowProfile.value = true;
 };
 
 export const injectRenderNav = () => {
