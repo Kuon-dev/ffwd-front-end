@@ -39,7 +39,7 @@ import {
 	injectSidebarComponent,
 	path,
 } from 'compostables/courses/CourseSidebarDataInjector';
-import { watch, ref } from 'vue';
+import { watch, ref, onMounted } from 'vue';
 
 const hasSidebar = ref(false);
 if (path?.value.params?.topic) hasSidebar.value = true;
@@ -49,7 +49,9 @@ watch(path, () => {
 	else hasSidebar.value = false;
 });
 
-injectSidebarComponent;
+onMounted(() => {
+	injectSidebarComponent;
+});
 </script>
 
 <style lang="scss" scoped>

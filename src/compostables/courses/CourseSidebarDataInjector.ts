@@ -109,6 +109,7 @@ export const path = computed(() => {
 
 // this will render the sidebar if the user is viewing a topic
 export const injectSidebarComponent = watch(path, () => {
+	console.log(path.value.params.topic);
 	if (path.value.params.topic) {
 		$('#page-sidebar').show();
 	}
