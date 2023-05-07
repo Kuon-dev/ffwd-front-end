@@ -96,18 +96,23 @@
 
 			<!-- Leave Comment Field -->
 			<form class="relative my-3 mx-1" data-te-input-wrapper-init>
-				<textarea
+				<v-textarea
 					class="peer block min-h-[auto] w-full rounded border border-gray-400 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
 					id="comment"
-					rows="3"
-					placeholder="Leave a comment"
-				></textarea>
-				<label
+					placeholder="Comment"
+					@input="getTextValue"
+				></v-textarea>
+				<!-- <label
 					for="exampleFormControlTextarea1"
 					class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
 					>Comment</label
+				> -->
+				<v-btn
+					color="#7e81ff"
+					class="mt-5 text-white"
+					@click="submitComment($event)"
+					>Post</v-btn
 				>
-				<v-btn class="mt-5">SUBMIT</v-btn>
 			</form>
 
 			<!-- Comment Area -->
@@ -157,6 +162,11 @@ import { renderHTML } from 'compostables/EditorJsInjector';
 import PostComment from 'forum-components/PostComment.vue';
 import { useForumStore } from 'stores/ForumStore';
 import BaseCard from 'base-components/BaseCard.vue';
+// The following imports are for submit Comments code(testing phase)
+// Used when user leave/post comment
+import { useUserStore } from 'stores/UserStore';
+import { getToken, apiClient } from 'stores/BackendAPI';
+import { AxiosError } from 'axios';
 
 // Define data properties for the component
 const forumStore = useForumStore();
@@ -164,17 +174,47 @@ const router = useRouter();
 
 forumStore.getSpecificForum(router.currentRoute.value.params.id);
 
-// (Work in progress)
-// Define forum data
+// Define comment data
 const comments = ref((await forumStore.getAllComments(0)) ?? []);
-// getPaginationCount is for forums, might need to do a separate one for comments
-// const totalPage = ref(Math.ceil((await forumStore.getPaginationCount()) / 10));
-// const currentPage = ref(forumStore.forumCurrentPagination);
 
-// const changePage = async (index: number) => {
-// 	comments.value = [];
-// 	comments.value = await forumStore.getAllComments(index - 1);
-// };
+// Test Code for Create Comment
+const newComment = ref<String>('');
+const errorMessage = ref('');
+const store = useUserStore();
+const getTextValue = (event: Event) => {
+	newComment.value = (event.target as HTMLTextAreaElement).value;
+	// console.log(newComment);
+};
+
+const submitComment = async (e: Event) => {
+	e.preventDefault();
+	console.log(newComment);
+	// if (newComment.value == null) {
+	// 	errorMessage.value = 'Please enter a message';
+	// 	return;
+	// }
+
+	const body = {
+		message: newComment.value,
+		user: store.user?.id,
+		forum: forumStore.forum?.forum?.id,
+	};
+
+	await getToken();
+	const res = await apiClient
+		.post('/api/comments/create', body)
+		.catch((err: Error | AxiosError) => {
+			const error = err as AxiosError;
+			// this.authErrors = (error?.response?.data as any).errors;
+			console.log('Errorz am I right?');
+			console.log(error);
+			return {
+				status: error?.response?.status,
+			};
+		});
+	console.log('Here\'s the response:' + res);
+};
+// End of test code
 
 const path = computed(() => {
 	return router.currentRoute.value.path;

@@ -70,13 +70,6 @@ const props = defineProps({
 
 const forumStore = useForumStore();
 
-// Convert updated_at param to local date
-// const formatDate = (date: string) => {
-// 	const newDate = new Date(date);
-
-// 	return newDate.toLocaleDateString();
-// };
-
 // Get duration since the comment was updated
 const formatDate = (date: string) => {
 	const updatedTime = new Date(date).getTime();
