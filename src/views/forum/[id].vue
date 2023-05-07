@@ -121,8 +121,18 @@
 
 				<!-- Comments -->
 				<div class="my-1">
-					<Comments />
-					<Comments />
+					{{ forumStore.postCommentPagination }}
+					<div v-if="Object.keys(forumStore.errorList).length === 0">
+						<PostComment
+							v-if="forumStore?.forum?.comment"
+							:comments="comments"
+						/>
+					</div>
+					<BaseCard v-else class="mt-4">
+						<div class="text-red-500">
+							{{ forumStore.errorList }}
+						</div>
+					</BaseCard>
 				</div>
 			</div>
 		</div>
@@ -144,14 +154,27 @@
 import { computed, watch, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { renderHTML } from 'compostables/EditorJsInjector';
-import Comments from 'forum-components/PostComment.vue';
+import PostComment from 'forum-components/PostComment.vue';
 import { useForumStore } from 'stores/ForumStore';
 import BaseCard from 'base-components/BaseCard.vue';
 
+// Define data properties for the component
 const forumStore = useForumStore();
 const router = useRouter();
 
 forumStore.getSpecificForum(router.currentRoute.value.params.id);
+
+// (Work in progress)
+// Define forum data
+const comments = ref((await forumStore.getAllComments(0)) ?? []);
+// getPaginationCount is for forums, might need to do a separate one for comments
+// const totalPage = ref(Math.ceil((await forumStore.getPaginationCount()) / 10));
+// const currentPage = ref(forumStore.forumCurrentPagination);
+
+// const changePage = async (index: number) => {
+// 	comments.value = [];
+// 	comments.value = await forumStore.getAllComments(index - 1);
+// };
 
 const path = computed(() => {
 	return router.currentRoute.value.path;
