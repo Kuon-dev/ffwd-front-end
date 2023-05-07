@@ -40,6 +40,7 @@
 		"scrollama": "^3.2.0",
 		"showdown": "^2.1.0",
 		"typeit": "^8.7.1",
+		"v3-infinite-loading": "^1.2.2",
 		"vee-validate": "^4.8.6",
 		"vue": "^3.2.45",
 		"vue-draggable-plus": "^0.1.3",

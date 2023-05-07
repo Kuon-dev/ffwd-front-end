@@ -5,17 +5,17 @@ import { ref } from 'vue';
 
 // Forum Interface with username
 export interface Forum {
-	id: number;
-	title: string;
 	content: string;
 	created_at: string;
-	updated_at: string;
+	downVotes: number;
+	id: number;
 	is_deleted_by_user: number;
 	is_removed_by_admin: number;
+	title: string;
+	upVotes: number;
+	updated_at: string;
 	user_id: number;
 	username: any;
-	upVotes: number;
-	downVotes: number;
 }
 
 // Forum Interface without username
@@ -128,9 +128,7 @@ export const useForumStore = defineStore('forumStore', {
 				? forumIndex + 1
 				: this.forumCurrentPgnt;
 
-			return Object.keys(this.forumError).length !== 0
-				? this.forumError
-				: newForum.value;
+			return Object.keys(this.forumError).length !== 0 ? [] : newForum.value;
 		},
 
 		async getPaginationCount() {
@@ -183,13 +181,30 @@ export const useForumStore = defineStore('forumStore', {
 			return res?.data;
 		},
 
+		async getHotForums() {
+			await getToken();
+			const data = ref<Forum[]>([]);
+
+			const res = await apiClient
+				.get('api/forums/get/hot')
+				.then((response) => {
+					data.value = response.data.data;
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+
+			console.log(res);
+			return data.value;
+		},
+
 		// Work in progress
 		// Get all comments of the selected forum
 		async getAllComments(commentIndex: number) {
 			await getToken();
 
 			const user = ref<String[]>([]);
-			const newComment = ref<Forum[]>([]);
+			const newComment = ref<Comment[]>([]);
 
 			const body = {
 				index: commentIndex ?? 0,
@@ -223,7 +238,7 @@ export const useForumStore = defineStore('forumStore', {
 			});
 
 			console.log(commentData);
-			console.log(this.forumSelected.id);
+			console.log(this.forumSelected.forum.id);
 
 			return Object.keys(this.commentError).length !== 0
 				? this.commentError
