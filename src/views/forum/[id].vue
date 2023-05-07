@@ -114,6 +114,13 @@
 					>Post</v-btn
 				>
 			</form>
+			<!-- Comment Related Alerts Field -->
+			<BaseAlert
+				v-if="showAlert"
+				:type="showAlertType"
+				:title="showAlertTitle"
+				:text="showAlertText"
+			/>
 
 			<!-- Comment Area -->
 			<div class="mt-5 mx-1">
@@ -121,12 +128,11 @@
 				<div
 					class="place-content-start flex text-xl font-semibold leading-10 ml-2"
 				>
-					<div>6 Answers</div>
+					<div>{{ forumStore.forum.comment.length }} Answers</div>
 				</div>
 
 				<!-- Comments -->
 				<div class="my-1">
-					{{ forumStore.postCommentPagination }}
 					<div v-if="Object.keys(forumStore.errorList).length === 0">
 						<PostComment
 							v-if="forumStore?.forum?.comment"
@@ -156,43 +162,63 @@
 </template>
 
 <script setup lang="ts">
-import { computed, watch, ref } from 'vue';
+import { computed, ref, PropType } from 'vue';
 import { useRouter } from 'vue-router';
 import { renderHTML } from 'compostables/EditorJsInjector';
 import PostComment from 'forum-components/PostComment.vue';
-import { useForumStore } from 'stores/ForumStore';
+import { useForumStore, Comment } from 'stores/ForumStore';
 import BaseCard from 'base-components/BaseCard.vue';
 // The following imports are for submit Comments code(testing phase)
 // Used when user leave/post comment
 import { useUserStore } from 'stores/UserStore';
 import { getToken, apiClient } from 'stores/BackendAPI';
 import { AxiosError } from 'axios';
+import BaseAlert from 'base-components/BaseAlert.vue';
 
 // Define data properties for the component
 const forumStore = useForumStore();
+const store = useUserStore();
 const router = useRouter();
 
 forumStore.getSpecificForum(router.currentRoute.value.params.id);
 
 // Define comment data
-const comments = ref((await forumStore.getAllComments(0)) ?? []);
+const comments = ref<Comment[]>((await forumStore.getAllComments(0)) ?? []);
 
-// Test Code for Create Comment
+// For Create New Comment
 const newComment = ref<String>('');
+
+// alert component
+const showAlert = ref<Boolean>(false);
+const showAlertTitle = ref<string>('');
+const showAlertText = ref<string>('');
+const showAlertType = ref<'error' | 'success' | 'warning' | 'info'>('error');
+const renderAlert = (
+	type: 'error' | 'success' | 'warning' | 'info',
+	title: string,
+	text: string,
+) => {
+	showAlertType.value = type ?? 'error';
+	showAlertTitle.value = title;
+	showAlertText.value = text;
+	showAlert.value = true;
+	setTimeout(() => {
+		showAlert.value = false;
+	}, 8000);
+};
+
 const errorMessage = ref('');
-const store = useUserStore();
+
 const getTextValue = (event: Event) => {
 	newComment.value = (event.target as HTMLTextAreaElement).value;
-	// console.log(newComment);
 };
 
 const submitComment = async (e: Event) => {
 	e.preventDefault();
-	console.log(newComment);
-	// if (newComment.value == null) {
-	// 	errorMessage.value = 'Please enter a message';
-	// 	return;
-	// }
+	if (!newComment.value) {
+		renderAlert('error', 'Oops an error has occured', 'Please enter a message');
+		return;
+	}
 
 	const body = {
 		message: newComment.value,
@@ -203,18 +229,22 @@ const submitComment = async (e: Event) => {
 	await getToken();
 	const res = await apiClient
 		.post('/api/comments/create', body)
+		.then(async (response) => {
+			renderAlert('success', 'Success', (response?.data as any).message);
+			// comments.value = await (forumStore.getAllComments(0)) ?? [];
+			location.reload();
+		})
 		.catch((err: Error | AxiosError) => {
 			const error = err as AxiosError;
 			// this.authErrors = (error?.response?.data as any).errors;
-			console.log('Errorz am I right?');
-			console.log(error);
-			return {
-				status: error?.response?.status,
-			};
+			renderAlert(
+				'error',
+				'Oops an error has occured',
+				(error?.response?.data as any)?.message,
+			);
 		});
-	console.log('Here\'s the response:' + res);
+	return res;
 };
-// End of test code
 
 const path = computed(() => {
 	return router.currentRoute.value.path;

@@ -31,7 +31,7 @@ interface FetchedForum {
 }
 
 // Comment Interface with username (Work in progress)
-interface Comment {
+export interface Comment {
 	id: number;
 	message: string;
 	created_at: string;
@@ -240,27 +240,8 @@ export const useForumStore = defineStore('forumStore', {
 			console.log(this.forumSelected.forum.id);
 
 			return Object.keys(this.commentError).length !== 0
-				? this.commentError
+				? []
 				: newComment.value;
-		},
-
-		async submitComment(id: any) {
-			const res = await apiClient
-				.post(`api/forums/get/specific/${id}`, {
-					forum_id: id,
-				})
-				.catch((err: Error | AxiosError) => {
-					const error = err as AxiosError;
-					const errorMessage: SingleError | any = {
-						message: (error?.response?.data as any).message,
-						status: error?.response?.status,
-					};
-					console.log(error);
-					this.forumError = errorMessage;
-				});
-
-			this.forumSelected = res?.data;
-			return res?.data;
 		},
 	},
 });

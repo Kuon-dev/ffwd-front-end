@@ -23,17 +23,17 @@ const props = defineProps({
 	type: {
 		type: String as PropType<'error' | 'success' | 'warning' | 'info'>,
 		default: 'error',
-		requred: false,
+		required: false,
 	},
 	title: {
 		type: String,
 		default: 'An error has occurred!',
-		requred: false,
+		required: false,
 	},
 	text: {
 		type: String,
 		default: '',
-		requred: false,
+		required: false,
 	},
 });
 
