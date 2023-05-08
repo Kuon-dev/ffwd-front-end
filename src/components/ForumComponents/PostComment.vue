@@ -173,8 +173,6 @@ const editComment = async (
 ) => {
 	if (store.user?.id !== commentUserId && accessLevel > 1) {
 		// TODO admin edit
-		console.log(commentId);
-		console.log(editedComment.value);
 		if (!editedComment.value) {
 			renderAlert(
 				'error',
@@ -191,8 +189,6 @@ const editComment = async (
 	}
 	else if (store.user?.id === commentUserId) {
 		// USER edit
-		console.log(commentId);
-		console.log(editedComment.value);
 		const body = {
 			message: editedComment.value,
 			comment: commentId,
@@ -222,8 +218,12 @@ const editComment = async (
 };
 
 const showCommentContent = (comment: Comment) => {
-	if (comment.is_deleted_by_user === 1) {return 'This comment has been deleted by the user';}
-	if (comment.is_removed_by_admin === 1) {return 'This comment has been removed by the admin';}
+	if (comment.is_deleted_by_user === 1) {
+		return 'This comment has been deleted by the user';
+	}
+	if (comment.is_removed_by_admin === 1) {
+		return 'This comment has been removed by the admin';
+	}
 	return comment.message;
 };
 
