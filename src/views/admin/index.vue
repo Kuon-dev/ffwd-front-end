@@ -1,10 +1,13 @@
 <template>
 	<!--The whole page-->
-	<div class="top-1 h-screen flex flex-col bg-gray-100">
+	<Top />
+	<div
+		class="top-1 h-screen flex flex-row bg-gray-100 items-center justify-between"
+	>
 		<!--Side Nav-->
-		<Side />
+		<Side class="sticky" />
 
-		<main class="main fixed top-32 left-72 h-4/5">
+		<main class="main flex flex-col py-10 mx-10">
 			<!--Admin Dashboard-->
 			<section>
 				<h1 class="mb-5 text-2xl font-semibold">Admin Dashboard</h1>
@@ -46,7 +49,7 @@
 
 				<!--forum today-->
 				<div
-					class="forum border rounded-md bg-white p-2 flex-column ml-5 overflow-hidden h-60 transition ease-in-out delay-150"
+					class="forum border rounded-md bg-white p-2 flex-column ml-5 overflow-hidden h-60 transition ease-in-out delay-150 w-full"
 				>
 					<div class="w-full h-10 flex justify-between">
 						<a href="#!">
@@ -67,7 +70,7 @@
 
 					<div class="overflow-y-auto h-48">
 						<!--forum-->
-						<div>
+						<div class="">
 							<a
 								href="#!"
 								class="flex border-b py-3 border-inherit hover:bg-gray-200 md:px-3 mr-4"
@@ -194,6 +197,7 @@
 
 <script setup lang="ts">
 import Side from 'nav-components/NavSidebarAdmin.vue';
+import Top from 'nav-components/NavDesktop.vue';
 </script>
 
 <style lang="scss" scoped>
@@ -201,7 +205,7 @@ import Side from 'nav-components/NavSidebarAdmin.vue';
 	width: 77%;
 	left: 18rem;
 	transition: transform 0.3s ease-in-out;
-	overflow-y: auto;
+	overflow-y: hidden;
 } //problem:scrollbar better not appear
 
 .box {
@@ -252,6 +256,10 @@ import Side from 'nav-components/NavSidebarAdmin.vue';
 		display: none;
 		transition: all 0.3s ease-in-out;
 	}
+}
+
+::-webkit-scrollbar-track {
+	background-color: #ffffff00;
 }
 
 //more: mobile phone version
