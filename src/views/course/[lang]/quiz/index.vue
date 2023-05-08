@@ -56,12 +56,14 @@
 import { useRouter } from 'vue-router';
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useQuizStore } from 'stores/QuizStore';
+import { Question, Option } from 'course-components/CourseQuiz';
+// import { }
 import BaseCard from 'base-components/BaseCard.vue';
 
 const quizStore = useQuizStore();
 const router = useRouter();
 
-const selectedCourse = ref(null);
+const selectedCourse = ref<Question[]>([]);
 const formattedTime = ref('00:00');
 const submittedQuiz = ref(false);
 const numberOfQuestions = ref(0);

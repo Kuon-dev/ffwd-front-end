@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 import { defineStore } from 'pinia';
 import { getToken, apiClient } from './BackendAPI';
-import { post } from 'jquery';
+// import { post } from 'jquery';
 
 interface LoginCredentials {
 	email: String;
@@ -77,7 +77,7 @@ export const useUserStore = defineStore('userStore', {
 				this.authUser = userData?.data;
 				/*
         if (userPerms.data.perm_level < accessType) {
-          this.router.push('/404')
+          (this as any).router.push('/404')
           return
         }
 
@@ -138,7 +138,7 @@ export const useUserStore = defineStore('userStore', {
 			getToken();
 			await apiClient.post('/logout');
 			this.authUser = null;
-			this.router.push('/');
+			(this as any).router.push('/');
 		},
 
 		async handleForgotPassword(email: String) {
@@ -172,7 +172,7 @@ export const useUserStore = defineStore('userStore', {
 			await this.getUser();
 			const res = await apiClient.get('/dashboard');
 			const route = await (res?.data as any).route;
-			if (route) this.router.push(route);
+			if (route) (this as any).router.push(route);
 			return true;
 		},
 		async editUser(newUser: User) {
