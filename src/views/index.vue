@@ -168,8 +168,6 @@ const data = computed(() => {
 	const newArr: any = [];
 	return newArr.concat(topics.languages, topics.frameworks);
 });
-
-console.log(data.value);
 </script>
 
 <style lang="scss" scoped>

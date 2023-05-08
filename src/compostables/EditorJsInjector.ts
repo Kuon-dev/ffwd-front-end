@@ -14,7 +14,7 @@ export const handleInputChange = (event: any) => {
 	}, 5000);
 };
 
-export const renderHTML = (data) => {
+export const renderHTML = (data: any) => {
 	if (!data) return;
 	console.log(JSON.stringify(data));
 	const html = EditorJsToHtml.parse(JSON.parse(data));

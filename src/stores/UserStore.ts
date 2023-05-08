@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 import { defineStore } from 'pinia';
 import { getToken, apiClient } from './BackendAPI';
-import { post } from 'jquery';
+// import { post } from 'jquery';
 
 interface LoginCredentials {
 	email: String;
@@ -23,11 +23,16 @@ interface ResetPasswordCredentials {
 	token: any;
 }
 
-interface newUserData {
+interface User {
+	id: string | any;
+	created_at: string | any;
+	email_verified_at: string | any;
+	is_banned: string | any;
+	updated_at: string | any;
 	name: string;
 	email: string;
-	phoneNumber: string;
-	password: string;
+	phone_number: string;
+	password: string | any;
 	bio: string;
 }
 
@@ -35,10 +40,9 @@ interface SingleError {
 	message: String;
 	status: number | any;
 }
-
 export const useUserStore = defineStore('userStore', {
 	state: () => ({
-		authUser: null,
+		authUser: null as User | null,
 		authUserAccessLevel: 0,
 		authErrors: <any>[] || <any>Object,
 	}),
@@ -73,7 +77,7 @@ export const useUserStore = defineStore('userStore', {
 				this.authUser = userData?.data;
 				/*
         if (userPerms.data.perm_level < accessType) {
-          this.router.push('/404')
+          (this as any).router.push('/404')
           return
         }
 
@@ -134,7 +138,7 @@ export const useUserStore = defineStore('userStore', {
 			getToken();
 			await apiClient.post('/logout');
 			this.authUser = null;
-			this.router.push('/');
+			(this as any).router.push('/');
 		},
 
 		async handleForgotPassword(email: String) {
@@ -168,10 +172,10 @@ export const useUserStore = defineStore('userStore', {
 			await this.getUser();
 			const res = await apiClient.get('/dashboard');
 			const route = await (res?.data as any).route;
-			if (route) this.router.push(route);
+			if (route) (this as any).router.push(route);
 			return true;
 		},
-		async editUser(newUser: Object) {
+		async editUser(newUser: User) {
 			await getToken();
 
 			const res = await apiClient

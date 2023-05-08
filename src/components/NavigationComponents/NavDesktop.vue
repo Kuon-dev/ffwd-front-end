@@ -40,7 +40,7 @@
 			<div v-else>
 				<v-container fluid>
 					<v-row justify="center">
-						<v-menu min-width="200px" rounded>
+						<v-menu min-width="200px" rounded :close-on-content-click="false">
 							<template v-slot:activator="{ props }">
 								<v-btn icon v-bind="props">
 									<v-avatar color="#7E81FF" size="large">
@@ -63,7 +63,14 @@
 											{{ store.user.email }}
 										</p>
 										<v-divider class="my-1"></v-divider>
-										<v-btn rounded variant="text"> Edit Account </v-btn>
+										<v-btn
+											rounded
+											variant="text"
+											@click="toggleProfileOverlay(true)"
+										>
+											Edit Account
+										</v-btn>
+
 										<v-divider class="my-1"></v-divider>
 										<v-btn rounded variant="text" @click="store.handleLogout()">
 											Logout
@@ -76,14 +83,17 @@
 				</v-container>
 			</div>
 		</BaseCard>
+		<BaseUserProfile />
 	</nav>
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import BaseCard from 'base-components/BaseCard.vue';
 import { landingNavigation } from 'nav-components/NavItems';
 import { useUserStore } from 'stores/UserStore';
+import BaseUserProfile from 'base-components/BaseUserProfile.vue';
+import { toggleProfileOverlay } from 'compostables/NavInjector';
 
 const store = useUserStore();
 

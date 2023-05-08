@@ -96,19 +96,31 @@
 
 			<!-- Leave Comment Field -->
 			<form class="relative my-3 mx-1" data-te-input-wrapper-init>
-				<textarea
+				<v-textarea
 					class="peer block min-h-[auto] w-full rounded border border-gray-400 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
 					id="comment"
-					rows="3"
-					placeholder="Leave a comment"
-				></textarea>
-				<label
+					placeholder="Comment"
+					@input="getTextValue"
+				></v-textarea>
+				<!-- <label
 					for="exampleFormControlTextarea1"
 					class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
 					>Comment</label
+				> -->
+				<v-btn
+					color="#7e81ff"
+					class="mt-5 text-white"
+					@click="submitComment($event)"
+					>Post</v-btn
 				>
-				<v-btn class="mt-5">SUBMIT</v-btn>
 			</form>
+			<!-- Comment Related Alerts Field -->
+			<BaseAlert
+				v-if="showAlert"
+				:type="showAlertType"
+				:title="showAlertTitle"
+				:text="showAlertText"
+			/>
 
 			<!-- Comment Area -->
 			<div class="mt-5 mx-1">
@@ -116,13 +128,22 @@
 				<div
 					class="place-content-start flex text-xl font-semibold leading-10 ml-2"
 				>
-					<div>6 Answers</div>
+					<div>{{ forumStore.forum.comment.length }} Answers</div>
 				</div>
 
 				<!-- Comments -->
 				<div class="my-1">
-					<Comments />
-					<Comments />
+					<div v-if="Object.keys(forumStore.errorList).length === 0">
+						<PostComment
+							v-if="forumStore?.forum?.comment"
+							:comments="comments"
+						/>
+					</div>
+					<BaseCard v-else class="mt-4">
+						<div class="text-red-500">
+							{{ forumStore.errorList }}
+						</div>
+					</BaseCard>
 				</div>
 			</div>
 		</div>
@@ -141,17 +162,89 @@
 </template>
 
 <script setup lang="ts">
-import { computed, watch, ref } from 'vue';
+import { computed, ref, PropType } from 'vue';
 import { useRouter } from 'vue-router';
 import { renderHTML } from 'compostables/EditorJsInjector';
-import Comments from 'forum-components/PostComment.vue';
-import { useForumStore } from 'stores/ForumStore';
+import PostComment from 'forum-components/PostComment.vue';
+import { useForumStore, Comment } from 'stores/ForumStore';
 import BaseCard from 'base-components/BaseCard.vue';
+// The following imports are for submit Comments code(testing phase)
+// Used when user leave/post comment
+import { useUserStore } from 'stores/UserStore';
+import { getToken, apiClient } from 'stores/BackendAPI';
+import { AxiosError } from 'axios';
+import BaseAlert from 'base-components/BaseAlert.vue';
 
+// Define data properties for the component
 const forumStore = useForumStore();
+const store = useUserStore();
 const router = useRouter();
 
 forumStore.getSpecificForum(router.currentRoute.value.params.id);
+
+// Define comment data
+const comments = ref<Comment[]>((await forumStore.getAllComments(0)) ?? []);
+
+// For Create New Comment
+const newComment = ref<String>('');
+
+// alert component
+const showAlert = ref<Boolean>(false);
+const showAlertTitle = ref<string>('');
+const showAlertText = ref<string>('');
+const showAlertType = ref<'error' | 'success' | 'warning' | 'info'>('error');
+const renderAlert = (
+	type: 'error' | 'success' | 'warning' | 'info',
+	title: string,
+	text: string,
+) => {
+	showAlertType.value = type ?? 'error';
+	showAlertTitle.value = title;
+	showAlertText.value = text;
+	showAlert.value = true;
+	setTimeout(() => {
+		showAlert.value = false;
+	}, 8000);
+};
+
+const errorMessage = ref('');
+
+const getTextValue = (event: Event) => {
+	newComment.value = (event.target as HTMLTextAreaElement).value;
+};
+
+const submitComment = async (e: Event) => {
+	e.preventDefault();
+	if (!newComment.value) {
+		renderAlert('error', 'Oops an error has occured', 'Please enter a message');
+		return;
+	}
+
+	const body = {
+		message: newComment.value,
+		user: store.user?.id,
+		forum: forumStore.forum?.forum?.id,
+	};
+
+	await getToken();
+	const res = await apiClient
+		.post('/api/comments/create', body)
+		.then(async (response) => {
+			renderAlert('success', 'Success', (response?.data as any).message);
+			// comments.value = await (forumStore.getAllComments(0)) ?? [];
+			location.reload();
+		})
+		.catch((err: Error | AxiosError) => {
+			const error = err as AxiosError;
+			// this.authErrors = (error?.response?.data as any).errors;
+			renderAlert(
+				'error',
+				'Oops an error has occured',
+				(error?.response?.data as any)?.message,
+			);
+		});
+	return res;
+};
 
 const path = computed(() => {
 	return router.currentRoute.value.path;
