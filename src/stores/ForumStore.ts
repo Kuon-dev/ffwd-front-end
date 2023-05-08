@@ -110,7 +110,6 @@ export const useForumStore = defineStore('forumStore', {
 						message: (error?.response?.data as any).message,
 						status: error?.response?.status,
 					};
-					console.log(error);
 					this.forumError = errorMessage;
 				});
 
@@ -168,7 +167,6 @@ export const useForumStore = defineStore('forumStore', {
 						message: (error?.response?.data as any).message,
 						status: error?.response?.status,
 					};
-					console.log(error);
 					this.forumError = errorMessage;
 				});
 
@@ -189,11 +187,9 @@ export const useForumStore = defineStore('forumStore', {
 					console.log(err);
 				});
 
-			console.log(res);
 			return data.value;
 		},
 
-		// Work in progress
 		// Get all comments of the selected forum
 		async getAllComments(commentIndex: number) {
 			await getToken();
@@ -203,7 +199,7 @@ export const useForumStore = defineStore('forumStore', {
 
 			const body = {
 				index: commentIndex ?? 0,
-				forum: this.forumSelected?.forum?.id,
+				forum: this.forum?.forum?.id,
 			};
 
 			const commentData = await apiClient
@@ -218,7 +214,6 @@ export const useForumStore = defineStore('forumStore', {
 						message: (error?.response?.data as any).message,
 						status: error?.response?.status,
 					};
-					console.log(error);
 					this.commentError = errorMessage;
 				});
 
@@ -230,9 +225,6 @@ export const useForumStore = defineStore('forumStore', {
 				};
 				newComment.value.push(tempComment);
 			});
-
-			console.log(commentData);
-			console.log(this.forumSelected.forum.id);
 
 			return Object.keys(this.commentError).length !== 0
 				? []

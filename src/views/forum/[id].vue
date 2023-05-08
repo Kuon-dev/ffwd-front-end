@@ -162,7 +162,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, PropType } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { renderHTML } from 'compostables/EditorJsInjector';
 import PostComment from 'forum-components/PostComment.vue';
@@ -180,10 +180,18 @@ const forumStore = useForumStore();
 const store = useUserStore();
 const router = useRouter();
 
-forumStore.getSpecificForum(router.currentRoute.value.params.id);
+const currentForumData = ref([]);
 
 // Define comment data
-const comments = ref<Comment[]>((await forumStore.getAllComments(0)) ?? []);
+const comments = ref<Comment[]>([]);
+
+watch(currentForumData, async (oldVal, newVal) => {
+	comments.value = await (forumStore.getAllComments(0) ?? []);
+});
+
+currentForumData.value = await forumStore.getSpecificForum(
+	router.currentRoute.value.params.id,
+);
 
 // For Create New Comment
 const newComment = ref<String>('');

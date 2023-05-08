@@ -173,8 +173,6 @@ const editComment = async (
 ) => {
 	if (store.user?.id !== commentUserId && accessLevel > 1) {
 		// TODO admin edit
-		console.log(commentId);
-		console.log(editedComment.value);
 		if (!editedComment.value) {
 			renderAlert(
 				'error',
@@ -191,8 +189,6 @@ const editComment = async (
 	}
 	else if (store.user?.id === commentUserId) {
 		// USER edit
-		console.log(commentId);
-		console.log(editedComment.value);
 		const body = {
 			message: editedComment.value,
 			comment: commentId,
