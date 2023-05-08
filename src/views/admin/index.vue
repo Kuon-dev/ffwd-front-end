@@ -1,13 +1,10 @@
 <template>
 	<!--The whole page-->
-	<Top />
 	<div
-		class="top-1 h-screen flex flex-row bg-gray-100 items-center justify-between"
+		class="flex flex-row items-center justify-between overflow-hidden w-full min-w-screen h-screen"
 	>
 		<!--Side Nav-->
-		<Side class="sticky" />
-
-		<main class="main flex flex-col py-10 mx-10">
+		<main class="main flex flex-col py-10 mx-10 w-full">
 			<!--Admin Dashboard-->
 			<section>
 				<h1 class="mb-5 text-2xl font-semibold">Admin Dashboard</h1>
@@ -195,14 +192,10 @@
 	</div>
 </template>
 
-<script setup lang="ts">
-import Side from 'nav-components/NavSidebarAdmin.vue';
-import Top from 'nav-components/NavDesktop.vue';
-</script>
+<script setup lang="ts"></script>
 
 <style lang="scss" scoped>
 .main {
-	width: 77%;
 	left: 18rem;
 	transition: transform 0.3s ease-in-out;
 	overflow-y: hidden;

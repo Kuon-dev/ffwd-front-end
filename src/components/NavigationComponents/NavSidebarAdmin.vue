@@ -1,8 +1,8 @@
 <template>
 	<!--The whole page-->
-	<div class="flex flex-col items-center h-full">
+	<div class="flex flex-col items-center h-[80%]">
 		<nav
-			class="border border-inherit rounded-lg shadow-2xl bg-white mx-10 px-10 h-full mb-10 mt-40 items-center flex flex-col justify-between py-10"
+			class="border border-inherit rounded-lg shadow-2xl bg-white mx-10 px-10 h-full my-1 items-center flex flex-col justify-between py-10"
 		>
 			<!--Admin Profile-->
 			<div class="flex flex-col">
