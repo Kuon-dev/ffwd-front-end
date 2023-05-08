@@ -222,8 +222,12 @@ const editComment = async (
 };
 
 const showCommentContent = (comment: Comment) => {
-	if (comment.is_deleted_by_user === 1) {return 'This comment has been deleted by the user';}
-	if (comment.is_removed_by_admin === 1) {return 'This comment has been removed by the admin';}
+	if (comment.is_deleted_by_user === 1) {
+		return 'This comment has been deleted by the user';
+	}
+	if (comment.is_removed_by_admin === 1) {
+		return 'This comment has been removed by the admin';
+	}
 	return comment.message;
 };
 
