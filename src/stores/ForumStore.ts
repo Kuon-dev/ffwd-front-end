@@ -156,13 +156,8 @@ export const useForumStore = defineStore('forumStore', {
 				this.forumError = errorMessage;
 			});
 		},
-		async getForumError() {
-			await getToken();
-
-			return this.errorList;
-		},
-
 		async getSpecificForum(id: any) {
+			await getToken();
 			const res = await apiClient
 				.post(`api/forums/get/specific/${id}`, {
 					forum_id: id,
@@ -208,7 +203,7 @@ export const useForumStore = defineStore('forumStore', {
 
 			const body = {
 				index: commentIndex ?? 0,
-				forum: this.forumSelected.forum.id,
+				forum: this.forumSelected?.forum?.id,
 			};
 
 			const commentData = await apiClient

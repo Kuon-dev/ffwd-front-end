@@ -53,7 +53,7 @@
 						:is="index === editingIndex ? 'textarea' : 'p'"
 						class="mx-1 my-4 flex-grow resize-none h-auto min-h-0"
 						@input="getEditedCommentValue"
-						>{{ comment.message }}</component
+						>{{ showCommentContent(comment) }}</component
 					>
 					<div class="flex flex-col gap-2 ml-2">
 						<v-btn
@@ -80,6 +80,12 @@
 				</div>
 			</div>
 		</div>
+		<BaseAlert
+			v-if="showAlert"
+			:text="showAlertText"
+			:title="showAlertTitle"
+			:type="showAlertType"
+		/>
 	</div>
 	<!-- <InfiniteLoading @infinite="forumStore.getAllComments(0)" /> -->
 </template>
@@ -213,6 +219,12 @@ const editComment = async (
 	else {
 		// ERROR
 	}
+};
+
+const showCommentContent = (comment: Comment) => {
+	if (comment.is_deleted_by_user === 1) {return 'This comment has been deleted by the user';}
+	if (comment.is_removed_by_admin === 1) {return 'This comment has been removed by the admin';}
+	return comment.message;
 };
 
 const deleteComment = (accessLevel: number, commentUserId: number) => {
