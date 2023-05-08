@@ -31,7 +31,7 @@ interface FetchedForum {
 }
 
 // Comment Interface with username (Work in progress)
-interface Comment {
+export interface Comment {
 	id: number;
 	message: string;
 	created_at: string;
@@ -208,7 +208,6 @@ export const useForumStore = defineStore('forumStore', {
 
 			const body = {
 				index: commentIndex ?? 0,
-				// how to get get the forum_id?
 				forum: this.forumSelected.forum.id,
 			};
 
@@ -241,7 +240,7 @@ export const useForumStore = defineStore('forumStore', {
 			console.log(this.forumSelected.forum.id);
 
 			return Object.keys(this.commentError).length !== 0
-				? this.commentError
+				? []
 				: newComment.value;
 		},
 	},
