@@ -24,12 +24,16 @@
 		</BaseCard>
 		<BaseCard
 			v-for="(quiz, index) in selectedCourse"
-			:key="quiz"
+			:key="quiz.questionText"
 			:class="`question-${index + 1}`"
 		>
 			<div class="result w-full text-lg mb-3"></div>
 			<h3 class="text-xl mb-5">{{ `${index + 1}. ${quiz.questionText}` }}</h3>
-			<div v-for="option in quiz.options" :key="option" class="flex gap-5 mb-3">
+			<div
+				v-for="option in quiz.options"
+				:key="option.label"
+				class="flex gap-5 mb-3"
+			>
 				<input
 					type="radio"
 					:name="quiz.questionText"
@@ -92,9 +96,11 @@ const dynamicImport = () => {
 // submit quiz handler
 const submitQuiz = () => {
 	// get all selected answers
-	document.querySelectorAll('input[type="radio"]:checked').forEach((answer) => {
-		quizStore.getChosenAnswers(answer.value);
-	});
+	document
+		.querySelectorAll('input[type="radio"]:checked')
+		.forEach((answer: Element) => {
+			quizStore.getChosenAnswers((<HTMLInputElement>answer).value);
+		});
 
 	console.log(quizStore.allChosenAnswers);
 
@@ -105,7 +111,7 @@ const submitQuiz = () => {
 		document.body.scrollTop = 0;
 		document.documentElement.scrollTop = 0;
 
-		alert('please check all questions and fill them up!');
+		alert('Please check all questions and fill them up!');
 		return;
 	}
 
@@ -120,17 +126,21 @@ const submitQuiz = () => {
 		if (
 			quizStore.allCorrectAnswers[index] === quizStore.allChosenAnswers[index]
 		) {
-			const result = document.querySelector(`.question-${index + 1} .result`);
+			const result = document.querySelector<HTMLElement>(
+				`.question-${index + 1} .result`,
+			);
 
-			result.innerHTML = 'Correct !';
-			result.style.color = 'green';
+			result!.innerHTML = 'Correct !';
+			result!.style.color = 'green';
 			numberOfCorrectAnswers.value++;
 		}
 		else {
-			const result = document.querySelector(`.question-${index + 1} .result`);
+			const result = document.querySelector<HTMLElement>(
+				`.question-${index + 1} .result`,
+			);
 
-			result.innerHTML = `Wrong ! Answer: ${quizStore.correctAnswers[index]}`;
-			result.style.color = 'red';
+			result!.innerHTML = `Wrong ! Answer: ${quizStore.correctAnswers[index]}`;
+			result!.style.color = 'red';
 		}
 	}
 
