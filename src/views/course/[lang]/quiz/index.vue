@@ -57,11 +57,11 @@
 </template>
 
 <script setup lang="ts">
+import $ from 'jquery';
 import { useRouter } from 'vue-router';
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useQuizStore } from 'stores/QuizStore';
 import { Question, Option } from 'course-components/CourseQuiz';
-// import { }
 import BaseCard from 'base-components/BaseCard.vue';
 
 const quizStore = useQuizStore();
@@ -96,13 +96,10 @@ const dynamicImport = () => {
 // submit quiz handler
 const submitQuiz = () => {
 	// get all selected answers
-	document
-		.querySelectorAll('input[type="radio"]:checked')
-		.forEach((answer: Element) => {
-			quizStore.getChosenAnswers((<HTMLInputElement>answer).value);
-		});
-
-	console.log(quizStore.allChosenAnswers);
+	$.each($('input[type="radio"]:checked'), (index: number, answer: Element) => {
+		quizStore.getChosenAnswers((answer as HTMLInputElement).value);
+		(answer as HTMLInputElement).disabled = true;
+	});
 
 	// check all question has answers
 	if (quizStore.allChosenAnswers.length !== numberOfQuestions.value) {
@@ -126,21 +123,21 @@ const submitQuiz = () => {
 		if (
 			quizStore.allCorrectAnswers[index] === quizStore.allChosenAnswers[index]
 		) {
-			const result = document.querySelector<HTMLElement>(
-				`.question-${index + 1} .result`,
-			);
+			// eslint-disable-next-line no-undef
+			const result: JQuery<HTMLElement> = $(`.question-${index + 1} .result`);
 
-			result!.innerHTML = 'Correct !';
-			result!.style.color = 'green';
+			result.html('Correct !');
+			result.css('color', 'green');
 			numberOfCorrectAnswers.value++;
 		}
 		else {
-			const result = document.querySelector<HTMLElement>(
-				`.question-${index + 1} .result`,
-			);
+			// eslint-disable-next-line no-undef
+			const result: JQuery<HTMLElement> = $(`.question-${index + 1} .result`);
 
-			result!.innerHTML = `Wrong ! Answer: ${quizStore.correctAnswers[index]}`;
-			result!.style.color = 'red';
+			const wrongResult = `Wrong ! Answer: ${quizStore.correctAnswers[index]}`;
+
+			result.html(wrongResult);
+			result.css('color', 'red');
 		}
 	}
 
@@ -153,8 +150,7 @@ const submitQuiz = () => {
 	submittedQuiz.value = true;
 
 	// scroll user to top of page
-	document.body.scrollTop = 0;
-	document.documentElement.scrollTop = 0;
+	$('body').scrollTop(0);
 };
 
 const calculateScore = (correct: number, total: number) => {

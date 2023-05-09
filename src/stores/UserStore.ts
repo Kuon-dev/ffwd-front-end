@@ -23,7 +23,7 @@ interface ResetPasswordCredentials {
 	token: any;
 }
 
-interface User {
+export interface User {
 	id: string | any;
 	created_at: string | any;
 	email_verified_at: string | any;

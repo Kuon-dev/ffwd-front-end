@@ -27,33 +27,31 @@
 										:icon="['fas', 'user']"
 									/>
 								</div>
-								<v-btn color="#7e81ee" class="text-white w-60"
+								<!-- <v-btn color="#7e81ee" class="text-white w-60"
 									>Update Profile Picture</v-btn
-								>
+								> -->
 							</BaseCard>
 							<BaseCard class="lg:w-3/5">
 								<h2 class="text-2xl mb-3">Edit Profile</h2>
 								<hr class="border-black" />
 								<form class="lg:grid grid-cols-2 gap-4 my-5">
 									<v-text-field
-										:model-value="oriName"
 										v-model="editName"
 										label="Name"
 										variant="solo"
 									></v-text-field>
 									<v-text-field
-										:model-value="oriEmail"
 										v-model="editEmail"
 										label="Email"
 										variant="solo"
 									></v-text-field>
 									<v-text-field
-										:model-value="oriPhone"
 										v-model="editPhone"
 										label="Phone Number"
 										variant="solo"
+										class="h-10"
 									></v-text-field>
-									<div class="relative">
+									<!-- <div class="relative">
 										<v-text-field
 											:type="passwordFieldType"
 											v-model="editPassword"
@@ -74,11 +72,10 @@
 												/>
 											</button>
 										</span>
-									</div>
+									</div> -->
 									<v-textarea
 										label="Bio"
 										variant="solo"
-										:model-value="oriBio"
 										v-model="editBio"
 									></v-textarea>
 								</form>
@@ -100,10 +97,18 @@
 									</v-btn>
 								</div>
 							</BaseCard>
+
+							<!-- Comment Related Alerts Field -->
+							<BaseAlert
+								v-if="showAlert"
+								:type="showAlertType"
+								:title="showAlertTitle"
+								:text="showAlertText"
+							/>
 						</div>
 						<button
 							class="select-none font-bold text-red-500 text-3xl"
-							@click="toggleProfileOverlay()"
+							@click="toggleProfileOverlay(true)"
 						>
 							X
 						</button>
@@ -115,11 +120,12 @@
 </template>
 
 <script setup lang="ts">
-import { useUserStore } from '@/stores/UserStore';
+import $ from 'jquery';
+import { useUserStore, User } from '@/stores/UserStore';
 import { ref, computed } from 'vue';
 import BaseCard from 'base-components/BaseCard.vue';
+import BaseAlert from 'base-components/BaseAlert.vue';
 import { isShowProfile, toggleProfileOverlay } from 'compostables/NavInjector';
-// toggleProfileOverlay(true);
 
 // Define data properties for the component
 const userStore = useUserStore();
@@ -140,6 +146,24 @@ const oriEmail = ref(userStore.user?.email);
 const oriPhone = ref(userStore.user?.phone_number);
 const oriBio = ref(userStore.user?.bio);
 
+const showAlert = ref<Boolean>(false);
+const showAlertTitle = ref<string>('');
+const showAlertText = ref<string>('');
+const showAlertType = ref<'error' | 'success' | 'warning' | 'info'>('error');
+const renderAlert = (
+	type: 'error' | 'success' | 'warning' | 'info',
+	title: string,
+	text: string,
+) => {
+	showAlertType.value = type ?? 'error';
+	showAlertTitle.value = title;
+	showAlertText.value = text;
+	showAlert.value = true;
+	setTimeout(() => {
+		showAlert.value = false;
+	}, 8000);
+};
+
 const togglePeek = (e: Event) => {
 	e.preventDefault();
 	isPeekingPassword.value = !isPeekingPassword.value;
@@ -152,14 +176,29 @@ const togglePeek = (e: Event) => {
 };
 
 const handleSave = (e: Event) => {
-	const updatedUser = {
-		id: originalUserData.value.id,
-		newName: editName.value,
-		newEmail: editEmail.value,
-		newPhone: editPhone.value,
-		newPassword: editPassword.value,
-		newBio: editBio.value,
+	const updatedUser: User = {
+		id: originalUserData.value?.id,
+		created_at: null,
+		email_verified_at: null,
+		is_banned: null,
+		updated_at: null,
+		name: editName.value!.trim(),
+		email: editEmail.value!.trim(),
+		phone_number: editPhone.value!.trim(),
+		password: editPassword.value.trim(),
+		bio: editBio.value!.trim(),
 	};
+
+	$.each($('input'), (index: number, field: Element) => {
+		if (!$(field).val()) {
+			renderAlert(
+				'error',
+				'Empty Field!',
+				'Please do not leave any field empty!',
+			);
+		}
+	});
+
 	userStore.editUser(updatedUser);
 };
 
