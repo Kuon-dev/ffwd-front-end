@@ -9,21 +9,21 @@
 			<!-- Forum Title -->
 			<div class="flex flex-row gap-4 align-center">
 				<div class="flex flex-col justify-center">
-					<button variant="text">
+					<button variant="text" @click="handleUserVote(true)">
 						<font-awesome-icon
 							:icon="['fas', 'caret-up']"
 							size="xl"
-							color="green"
+							:color="userVote?.is_upvote === 1 ? 'green' : 'gray'"
 						/>
 					</button>
 					<p class="text-center">
 						{{ forumStore?.forum?.votes }}
 					</p>
-					<button>
+					<button @click="handleUserVote(false)">
 						<font-awesome-icon
 							:icon="['fas', 'caret-down']"
 							size="xl"
-							color="red"
+							:color="userVote?.is_upvote === 0 ? 'red' : 'gray'"
 						/>
 					</button>
 				</div>
@@ -33,11 +33,7 @@
 			</div>
 
 			<!--Description-->
-			<div class="mt-3 mb-10 px-3" id="forum-content">
-				<p>
-					{{ renderHTML(forumStore.forum.forum.content) ? null : 'no content' }}
-				</p>
-			</div>
+			<div class="mt-3 mb-10 px-3" id="forum-content"></div>
 
 			<!-- Author -->
 			<div class="h-14 my-4 ml-1">
@@ -145,7 +141,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed, ref, watch, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { renderHTML } from 'compostables/EditorJsInjector';
 import PostComment from 'forum-components/PostComment.vue';
@@ -202,6 +198,25 @@ const getTextValue = (event: Event) => {
 	newComment.value = (event.target as HTMLTextAreaElement).value;
 };
 
+const handleUserVote = async (voteType: boolean) => {
+	await getToken();
+	await apiClient
+		.post('/api/forums/vote/add', {
+			forum: forumStore.forum.forum.id,
+			vote: voteType,
+		})
+		.catch((err: Error | AxiosError) => {
+			const error = err as AxiosError;
+			// this.authErrors = (error?.response?.data as any).errors;
+			renderAlert(
+				'error',
+				'Oops an error has occured',
+				(error?.response?.data as any)?.message,
+			);
+		});
+	location.reload();
+};
+
 const submitComment = async (e: Event) => {
 	e.preventDefault();
 	if (!newComment.value) {
@@ -237,6 +252,32 @@ const submitComment = async (e: Event) => {
 
 const path = computed(() => {
 	return router.currentRoute.value.path;
+});
+
+const userVote = ref();
+const renderVote = async () => {
+	const vote = await apiClient
+		.post('/api/forums/vote/get', {
+			forum: forumStore.forum.forum.id,
+		})
+		.catch((err: Error | AxiosError) => {
+			const error = err as AxiosError;
+			// this.authErrors = (error?.response?.data as any).errors;
+			renderAlert(
+				'error',
+				'Oops an error has occured',
+				(error?.response?.data as any)?.message,
+			);
+		});
+	const voteResult = (vote as any).data.data[0];
+	userVote.value = voteResult;
+	return voteResult;
+};
+
+await renderVote();
+
+onMounted(() => {
+	renderHTML(forumStore.forum.forum.content);
 });
 </script>
 
