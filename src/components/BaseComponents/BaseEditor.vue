@@ -2,15 +2,22 @@
 	<div
 		id="target"
 		class="border border-gray-200 px-16 text-black"
-		@change="handleInputChange()"
+		@change="handleInputChange($event)"
 	/>
 	<v-btn color="#7e81ff" class="text-white" @click="handleSubmit($event)"
 		>submit</v-btn
 	>
+	<BaseAlert
+		v-if="showAlert"
+		:type="showAlertType"
+		:title="showAlertTitle"
+		:text="showAlertText"
+	/>
 </template>
 
 <script setup lang="ts">
 // import Editor from '@tinymce/tinymce-vue';
+import BaseAlert from 'base-components/BaseAlert.vue';
 import EditorJS from '@editorjs/editorjs';
 import Code from '@editorjs/code';
 import Paragraph from '@editorjs/paragraph';
@@ -51,11 +58,23 @@ const editor = new EditorJS({
 	},
 });
 
-/*
-const emitContent = () => {
-	emits('text-value', textContent.value);
+const showAlert = ref<Boolean>(false);
+const showAlertTitle = ref<string>('');
+const showAlertText = ref<string>('');
+const showAlertType = ref<'error' | 'success' | 'warning' | 'info'>('error');
+const renderAlert = (
+	type: 'error' | 'success' | 'warning' | 'info',
+	title: string,
+	text: string,
+) => {
+	showAlertType.value = type ?? 'error';
+	showAlertTitle.value = title;
+	showAlertText.value = text;
+	showAlert.value = true;
+	setTimeout(() => {
+		showAlert.value = false;
+	}, 8000);
 };
-*/
 
 const handleSubmit = async (e: Event) => {
 	e.preventDefault();
@@ -70,9 +89,14 @@ const handleSubmit = async (e: Event) => {
 				content: output,
 			});
 			console.log(res);
+			renderAlert(
+				'success',
+				'Post success',
+				'Post has been successfully created',
+			);
 		})
 		.catch((err) => {
-			console.log(err);
+			renderAlert('error', 'An error occurred', err);
 		});
 };
 </script>

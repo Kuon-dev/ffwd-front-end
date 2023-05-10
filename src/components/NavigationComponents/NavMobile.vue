@@ -134,10 +134,6 @@ import {
 import { useUserStore } from 'stores/UserStore';
 
 const store = useUserStore();
-
-onMounted(async () => {
-	await store.getUser();
-});
 </script>
 
 <style lang="scss" scoped>
