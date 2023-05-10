@@ -55,7 +55,7 @@ interface FetchedComment {
 }
 
 export interface Post {
-	comment: Comment;
+	comment: Comment[];
 	forum: Forum;
 	user: any;
 	votes: number;

@@ -96,10 +96,6 @@ import BaseUserProfile from 'base-components/BaseUserProfile.vue';
 import { toggleProfileOverlay } from 'compostables/NavInjector';
 
 const store = useUserStore();
-
-onMounted(async () => {
-	await store.getUser();
-});
 </script>
 
 <style lang="scss" scoped></style>
