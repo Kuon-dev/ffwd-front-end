@@ -11,18 +11,7 @@
 					/>
 				</aside>
 				<div class="w-full lg:px-6 lg:ml-10 2xl:ml-0">
-					<Suspense>
-						<template #default>
-							<router-view></router-view>
-						</template>
-						<template #fallback>
-							<v-skeleton-loader
-								class="mx-auto border w-full"
-								:type="['article', 'button', 'text', 'avatar']"
-								:elevation="10"
-							></v-skeleton-loader>
-						</template>
-					</Suspense>
+					<router-view></router-view>
 				</div>
 			</div>
 		</div>

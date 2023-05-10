@@ -1,4 +1,5 @@
 import { ref } from 'vue';
+import $ from 'jquery';
 import { OutputData } from '@editorjs/editorjs';
 import editorJsHtml from 'editorjs-html';
 
@@ -15,8 +16,13 @@ export const handleInputChange = (event: any) => {
 };
 
 export const renderHTML = (data: any) => {
-	if (!data) return;
-	console.log(JSON.stringify(data));
+	if (!data) return false;
+	const element = $('#forum-content');
+	if (element.contents().length > 0) return false;
 	const html = EditorJsToHtml.parse(JSON.parse(data));
-	return html[0];
+	console.log(html);
+	html?.forEach((elem: any) => {
+		$('#forum-content').append(elem);
+	});
+	return true;
 };

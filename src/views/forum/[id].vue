@@ -3,7 +3,7 @@
 	<div class="h-full w-full bg-cover p-1">
 		<!--Forum-->
 		<div
-			class="bg-white justify-center border rounded-lg p-9 xl:w-3/5 md:w-5/6 sm:w-6/7 xl:mx-72 md:mx-16 sm:mx-2 grid grid-cols-1 my-5"
+			class="bg-white justify-center border rounded-lg p-9 xl:w-3/5 md:w-5/6 sm:w-6/7 xl:mx-72 md:mx-16 sm:mx-2 flex flex-col my-5"
 			v-if="Object.keys(forumStore.errorList).length === 0"
 		>
 			<!-- Forum Title -->
@@ -32,6 +32,13 @@
 				</h2>
 			</div>
 
+			<!--Description-->
+			<div class="mt-3 mb-10 px-3" id="forum-content">
+				<p>
+					{{ renderHTML(forumStore.forum.forum.content) ? null : 'no content' }}
+				</p>
+			</div>
+
 			<!-- Author -->
 			<div class="h-14 my-4 ml-1">
 				<div class="h-14 w-full flex justify-start items-center">
@@ -54,50 +61,15 @@
 					</div>
 				</div>
 			</div>
-
-			<!--Description-->
-			<div class="ml-1">
-				<p class="my-4">
-					I would like to extend the border-bottom line longer than ever as the
-					image below: \n If this is impossible and you have any suggestion to
-					make a change into my code, that would be great.
-				</p>
-
-				<!-- Image -->
-				<p>
-					<img
-						src="https://i.stack.imgur.com/HGVm7.png"
-						alt="Reference Image"
-					/>
-				</p>
-
-				<p class="my-4"><strong>HTML:</strong></p>
-
-				<!-- Display Code -->
-				<div class="bg-slate-950 rounded h-auto max-h-96 overflow-y-auto">
-					<div class="flex justify-start mx-5 h-fit"></div>
-				</div>
-
-				<!-- Link -->
-				<p class="my-4">
-					"Here is my &nbsp;"
-					<strong>JSFIDDLE</strong>
-					": &nbsp;"
-					<strong>
-						<a
-							href="http://jsfiddle.net/QTNr5/"
-							rel="nofollow noreferrer"
-							class="text-sky-700 underline hover:text-blue-700 visited:text-indigo-500"
-							>http://jsfiddle.net/QTNr5/</a
-						>
-					</strong>
-				</p>
-			</div>
-
 			<!-- Leave Comment Field -->
-			<form class="relative my-3 mx-1" data-te-input-wrapper-init>
+			<form
+				class="relative my-3 mx-1"
+				data-te-input-wrapper-init
+				v-if="store.user"
+			>
+				<span class="text-sky-500">Comment as {{ store.user?.name }}</span>
 				<v-textarea
-					class="peer block min-h-[auto] w-full rounded border border-gray-400 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+					class=""
 					id="comment"
 					placeholder="Comment"
 					@input="getTextValue"
@@ -128,16 +100,27 @@
 				<div
 					class="place-content-start flex text-xl font-semibold leading-10 ml-2"
 				>
-					<div>{{ forumStore.forum.comment.length }} Answers</div>
+					<div>{{ forumStore.forum.comment.length }} Comments</div>
 				</div>
 
 				<!-- Comments -->
 				<div class="my-1">
-					<div v-if="Object.keys(forumStore.errorList).length === 0">
+					<div
+						v-if="
+							Object.keys(forumStore.errorList).length === 0 &&
+							forumStore?.forum.comment.length > 0
+						"
+					>
 						<PostComment
 							v-if="forumStore?.forum?.comment"
 							:comments="comments"
 						/>
+					</div>
+					<div
+						v-else-if="Object.keys(forumStore.errorList).length === 0"
+						class="mt-5 text-gray-500"
+					>
+						No comments yet
 					</div>
 					<BaseCard v-else class="mt-4">
 						<div class="text-red-500">
@@ -185,12 +168,12 @@ const currentForumData = ref([]);
 // Define comment data
 const comments = ref<Comment[]>([]);
 
-watch(currentForumData, async (oldVal, newVal) => {
+watch(currentForumData, async () => {
 	comments.value = await (forumStore.getAllComments(0) ?? []);
 });
 
 currentForumData.value = await forumStore.getSpecificForum(
-	router.currentRoute.value.params.id,
+	(router.currentRoute.value.params as any).id,
 );
 
 // For Create New Comment
@@ -214,8 +197,6 @@ const renderAlert = (
 		showAlert.value = false;
 	}, 8000);
 };
-
-const errorMessage = ref('');
 
 const getTextValue = (event: Event) => {
 	newComment.value = (event.target as HTMLTextAreaElement).value;
@@ -259,4 +240,47 @@ const path = computed(() => {
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss">
+#forum-content {
+}
+
+#forum-content h1,
+#forum-content h2,
+#forum-content h3,
+#forum-content h4,
+#forum-content h5,
+#forum-content h6 {
+	margin-top: 24px;
+	margin-bottom: 16px;
+	font-weight: 600;
+	line-height: 1.25;
+}
+
+#forum-content h2 {
+	font-weight: 600;
+	padding-bottom: 0.3em;
+	font-size: 1.5em;
+	// border-bottom: 1px solid hsla(210,18%,87%,1);
+}
+
+#forum-content h3 {
+	font-weight: 600;
+	font-size: 1.25em;
+}
+
+#forum-content h4 {
+	font-weight: 600;
+	font-size: 1em;
+}
+
+#forum-content h5 {
+	font-weight: 600;
+	font-size: 0.875em;
+}
+
+#forum-content h6 {
+	font-weight: 600;
+	font-size: 0.85em;
+	color: #57606a;
+}
+</style>
