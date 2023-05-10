@@ -39,7 +39,7 @@
 				v-if="status !== 'editing'"
 			></div>
 			<BaseEditor
-				v-else
+				v-else-if="store.user"
 				server="/api/forums/edit"
 				:user="store.user"
 				:title="forumStore?.forum?.forum?.title"
@@ -71,7 +71,7 @@
 
 				<div
 					v-if="
-						store.user.id === forumStore.forum.forum.user_id ||
+						store.user?.id === forumStore.forum.forum.user_id ||
 						store.accessLevel > 1
 					"
 					class="flex flex-row justify-end gap-4 items-center"
@@ -80,7 +80,7 @@
 					<button @click="toggleEditStatus()">
 						<font-awesome-icon icon="fa-solid fa-pen" />
 					</button>
-					<button>
+					<button @click="deletePost()">
 						<font-awesome-icon icon="fa-solid fa-trash" />
 					</button>
 				</div>
@@ -169,19 +169,19 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch, onMounted } from 'vue';
+import { computed, ref, watch, onMounted, onBeforeMount } from 'vue';
 import { useRouter } from 'vue-router';
 import { renderHTML } from 'compostables/EditorJsInjector';
-import PostComment from 'forum-components/PostComment.vue';
 import { useForumStore, Comment } from 'stores/ForumStore';
-import BaseCard from 'base-components/BaseCard.vue';
-import BaseEditor from 'base-components/BaseEditor.vue';
-// The following imports are for submit Comments code(testing phase)
-// Used when user leave/post comment
 import { useUserStore } from 'stores/UserStore';
 import { getToken, apiClient } from 'stores/BackendAPI';
 import { AxiosError } from 'axios';
 import BaseAlert from 'base-components/BaseAlert.vue';
+import PostComment from 'forum-components/PostComment.vue';
+import BaseCard from 'base-components/BaseCard.vue';
+import BaseEditor from 'base-components/BaseEditor.vue';
+
+import { setupWebSocket } from 'stores/WebSocketAPI';
 
 // Define data properties for the component
 const forumStore = useForumStore();
@@ -321,7 +321,15 @@ const toggleEditStatus = () => {
 	}
 };
 
+const deletePost = () => {
+	console.log('test');
+};
+
 await renderVote();
+
+onBeforeMount(() => {
+	setupWebSocket(forumStore.forum.forum.id);
+});
 
 onMounted(() => {
 	renderHTML(forumStore.forum.forum.content);

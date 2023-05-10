@@ -170,23 +170,15 @@ const editComment = async (
 	commentUserId: number,
 	commentId: number,
 ) => {
-	if (store.user?.id !== commentUserId && accessLevel > 1) {
-		// TODO admin edit
-		if (!editedComment.value) {
-			renderAlert(
-				'error',
-				'Oops an error has occured',
-				'Make sure your edited comment is not empty',
-			);
-			return;
-		}
-
-		const body = {
-			message: editedComment.value,
-			// comment: comment.id,
-		};
+	if (!editedComment.value) {
+		renderAlert(
+			'error',
+			'Oops an error has occured',
+			'Make sure your edited comment is not empty',
+		);
+		return;
 	}
-	else if (store.user?.id === commentUserId) {
+	if (store.user?.id === commentUserId || accessLevel > 1) {
 		// USER edit
 		const body = {
 			message: editedComment.value,
