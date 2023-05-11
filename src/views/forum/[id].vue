@@ -299,7 +299,7 @@ const renderVote = async () => {
 				(error?.response?.data as any)?.message,
 			);
 		});
-	const voteResult = (vote as any).data.data[0];
+	const voteResult = (vote as any)?.data?.data[0];
 	userVote.value = voteResult;
 	return voteResult;
 };
@@ -321,7 +321,7 @@ const deletePost = () => {
 	console.log('test');
 };
 
-await renderVote();
+if (store.user) await renderVote();
 
 onBeforeMount(() => {
 	addNewCommentSocket(forumStore.forum.forum.id);
