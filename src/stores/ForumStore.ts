@@ -226,8 +226,8 @@ export const useForumStore = defineStore('forumStore', {
 					};
 				},
 			);
-			console.log(newComment);
 
+			this.postComments = newComment;
 			Object.keys(this.commentError).length !== 0
 				? (this.postComments = newComment)
 				: [];

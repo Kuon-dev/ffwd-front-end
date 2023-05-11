@@ -137,7 +137,7 @@
 					>
 						<PostComment
 							v-if="forumStore?.forum?.comment"
-							:comments="comments"
+							:comments="forumStore.allComments"
 						/>
 					</div>
 					<div
@@ -181,7 +181,7 @@ import PostComment from 'forum-components/PostComment.vue';
 import BaseCard from 'base-components/BaseCard.vue';
 import BaseEditor from 'base-components/BaseEditor.vue';
 
-import { setupWebSocket } from 'stores/WebSocketAPI';
+import { addNewCommentSocket } from 'stores/WebSocketAPI';
 
 // Define data properties for the component
 const forumStore = useForumStore();
@@ -192,11 +192,6 @@ const status = ref<'viewing' | 'editing'>('viewing');
 const currentForumData = ref([]);
 
 // Define comment data
-const comments = ref<Comment[]>([]);
-
-watch(currentForumData, async () => {
-	comments.value = await (forumStore.getAllComments(0) ?? []);
-});
 
 const fetchForumContent = async () => {
 	currentForumData.value = await forumStore.getSpecificForum(
@@ -204,8 +199,10 @@ const fetchForumContent = async () => {
 	);
 };
 
+// get the content of the post
 await fetchForumContent();
-
+// get the content of the comments
+await forumStore.getAllComments(0);
 // For Create New Comment
 const newComment = ref<String>('');
 
@@ -270,7 +267,6 @@ const submitComment = async (e: Event) => {
 		.then(async (response) => {
 			renderAlert('success', 'Success', (response?.data as any).message);
 			// comments.value = await (forumStore.getAllComments(0)) ?? [];
-			location.reload();
 		})
 		.catch((err: Error | AxiosError) => {
 			const error = err as AxiosError;
@@ -328,7 +324,7 @@ const deletePost = () => {
 await renderVote();
 
 onBeforeMount(() => {
-	setupWebSocket(forumStore.forum.forum.id);
+	addNewCommentSocket(forumStore.forum.forum.id);
 });
 
 onMounted(() => {

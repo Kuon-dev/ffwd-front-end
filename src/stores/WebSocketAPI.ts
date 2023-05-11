@@ -7,7 +7,7 @@ const pusher = new Pusher(import.meta.env.VITE_APP_PUSHER_KEY, {
 	cluster: import.meta.env.VITE_APP_PUSHER_CLUSTER,
 });
 
-export function setupWebSocket(postId: string) {
+export const addNewCommentSocket = (postId: number) => {
 	const channel = pusher.subscribe(`post-comments-${postId}`);
 	console.log(postId);
 
@@ -18,6 +18,6 @@ export function setupWebSocket(postId: string) {
 			...data.commentData,
 			username: data.user.name,
 		};
-		forumStore.postComments.push(newComment);
+		forumStore.postComments.unshift(newComment);
 	});
-}
+};
