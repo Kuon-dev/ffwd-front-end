@@ -4,9 +4,9 @@
 		class="border border-gray-200 px-16 text-black"
 		@change="handleInputChange($event)"
 	/>
-	<v-btn color="#7e81ff" class="text-white" @click="handleSubmit($event)"
-		>submit</v-btn
-	>
+	<v-btn color="#7e81ff" class="text-white" @click="handleSubmit($event)">
+		{{ props.status === 'adding' ? 'Submit' : 'Edit' }}
+	</v-btn>
 	<BaseAlert
 		v-if="showAlert"
 		:type="showAlertType"
@@ -23,10 +23,13 @@ import Code from '@editorjs/code';
 import Paragraph from '@editorjs/paragraph';
 import Header from '@editorjs/header';
 
+import { useForumStore } from 'stores/ForumStore';
+
 import { handleInputChange } from 'compostables/EditorJsInjector';
-import { ref, computed } from 'vue';
+import { ref, computed, PropType } from 'vue';
 import { apiClient, getToken } from 'stores/BackendAPI';
 
+const forumStore = useForumStore();
 const props = defineProps({
 	server: {
 		type: String,
@@ -40,6 +43,10 @@ const props = defineProps({
 		type: Object,
 		required: true,
 	},
+	status: {
+		type: String as PropType<'viewing' | 'adding' | 'editing'>,
+		default: 'adding',
+	},
 });
 
 const emits = defineEmits(['text-value']);
@@ -52,6 +59,7 @@ const editor = new EditorJS({
 		paragraph: Paragraph,
 		// ...
 	},
+	data: JSON.parse(forumStore.forum.forum.content),
 	async onChange(api, event) {
 		const data = await api.saver.save();
 		handleInputChange(data);
@@ -85,6 +93,7 @@ const handleSubmit = async (e: Event) => {
 			if (!props.server) return;
 			const res = await apiClient.post(props.server, {
 				user_id: props.user.id,
+				forum: forumStore.forum.forum.id ?? -1,
 				title: props.title ?? 'Test title',
 				content: output,
 			});

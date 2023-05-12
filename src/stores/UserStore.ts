@@ -61,6 +61,7 @@ export const useUserStore = defineStore('userStore', {
 
 		async getUser() {
 			await getToken();
+			if (!this.user) return;
 			const userData = await apiClient
 				.get('api/user')
 				.catch((err: Error | AxiosError) => {

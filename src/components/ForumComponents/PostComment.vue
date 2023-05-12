@@ -57,6 +57,12 @@
 						:is="index === editingIndex ? 'textarea' : 'p'"
 						class="mx-1 my-4 flex-grow resize-none h-auto min-h-0"
 						@input="getEditedCommentValue"
+						:class="
+							comment.is_deleted_by_user === 1 ||
+							comment.is_removed_by_admin === 1
+								? 'text-gray-400'
+								: 'text-gray-700'
+						"
 						>{{ showCommentContent(comment) }}</component
 					>
 					<div class="flex flex-col gap-2 ml-2">
@@ -175,17 +181,15 @@ const editComment = async (
 	commentUserId: number,
 	commentId: number,
 ) => {
+	if (!editedComment.value) {
+		renderAlert(
+			'error',
+			'Oops an error has occured',
+			'Make sure your edited comment is not empty',
+		);
+		return;
+	}
 	if (store.user?.id !== commentUserId && accessLevel > 1) {
-		// TODO admin edit
-		if (!editedComment.value) {
-			renderAlert(
-				'error',
-				'Oops an error has occured',
-				'Please enter a new message for your comment',
-			);
-			return;
-		}
-
 		const body = {
 			message: editedComment.value,
 			comment: commentId,
@@ -197,7 +201,6 @@ const editComment = async (
 			.then(async (response) => {
 				renderAlert('success', 'Success', (response?.data as any).message);
 				// comments.value = await (forumStore.getAllComments(0)) ?? [];
-				location.reload();
 			})
 			.catch((err: Error | AxiosError) => {
 				const error = err as AxiosError;
@@ -209,7 +212,7 @@ const editComment = async (
 			});
 		return res;
 	}
-	else if (store.user?.id === commentUserId) {
+	if (store.user?.id === commentUserId || accessLevel > 1) {
 		// USER edit
 		if (!editedComment.value) {
 			renderAlert(
@@ -231,7 +234,6 @@ const editComment = async (
 			.then(async (response) => {
 				renderAlert('success', 'Success', (response?.data as any).message);
 				// comments.value = await (forumStore.getAllComments(0)) ?? [];
-				location.reload();
 			})
 			.catch((err: Error | AxiosError) => {
 				const error = err as AxiosError;
@@ -250,7 +252,7 @@ const editComment = async (
 
 const showCommentContent = (comment: Comment) => {
 	if (comment.is_deleted_by_user === 1) {
-		return 'This comment has been deleted by the user';
+		return '(This comment has been deleted by the user)';
 	}
 	if (comment.is_removed_by_admin === 1) {
 		return 'This comment has been removed by the admin';
@@ -275,7 +277,6 @@ const deleteComment = async (
 			.post('/api/comments/deleteAdmin', body)
 			.then(async (response) => {
 				renderAlert('success', 'Success', (response?.data as any).message);
-				location.reload();
 			})
 			.catch((err: Error | AxiosError) => {
 				const error = err as AxiosError;
@@ -298,7 +299,6 @@ const deleteComment = async (
 			.post('/api/comments/deleteUser', body)
 			.then(async (response) => {
 				renderAlert('success', 'Success', (response?.data as any).message);
-				location.reload();
 			})
 			.catch((err: Error | AxiosError) => {
 				const error = err as AxiosError;

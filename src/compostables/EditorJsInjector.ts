@@ -16,13 +16,12 @@ export const handleInputChange = (event: any) => {
 };
 
 export const renderHTML = (data: any) => {
-	if (!data) return false;
+	if (!data) return;
 	const element = $('#forum-content');
-	if (element.contents().length > 0) return false;
+	if (element.contents().length > 0) return;
 	const html = EditorJsToHtml.parse(JSON.parse(data));
-	console.log(html);
 	html?.forEach((elem: any) => {
 		$('#forum-content').append(elem);
 	});
-	return true;
+	return html[0];
 };

@@ -11,9 +11,13 @@ router.beforeEach(async (to: any) => {
 	NProgress.start();
 	console.info(`%c[Dev Vue Router] ${to.path}`, 'color: #bada55');
 	const store = useUserStore();
-	if (!store.user) await store.getUser();
+	if (!store.user) return;
 	if (Object.keys(store.user).length === 0) {
-		store.setNullUser();
+		console.log('fetching user');
+		const user = await store.getUser();
+		if (!user) {
+			store.setNullUser();
+		}
 	}
 
 	const admin = /^\/admin(\/\w+)*$/;

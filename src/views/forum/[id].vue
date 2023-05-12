@@ -9,21 +9,21 @@
 			<!-- Forum Title -->
 			<div class="flex flex-row gap-4 align-center">
 				<div class="flex flex-col justify-center">
-					<button variant="text">
+					<button variant="text" @click="handleUserVote(true)">
 						<font-awesome-icon
 							:icon="['fas', 'caret-up']"
 							size="xl"
-							color="green"
+							:color="userVote?.is_upvote === 1 ? 'green' : 'gray'"
 						/>
 					</button>
 					<p class="text-center">
 						{{ forumStore?.forum?.votes }}
 					</p>
-					<button>
+					<button @click="handleUserVote(false)">
 						<font-awesome-icon
 							:icon="['fas', 'caret-down']"
 							size="xl"
-							color="red"
+							:color="userVote?.is_upvote === 0 ? 'red' : 'gray'"
 						/>
 					</button>
 				</div>
@@ -33,14 +33,22 @@
 			</div>
 
 			<!--Description-->
-			<div class="mt-3 mb-10 px-3" id="forum-content">
-				<p>
-					{{ renderHTML(forumStore.forum.forum.content) ? null : 'no content' }}
-				</p>
-			</div>
+			<div
+				class="mt-3 mb-10 px-3"
+				id="forum-content"
+				v-if="status !== 'editing'"
+			></div>
+			<BaseEditor
+				v-else-if="store.user"
+				server="/api/forums/edit"
+				:user="store.user"
+				:title="forumStore?.forum?.forum?.title"
+				:status="status"
+			/>
+			<!-- User toolbar -->
 
 			<!-- Author -->
-			<div class="h-14 my-4 ml-1">
+			<div class="h-14 my-4 ml-1 flex justify-between items-center">
 				<div class="h-14 w-full flex justify-start items-center">
 					<!-- Profile Image -->
 					<div class="h-14 w-12 flex justify-center items-center">
@@ -59,6 +67,22 @@
 						<div class="font-light text-xs">3 days ago</div>
 						<!-- Time elapsed since forum post -->
 					</div>
+				</div>
+
+				<div
+					v-if="
+						store.user?.id === forumStore.forum.forum.user_id ||
+						store.accessLevel > 1
+					"
+					class="flex flex-row justify-end gap-4 items-center"
+				>
+					{{ status }}
+					<button @click="toggleEditStatus()">
+						<font-awesome-icon icon="fa-solid fa-pen" />
+					</button>
+					<button @click="deletePost()">
+						<font-awesome-icon icon="fa-solid fa-trash" />
+					</button>
 				</div>
 			</div>
 			<!-- Leave Comment Field -->
@@ -113,7 +137,7 @@
 					>
 						<PostComment
 							v-if="forumStore?.forum?.comment"
-							:comments="comments"
+							:comments="forumStore.allComments"
 						/>
 					</div>
 					<div
@@ -145,37 +169,40 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed, ref, watch, onMounted, onBeforeMount } from 'vue';
 import { useRouter } from 'vue-router';
 import { renderHTML } from 'compostables/EditorJsInjector';
-import PostComment from 'forum-components/PostComment.vue';
 import { useForumStore, Comment } from 'stores/ForumStore';
-import BaseCard from 'base-components/BaseCard.vue';
-// The following imports are for submit Comments code(testing phase)
-// Used when user leave/post comment
 import { useUserStore } from 'stores/UserStore';
 import { getToken, apiClient } from 'stores/BackendAPI';
 import { AxiosError } from 'axios';
 import BaseAlert from 'base-components/BaseAlert.vue';
+import PostComment from 'forum-components/PostComment.vue';
+import BaseCard from 'base-components/BaseCard.vue';
+import BaseEditor from 'base-components/BaseEditor.vue';
+
+import { addNewCommentSocket } from 'stores/WebSocketAPI';
 
 // Define data properties for the component
 const forumStore = useForumStore();
 const store = useUserStore();
 const router = useRouter();
 
+const status = ref<'viewing' | 'editing'>('viewing');
 const currentForumData = ref([]);
 
 // Define comment data
-const comments = ref<Comment[]>([]);
 
-watch(currentForumData, async () => {
-	comments.value = await (forumStore.getAllComments(0) ?? []);
-});
+const fetchForumContent = async () => {
+	currentForumData.value = await forumStore.getSpecificForum(
+		(router.currentRoute.value.params as any).id,
+	);
+};
 
-currentForumData.value = await forumStore.getSpecificForum(
-	(router.currentRoute.value.params as any).id,
-);
-
+// get the content of the post
+await fetchForumContent();
+// get the content of the comments
+await forumStore.getAllComments(0);
 // For Create New Comment
 const newComment = ref<String>('');
 
@@ -202,6 +229,25 @@ const getTextValue = (event: Event) => {
 	newComment.value = (event.target as HTMLTextAreaElement).value;
 };
 
+const handleUserVote = async (voteType: boolean) => {
+	await getToken();
+	await apiClient
+		.post('/api/forums/vote/add', {
+			forum: forumStore.forum.forum.id,
+			vote: voteType,
+		})
+		.catch((err: Error | AxiosError) => {
+			const error = err as AxiosError;
+			// this.authErrors = (error?.response?.data as any).errors;
+			renderAlert(
+				'error',
+				'Oops an error has occured',
+				(error?.response?.data as any)?.message,
+			);
+		});
+	location.reload();
+};
+
 const submitComment = async (e: Event) => {
 	e.preventDefault();
 	if (!newComment.value) {
@@ -221,7 +267,6 @@ const submitComment = async (e: Event) => {
 		.then(async (response) => {
 			renderAlert('success', 'Success', (response?.data as any).message);
 			// comments.value = await (forumStore.getAllComments(0)) ?? [];
-			location.reload();
 		})
 		.catch((err: Error | AxiosError) => {
 			const error = err as AxiosError;
@@ -237,6 +282,53 @@ const submitComment = async (e: Event) => {
 
 const path = computed(() => {
 	return router.currentRoute.value.path;
+});
+
+const userVote = ref();
+const renderVote = async () => {
+	const vote = await apiClient
+		.post('/api/forums/vote/get', {
+			forum: forumStore.forum.forum.id,
+		})
+		.catch((err: Error | AxiosError) => {
+			const error = err as AxiosError;
+			// this.authErrors = (error?.response?.data as any).errors;
+			renderAlert(
+				'error',
+				'Oops an error has occured',
+				(error?.response?.data as any)?.message,
+			);
+		});
+	const voteResult = (vote as any)?.data?.data[0];
+	userVote.value = voteResult;
+	return voteResult;
+};
+
+const toggleEditStatus = () => {
+	status.value === 'viewing'
+		? (status.value = 'editing')
+		: (status.value = 'viewing');
+
+	if (status.value === 'viewing') {
+		setTimeout(async () => {
+			await fetchForumContent();
+			renderHTML(forumStore.forum.forum.content);
+		}, 500);
+	}
+};
+
+const deletePost = () => {
+	console.log('test');
+};
+
+if (store.user) await renderVote();
+
+onBeforeMount(() => {
+	addNewCommentSocket(forumStore.forum.forum.id);
+});
+
+onMounted(() => {
+	renderHTML(forumStore.forum.forum.content);
 });
 </script>
 
