@@ -219,7 +219,7 @@ export const useForumStore = defineStore('forumStore', {
 
 			const newComment = response?.data?.map(
 				(comment: FetchedComment, index: number) => {
-					// The Comment is from the interface Comment defined above
+					// The FetchedComment is from the interface FetchedComment defined above
 					return {
 						...comment,
 						username: user.value[index],
