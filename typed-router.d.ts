@@ -114,6 +114,12 @@ declare module 'vue-router/auto/routes' {
 			{ lang: ParamValue<true> },
 			{ lang: ParamValue<false> }
 		>;
+		'/course/[lang]/score/[score_id]': RouteRecordInfo<
+			'/course/[lang]/score/[score_id]',
+			'/course/:lang/score/:score_id',
+			{ lang: ParamValue<true>; score_id: ParamValue<true> },
+			{ lang: ParamValue<false>; score_id: ParamValue<false> }
+		>;
 		'/forgot-password': RouteRecordInfo<
 			'/forgot-password',
 			'/forgot-password',

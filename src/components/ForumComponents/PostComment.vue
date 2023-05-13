@@ -1,3 +1,4 @@
+<!-- Display Comment UI for each Comment of the Forum -->
 <template>
 	<div v-for="(comment, index) in comments" :key="comment.id">
 		<hr />
