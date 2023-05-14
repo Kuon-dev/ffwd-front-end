@@ -122,10 +122,6 @@ import { useUserStore } from 'stores/UserStore';
 
 const store = useUserStore();
 
-onMounted(async () => {
-	await store.getUser();
-});
-
 /*
 import BaseCard from 'base-components/BaseCard.vue';
 import { landingNavigation } from 'nav-components/NavItems';

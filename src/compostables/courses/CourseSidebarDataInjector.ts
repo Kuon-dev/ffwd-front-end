@@ -77,7 +77,6 @@ const injectScrollama = () => {
 		section.insertBefore(h2);
 		section.prepend(h2);
 	});
-	console.log('injecting scrollama');
 	// setup scrollama
 	const scroller = scrollama();
 	scroller
@@ -90,7 +89,6 @@ const injectScrollama = () => {
 			const sidebarItem = $(
 				`#page-sidebar-headers li a[href="#${id}"]`,
 			).parent();
-			console.log(sidebarItem);
 			sidebarItem.addClass('active');
 		})
 		.onStepExit(({ element }) => {
@@ -109,7 +107,6 @@ export const path = computed(() => {
 
 // this will render the sidebar if the user is viewing a topic
 export const injectSidebarComponent = watch(path, () => {
-	console.log(path.value.params.topic);
 	if (path.value.params.topic) {
 		$('#page-sidebar').show();
 	}

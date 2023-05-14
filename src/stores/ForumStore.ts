@@ -55,7 +55,7 @@ interface FetchedComment {
 }
 
 export interface Post {
-	comment: Comment;
+	comment: Comment[];
 	forum: Forum;
 	user: any;
 	votes: number;
@@ -69,16 +69,17 @@ interface SingleError {
 
 export const useForumStore = defineStore('forumStore', {
 	state: () => ({
-		forums: <any>[],
+		forums: [] as Forum[],
 		forumSelected: <Post>{} || <any>{},
 		forumPagination: 0,
-		postCommentPagination: 0,
 		forumCurrentPgnt: 1,
+		postComments: [] as Comment[],
 		forumError: <SingleError>{} || <any>{},
 		commentError: <SingleError>{} || <any>{},
 	}),
 	getters: {
 		allForums: (state) => state.forums,
+		allComments: (state) => state.postComments,
 		forumCurrentPagination: (state) => state.forumCurrentPgnt,
 		errorList: (state) => state.forumError,
 		forum: (state) => state.forumSelected,
@@ -110,7 +111,6 @@ export const useForumStore = defineStore('forumStore', {
 						message: (error?.response?.data as any).message,
 						status: error?.response?.status,
 					};
-					console.log(error);
 					this.forumError = errorMessage;
 				});
 
@@ -168,7 +168,6 @@ export const useForumStore = defineStore('forumStore', {
 						message: (error?.response?.data as any).message,
 						status: error?.response?.status,
 					};
-					console.log(error);
 					this.forumError = errorMessage;
 				});
 
@@ -189,24 +188,21 @@ export const useForumStore = defineStore('forumStore', {
 					console.log(err);
 				});
 
-			console.log(res);
 			return data.value;
 		},
 
-		// Work in progress
 		// Get all comments of the selected forum
 		async getAllComments(commentIndex: number) {
 			await getToken();
 
 			const user = ref<String[]>([]);
-			const newComment = ref<Comment[]>([]);
 
 			const body = {
 				index: commentIndex ?? 0,
-				forum: this.forumSelected?.forum?.id,
+				forum: this.forum?.forum?.id,
 			};
 
-			const commentData = await apiClient
+			const response = await apiClient
 				.post(`api/comments/get/${commentIndex ?? 0}`, body)
 				.then((res) => {
 					user.value = res.data.users;
@@ -218,25 +214,23 @@ export const useForumStore = defineStore('forumStore', {
 						message: (error?.response?.data as any).message,
 						status: error?.response?.status,
 					};
-					console.log(error);
 					this.commentError = errorMessage;
 				});
 
-			commentData?.data?.forEach((comment: FetchedComment, index: number) => {
-				// The Comment is from the interface Comment defined above
-				const tempComment: Comment = {
-					...comment,
-					username: user.value[index],
-				};
-				newComment.value.push(tempComment);
-			});
+			const newComment = response?.data?.map(
+				(comment: FetchedComment, index: number) => {
+					// The FetchedComment is from the interface FetchedComment defined above
+					return {
+						...comment,
+						username: user.value[index],
+					};
+				},
+			);
 
-			console.log(commentData);
-			console.log(this.forumSelected.forum.id);
-
-			return Object.keys(this.commentError).length !== 0
-				? []
-				: newComment.value;
+			this.postComments = newComment;
+			Object.keys(this.commentError).length !== 0
+				? (this.postComments = newComment)
+				: [];
 		},
 	},
 });

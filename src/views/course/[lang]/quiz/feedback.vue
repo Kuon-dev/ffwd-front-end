@@ -2,7 +2,7 @@
 	<!--The Whole Page-->
 	<div class="h-full w-full bg-[url('/public/img1.png')] bg-cover p-1">
 		<div
-			class="bg-white flex justify-center border rounded-lg p-9 xl:w-3/5 md:w-5/6 sm:w-6/7 xl:mx-72 md:mx-16 sm:mx-2 grid grid-cols-1 my-15"
+			class="bg-white flex justify-center border rounded-lg p-9 xl:w-3/5 md:w-5/6 sm:w-6/7 xl:mx-auto md:mx-16 sm:mx-2 grid grid-cols-1 my-15"
 		>
 			<h1 class="relative text-3xl font-bold text-center">
 				Quiz Feedback Page
@@ -22,7 +22,7 @@
 						<div>How many stars would you give this quiz?</div>
 					</div>
 
-					<div class="" data-te-input-wrapper-init>
+					<div class="flex justify-center" data-te-input-wrapper-init>
 						<button v-for="i in 5" :key="i" @click="selectRating(i)">
 							<font-awesome-icon
 								:icon="['fas', 'star']"

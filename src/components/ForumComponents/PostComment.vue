@@ -1,3 +1,4 @@
+<!-- Display Comment UI for each Comment of the Forum -->
 <template>
 	<div v-for="(comment, index) in comments" :key="comment.id">
 		<hr />
@@ -34,7 +35,11 @@
 								class="hover:text-blue-600"
 							/>
 						</button>
-						<button>
+						<button
+							@click="
+								deleteComment(store.accessLevel, comment.user_id, comment.id)
+							"
+						>
 							<font-awesome-icon
 								icon="fa-solid fa-trash"
 								class="hover:text-red-600"
@@ -53,6 +58,12 @@
 						:is="index === editingIndex ? 'textarea' : 'p'"
 						class="mx-1 my-4 flex-grow resize-none h-auto min-h-0"
 						@input="getEditedCommentValue"
+						:class="
+							comment.is_deleted_by_user === 1 ||
+							comment.is_removed_by_admin === 1
+								? 'text-gray-400'
+								: 'text-gray-700'
+						"
 						>{{ showCommentContent(comment) }}</component
 					>
 					<div class="flex flex-col gap-2 ml-2">
@@ -62,7 +73,7 @@
 							v-if="index === editingIndex"
 							@click="
 								editingIndex = -1;
-								editComment(store.accessLevel, store.user?.id, comment.id);
+								editComment(store.accessLevel, comment.user_id, comment.id);
 							"
 							>Save</v-btn
 						>
@@ -92,7 +103,6 @@
 
 <script setup lang="ts">
 import { PropType } from 'vue';
-import { renderHTML } from 'compostables/EditorJsInjector';
 import { ref } from 'vue';
 import InfiniteLoading from 'v3-infinite-loading';
 import 'v3-infinite-loading/lib/style.css';
@@ -166,33 +176,21 @@ const editedComment = ref<String>('');
 const getEditedCommentValue = (event: Event) => {
 	editedComment.value = (event.target as HTMLTextAreaElement).value;
 };
+
 const editComment = async (
 	accessLevel: number,
 	commentUserId: number,
 	commentId: number,
 ) => {
-	if (store.user?.id !== commentUserId && accessLevel > 1) {
-		// TODO admin edit
-		console.log(commentId);
-		console.log(editedComment.value);
-		if (!editedComment.value) {
-			renderAlert(
-				'error',
-				'Oops an error has occured',
-				'Make sure your edited comment is not empty',
-			);
-			return;
-		}
-
-		const body = {
-			message: editedComment.value,
-			// comment: comment.id,
-		};
+	if (!editedComment.value) {
+		renderAlert(
+			'error',
+			'Oops an error has occured',
+			'Make sure your edited comment is not empty',
+		);
+		return;
 	}
-	else if (store.user?.id === commentUserId) {
-		// USER edit
-		console.log(commentId);
-		console.log(editedComment.value);
+	if (store.user?.id !== commentUserId && accessLevel > 1) {
 		const body = {
 			message: editedComment.value,
 			comment: commentId,
@@ -204,7 +202,39 @@ const editComment = async (
 			.then(async (response) => {
 				renderAlert('success', 'Success', (response?.data as any).message);
 				// comments.value = await (forumStore.getAllComments(0)) ?? [];
-				location.reload();
+			})
+			.catch((err: Error | AxiosError) => {
+				const error = err as AxiosError;
+				renderAlert(
+					'error',
+					'Oops an error has occured',
+					(error?.response?.data as any)?.message,
+				);
+			});
+		return res;
+	}
+	if (store.user?.id === commentUserId || accessLevel > 1) {
+		// USER edit
+		if (!editedComment.value) {
+			renderAlert(
+				'error',
+				'Oops an error has occured',
+				'Please enter a new message for your comment',
+			);
+			return;
+		}
+
+		const body = {
+			message: editedComment.value,
+			comment: commentId,
+		};
+
+		await getToken();
+		const res = await apiClient
+			.post('/api/comments/edit', body)
+			.then(async (response) => {
+				renderAlert('success', 'Success', (response?.data as any).message);
+				// comments.value = await (forumStore.getAllComments(0)) ?? [];
 			})
 			.catch((err: Error | AxiosError) => {
 				const error = err as AxiosError;
@@ -222,17 +252,64 @@ const editComment = async (
 };
 
 const showCommentContent = (comment: Comment) => {
-	if (comment.is_deleted_by_user === 1) {return 'This comment has been deleted by the user';}
-	if (comment.is_removed_by_admin === 1) {return 'This comment has been removed by the admin';}
+	if (comment.is_deleted_by_user === 1) {
+		return '(This comment has been deleted by the user)';
+	}
+	if (comment.is_removed_by_admin === 1) {
+		return 'This comment has been removed by the admin';
+	}
 	return comment.message;
 };
 
-const deleteComment = (accessLevel: number, commentUserId: number) => {
+const deleteComment = async (
+	accessLevel: number,
+	commentUserId: number,
+	commentId: number,
+) => {
 	if (store.user?.id !== commentUserId && accessLevel > 1) {
-		// TODO admin delete
+		// If current user is not creator of comment and is privileged role
+		// Admin delete
+		const body = {
+			comment: commentId,
+		};
+
+		await getToken();
+		const res = await apiClient
+			.post('/api/comments/deleteAdmin', body)
+			.then(async (response) => {
+				renderAlert('success', 'Success', (response?.data as any).message);
+			})
+			.catch((err: Error | AxiosError) => {
+				const error = err as AxiosError;
+				renderAlert(
+					'error',
+					'Oops an error has occured',
+					(error?.response?.data as any)?.message,
+				);
+			});
+		return res;
 	}
 	else if (store.user?.id === commentUserId) {
 		// USER DELETE
+		const body = {
+			comment: commentId,
+		};
+
+		await getToken();
+		const res = await apiClient
+			.post('/api/comments/deleteUser', body)
+			.then(async (response) => {
+				renderAlert('success', 'Success', (response?.data as any).message);
+			})
+			.catch((err: Error | AxiosError) => {
+				const error = err as AxiosError;
+				renderAlert(
+					'error',
+					'Oops an error has occured',
+					(error?.response?.data as any)?.message,
+				);
+			});
+		return res;
 	}
 	else {
 		// ERROR
