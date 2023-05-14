@@ -144,12 +144,6 @@ declare module 'vue-router/auto/routes' {
 			Record<never, never>,
 			Record<never, never>
 		>;
-		'/forum/display': RouteRecordInfo<
-			'/forum/display',
-			'/forum/display',
-			Record<never, never>,
-			Record<never, never>
-		>;
 		'/login': RouteRecordInfo<
 			'/login',
 			'/login',
