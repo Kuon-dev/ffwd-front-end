@@ -90,4 +90,4 @@ const obj = {
 obj.greet(); // Output: Hello, John!
 ```
 
-In this example, `innerFunc` is an arrow function that inherits the `this` value from the `greet` method
+

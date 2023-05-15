@@ -83,6 +83,4 @@ export default {
 
 In this example, we define two watchers: one for the `person.name` property and another for the `person.age` property. The first watcher directly specifies the callback function, while the second watcher uses the `handler` option. The second watcher also enables deep watching and immediate invocation.
 
-## Cleaning Up Watchers
 
-Watchers in Vue are automatically cleaned up when the component is destroyed. However, if you need to manually stop watching a property before the component is destroyed, you can use the `vm.$watch()` method to create a watcher instance and store

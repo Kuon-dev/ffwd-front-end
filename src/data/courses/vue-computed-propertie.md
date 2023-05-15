@@ -84,6 +84,4 @@ As a general guideline, use computed properties when you have data that depends 
 
 If a computed property doesn't depend on any data properties and only relies on other computed properties, you can also consider using a method instead.
 
-## Conclusion
 
-Computed properties

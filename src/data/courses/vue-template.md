@@ -78,6 +78,4 @@ export default {
 
 In this example, the `v-for` directive iterates over the `items` array and renders a `<li>` element for each item. The `v-bind` directive is used to bind the `:key` attribute to the `item.id` value for proper list rendering. The `v-model` directive creates a two-way data binding between the input element and the `inputText` data property. The `v-on` directive is used to attach the `@click` event listener to the button, which calls the `addItem` method when clicked.
 
-## Template Components
 
-Vue allows you to define reusable templates as components. Components encapsulate

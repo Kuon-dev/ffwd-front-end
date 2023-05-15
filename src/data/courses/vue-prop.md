@@ -108,4 +108,4 @@ export default {
 </script>
 ```
 
-In this example, the `title` prop is specified with type `String`, a default value of `'Default Title'`, and marked as `required`. If the parent component doesn't pass a value for the `title` prop, the default value will be used. If the parent component
+

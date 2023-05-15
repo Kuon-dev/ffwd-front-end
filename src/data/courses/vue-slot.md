@@ -83,4 +83,4 @@ In this example, we have three slots: a named slot with the name "header", a def
 
 In this example, we use the `v-slot` directive to provide content for each named slot. The content within the `<template>` tags with the `v-slot` directive will be placed in the corresponding named slot in the component.
 
-##
+

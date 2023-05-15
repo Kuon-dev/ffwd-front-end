@@ -107,4 +107,4 @@ export default {
 </script>
 ```
 
-In this example, the `my-component` component will be rendered for each item in the `items` array. The `:item` prop is passed to each instance of the component, allowing it to receive and display the
+

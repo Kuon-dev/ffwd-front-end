@@ -92,8 +92,4 @@ export default {
 
 In this example, the `v-model="customValue"` directive binds the `customValue` data property to the custom input component. The `customValue` property will be synchronized with the `value` prop and `input` events of the custom component, enabling two-way data binding.
 
-## Modifiers
 
-The `v-model` directive also supports modifiers to enable additional features or transformations. Some common modifiers include `.lazy`, `.number`, and `.trim`. Here's a brief overview:
-
-- `.lazy`:

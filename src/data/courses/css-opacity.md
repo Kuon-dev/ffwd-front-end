@@ -9,19 +9,19 @@ The `opacity` property accepts a value between 0 and 1, where 0 represents compl
 
 To set the opacity of an element, use the following CSS syntax:
 
-\\\css
+```css
 selector {
   opacity: value;
 }
-\\\
+```
 
 For example, to make a `<div>` element 50% transparent, you would use:
 
-\\\css
+```css
 div {
   opacity: 0.5;
 }
-\\\
+```
 
 ## Applying Opacity to Child Elements
 
@@ -31,11 +31,11 @@ If you want to make only the parent element transparent while keeping the child 
 
 For example, to make a `<div>` element with a transparent background color but keep its child elements fully visible, you can use:
 
-\\\css
+```css
 div {
   background-color: rgba(0, 0, 255, 0.5); /* 50% transparent blue */
 }
-\\\
+```
 
 ## Opacity vs. Transparency
 

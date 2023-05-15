@@ -72,4 +72,3 @@ let boolValue = boolObj.valueOf(); // true
 
 Booleans are fundamental in JavaScript programming. They represent the logical values of `true` and `false` and are extensively used in conditional statements, comparisons, and logical operations. Understanding how to work with booleans is essential for controlling the flow of your JavaScript programs.
 
-Happy coding!
