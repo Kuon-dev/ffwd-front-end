@@ -27,7 +27,9 @@
 						/>
 					</button>
 				</div>
-				<h2 class="place-content-start flex text-2xl font-semibold leading-10">
+				<h2
+					class="truncate place-content-start flex text-2xl font-semibold leading-10"
+				>
 					{{ forumStore?.forum?.forum?.title }}
 				</h2>
 			</div>
@@ -36,8 +38,18 @@
 			<div
 				class="mt-3 mb-10 px-3"
 				id="forum-content"
-				v-if="status !== 'editing'"
+				v-if="
+					status !== 'editing' &&
+					forumStore?.forum?.forum?.is_deleted_by_user === 0 &&
+					forumStore?.forum?.forum?.is_removed_by_admin === 0
+				"
 			></div>
+			<div v-else-if="forumStore?.forum?.forum?.is_deleted_by_user === 1">
+				<div>Forum has been deleted by the creator</div>
+			</div>
+			<div v-else-if="forumStore?.forum?.forum?.is_removed_by_admin === 1">
+				<div>Forum has been removed by admin</div>
+			</div>
 			<BaseEditor
 				v-else-if="store.user"
 				server="/api/forums/edit"
@@ -181,8 +193,6 @@ import PostComment from 'forum-components/PostComment.vue';
 import BaseCard from 'base-components/BaseCard.vue';
 import BaseEditor from 'base-components/BaseEditor.vue';
 
-import { addNewCommentSocket } from 'stores/WebSocketAPI';
-
 // Define data properties for the component
 const forumStore = useForumStore();
 const store = useUserStore();
@@ -190,8 +200,6 @@ const router = useRouter();
 
 const status = ref<'viewing' | 'editing'>('viewing');
 const currentForumData = ref([]);
-
-// Define comment data
 
 const fetchForumContent = async () => {
 	currentForumData.value = await forumStore.getSpecificForum(
@@ -313,8 +321,55 @@ const toggleEditStatus = () => {
 	}
 };
 
-const deletePost = () => {
-	console.log('test');
+const deletePost = async () => {
+	// Admin Delete Post
+	// If current user not creator of forum and access level more than 1 (admin)
+	if (
+		store.user?.id !== forumStore.forum?.forum?.user_id &&
+		store.accessLevel > 1
+	) {
+		const body = {
+			forum: forumStore.forum?.forum?.id,
+		};
+
+		await getToken();
+		const res = await apiClient
+			.post('/api/forums/deleteAdmin', body)
+			.then(async (response) => {
+				renderAlert('success', 'Success', (response?.data as any).message);
+			})
+			.catch((err: Error | AxiosError) => {
+				const error = err as AxiosError;
+				renderAlert(
+					'error',
+					'Oops an error has occured',
+					(error?.response?.data as any)?.message,
+				);
+			});
+		return res;
+	}
+	else if (store.user?.id === forumStore.forum?.forum?.user_id) {
+		// USER DELETE
+		const body = {
+			forum: forumStore.forum?.forum?.id,
+		};
+
+		await getToken();
+		const res = await apiClient
+			.post('/api/forums/deleteUser', body)
+			.then(async (response) => {
+				renderAlert('success', 'Success', (response?.data as any).message);
+			})
+			.catch((err: Error | AxiosError) => {
+				const error = err as AxiosError;
+				renderAlert(
+					'error',
+					'Oops an error has occured',
+					(error?.response?.data as any)?.message,
+				);
+			});
+		return res;
+	}
 };
 
 if (store.user) await renderVote();
@@ -324,7 +379,12 @@ await fetchForumContent();
 await forumStore.getAllComments(0);
 
 onBeforeMount(() => {
-	addNewCommentSocket(forumStore.forum.forum?.id);
+	if (import.meta.env.VITE_APP_PUSHER_KEY) {
+		import('stores/WebSocketAPI').then((module: { [key: string]: any }) => {
+			module['addNewCommentSocket' as any];
+			module.addNewCommentSocket(forumStore.forum.forum.id);
+		});
+	}
 });
 
 onMounted(async () => {
@@ -374,5 +434,11 @@ onMounted(async () => {
 	font-weight: 600;
 	font-size: 0.85em;
 	color: #57606a;
+}
+
+.truncate {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 </style>
