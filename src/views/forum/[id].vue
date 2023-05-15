@@ -83,7 +83,7 @@
 
 				<div
 					v-if="
-						store.user?.id === forumStore.forum.forum.user_id ||
+						store.user?.id === forumStore.forum.forum?.user_id ||
 						store.accessLevel > 1
 					"
 					class="flex flex-row justify-end gap-4 items-center"
@@ -136,7 +136,7 @@
 				<div
 					class="place-content-start flex text-xl font-semibold leading-10 ml-2"
 				>
-					<div>{{ forumStore.forum.comment.length }} Comments</div>
+					<div>{{ forumStore.forum?.comment?.length }} Comments</div>
 				</div>
 
 				<!-- Comments -->
@@ -144,7 +144,7 @@
 					<div
 						v-if="
 							Object.keys(forumStore.errorList).length === 0 &&
-							forumStore?.forum.comment.length > 0
+							forumStore?.forum.comment?.length > 0
 						"
 					>
 						<PostComment
@@ -207,10 +207,6 @@ const fetchForumContent = async () => {
 	);
 };
 
-// get the content of the post
-await fetchForumContent();
-// get the content of the comments
-await forumStore.getAllComments(0);
 // For Create New Comment
 const newComment = ref<String>('');
 
@@ -296,7 +292,7 @@ const userVote = ref();
 const renderVote = async () => {
 	const vote = await apiClient
 		.post('/api/forums/vote/get', {
-			forum: forumStore.forum.forum.id,
+			forum: forumStore.forum.forum?.id,
 		})
 		.catch((err: Error | AxiosError) => {
 			const error = err as AxiosError;
@@ -377,6 +373,10 @@ const deletePost = async () => {
 };
 
 if (store.user) await renderVote();
+// get the content of the post
+await fetchForumContent();
+// get the content of the comments
+await forumStore.getAllComments(0);
 
 onBeforeMount(() => {
 	if (import.meta.env.VITE_APP_PUSHER_KEY) {
@@ -387,8 +387,8 @@ onBeforeMount(() => {
 	}
 });
 
-onMounted(() => {
-	renderHTML(forumStore.forum.forum.content);
+onMounted(async () => {
+	renderHTML(forumStore.forum.forum?.content);
 });
 </script>
 
