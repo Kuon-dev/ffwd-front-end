@@ -3,8 +3,8 @@ import { useForumStore, Comment } from 'stores/ForumStore';
 
 const forumStore = useForumStore();
 
-const pusher = new Pusher(import.meta.env.VITE_APP_PUSHER_KEY, {
-	cluster: import.meta.env.VITE_APP_PUSHER_CLUSTER,
+const pusher = new Pusher((import.meta as any).env.VITE_APP_PUSHER_KEY, {
+	cluster: (import.meta as any).env.VITE_APP_PUSHER_CLUSTER,
 });
 
 export const addNewCommentSocket = (postId: number) => {

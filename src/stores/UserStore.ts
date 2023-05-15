@@ -42,7 +42,7 @@ interface SingleError {
 }
 export const useUserStore = defineStore('userStore', {
 	state: () => ({
-		authUser: <User>{} || (null as User | any),
+		authUser: <User | any>{} || (null as User | any) | (<any>{}),
 		authUserAccessLevel: 0,
 		authErrors: <any>[] || <any>Object,
 	}),

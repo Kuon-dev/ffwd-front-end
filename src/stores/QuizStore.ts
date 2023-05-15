@@ -37,6 +37,7 @@ export const useQuizStore = defineStore('quizStore', {
 		correctAnswers: <any>[],
 		numberOfCorrectAnswers: 0,
 		courseSelected: '',
+		timeTaken: <any>{},
 		personalQuizRecords: [] as PersonalQuizRecord[],
 		quizError: <SingleError>{} || <any>{},
 	}),
@@ -86,7 +87,7 @@ export const useQuizStore = defineStore('quizStore', {
 			this.correctAnswers = [];
 		},
 		// Set time taken to complete quiz
-		setTimeTaken(time: string) {
+		setTimeTaken(time: any) {
 			this.timeTaken = time;
 		},
 		// Set correct answers of the quiz
@@ -122,6 +123,7 @@ export const useQuizStore = defineStore('quizStore', {
 						status: error?.response?.status,
 					};
 					this.quizError = errorMessage;
+					return [];
 				});
 
 			const newPersonalQuizRecord = response?.data?.map(
@@ -135,7 +137,7 @@ export const useQuizStore = defineStore('quizStore', {
 
 			//  This quizRecords relate to state and getters
 			this.personalQuizRecords = newPersonalQuizRecord;
-			Object.keys(this.quizError).length !== 0
+			return Object.keys(this.quizError).length !== 0
 				? (this.personalQuizRecords = newPersonalQuizRecord)
 				: [];
 		},
@@ -145,7 +147,6 @@ export const useQuizStore = defineStore('quizStore', {
 			const body = {
 				score_id: path,
 			};
-			console.log(path);
 
 			const response = await apiClient
 				.post(`/api/score/${path ?? 0}`, body)
