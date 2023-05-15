@@ -64,7 +64,7 @@
 							<ul class="space-y-1 py-2 pr-2 pl-9 list-disc">
 								<li
 									v-for="items in topics.languages"
-									:key="items.route"
+									:key="items.path"
 									class="antialiased font-sans text-base leading-relaxed before:content-[' '] relative list-item w-full py-1 px-1 capitalize transition-colors before:absolute before:-left-[25px] before:top-2/4 before:h-1.5 before:w-1.5 before:-translate-y-2/4 before:rounded-full before:transition-colors hover:text-blue-gray-900 hover:before:bg-blue-gray-900 font-medium text-blue-gray-900 before:bg-blue-gray-900"
 								>
 									<router-link
@@ -87,7 +87,7 @@
 							<ul class="space-y-1 py-2 pr-2 pl-9 list-disc">
 								<li
 									v-for="items in topics.frameworks"
-									:key="items.route"
+									:key="items.path"
 									class="antialiased font-sans text-base leading-relaxed before:content-[' '] relative list-item w-full py-1 px-1 capitalize transition-colors before:absolute before:-left-[25px] before:top-2/4 before:h-1.5 before:w-1.5 before:-translate-y-2/4 before:rounded-full before:transition-colors hover:text-blue-gray-900 hover:before:bg-blue-gray-900 font-medium text-blue-gray-900 before:bg-blue-gray-900"
 								>
 									<router-link
@@ -108,7 +108,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import {
 	injectRenderNav,
 	toggleShowSidebar,
@@ -118,12 +118,16 @@ import {
 
 import { topics } from 'course-components/CourseTopics';
 import { landingNavigation } from 'nav-components/NavItems';
+import { useUserStore } from 'stores/UserStore';
+
+const store = useUserStore();
+
 /*
 import BaseCard from 'base-components/BaseCard.vue';
 import { landingNavigation } from 'nav-components/NavItems';
 */
 
-const closeNavbarOverlay = (e) => {
+const closeNavbarOverlay = (e: any) => {
 	toggleShowSidebar(false);
 };
 </script>

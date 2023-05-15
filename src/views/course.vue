@@ -2,7 +2,7 @@
 	<div class="bg-cover top-0 h-full flex flex-col bg-gray-100 overflow-hidden">
 		<Nav />
 		<div class="flex flex-row w-full mt-10 justify-center">
-			<div class="rounded-lg flex-row flex xl:w-3/4 w-full xl:mx-0 mx-20">
+			<div class="rounded-lg flex-row flex xl:w-3/4 w-full mx-2">
 				<aside
 					class="fixed z-[999] h-screen w-80 pb-4 pr-4 transition-all duration-300 lg:relative lg:left-0 lg:z-10 lg:w-64 lg:pt-20 -left-96"
 				>
@@ -39,7 +39,7 @@ import {
 	injectSidebarComponent,
 	path,
 } from 'compostables/courses/CourseSidebarDataInjector';
-import { watch, ref } from 'vue';
+import { watch, ref, onMounted } from 'vue';
 
 const hasSidebar = ref(false);
 if (path?.value.params?.topic) hasSidebar.value = true;
@@ -49,7 +49,9 @@ watch(path, () => {
 	else hasSidebar.value = false;
 });
 
-injectSidebarComponent;
+onMounted(() => {
+	injectSidebarComponent;
+});
 </script>
 
 <style lang="scss" scoped>

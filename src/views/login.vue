@@ -1,6 +1,6 @@
 <template>
 	<div class="h-full div-center relative w-full">
-		<div v-if="loaded" class="div-center h-full base-bg relative w-full">
+		<div class="div-center h-full base-bg relative w-full">
 			<div class="img-overlay"></div>
 			<div
 				class="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8 bg-white rounded-lg drop-shadow-md"
@@ -114,10 +114,6 @@
 				</form>
 			</div>
 		</div>
-
-		<div v-else>
-			<LoadingPage />
-		</div>
 	</div>
 </template>
 
@@ -150,13 +146,6 @@ const togglePeek = (e: Event) => {
 };
 // get user details and redirect the user
 // if the token is already set, immediately redirect to dashboard
-const res = await store.loginRedirect();
-if (res) {
-	setTimeout(() => {
-		loaded.value = true;
-	}, 3000);
-}
-
 const email = ref('');
 const password = ref('');
 
@@ -164,7 +153,6 @@ const handleLogin = async (e: Event) => {
 	e.preventDefault();
 	if (store.user) {
 		store.loginRedirect();
-		console.log('already logged in');
 		return;
 	}
 	const status = await store.handleLogin({
@@ -176,7 +164,7 @@ const handleLogin = async (e: Event) => {
 	// debugging purpose
 	console.log(status);
 	if (status?.status === 204) {
-		console.log('successfully logged in');
+		// console.log('successfully logged in');
 	}
 	if (store.errorList.length > 0) {
 		emailError.value = store.errorList.email;

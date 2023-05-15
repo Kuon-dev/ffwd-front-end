@@ -6,6 +6,9 @@
 		<div class="flex flex-row">
 			<section class="px-5 mb-5 lg:mb-0 lg:w-2/6 order-last lg:order-first">
 				<h3 class="font-semibold text-2xl">Hot Today</h3>
+				<BaseCard class="mt-5">
+					<ForumHots :forums="hots" />
+				</BaseCard>
 				<!-- Carousel Section -->
 			</section>
 
@@ -62,6 +65,7 @@ import SearchBarVue from 'base-components/BaseSearchBar.vue';
 import FilterDropDownVue from 'base-components/BaseDropDown.vue';
 import FormCarouselSectionVue from 'forum-components/ForumCarouselSection.vue';
 import ForumCard from 'forum-components/ForumCard.vue';
+import ForumHots from 'forum-components/ForumHotSection.vue';
 import { useForumStore, Forum } from 'stores/ForumStore';
 import { VSkeletonLoader } from 'vuetify/labs/VSkeletonLoader';
 
@@ -69,7 +73,8 @@ import { VSkeletonLoader } from 'vuetify/labs/VSkeletonLoader';
 const forumStore = useForumStore();
 
 // Define forum data
-const forums = ref<Forum>((await forumStore.getAllForums(0)) ?? []);
+const forums = ref<Forum[]>((await forumStore.getAllForums(0)) ?? []);
+const hots = ref<Forum[]>((await forumStore.getHotForums()) ?? []);
 const totalPage = ref(Math.ceil((await forumStore.getPaginationCount()) / 10));
 const currentPage = ref(forumStore.forumCurrentPagination);
 

@@ -26,7 +26,7 @@
 
 						<div class="flex items-center gap-8 p-8 lg:p-16 basis-8/12">
 							<div class="w-10/12 rounded-lg flex basis-1/2">
-								<img src="code3.png" class="w-full rounded-lg" alt="Tree" />
+								<img src="/code3.png" class="w-full rounded-lg" alt="Tree" />
 							</div>
 							<div class="basis-1/2">
 								<img src="/code1.png" class="mb-8 rounded-lg" alt="Tree" />
@@ -162,13 +162,12 @@ import { defineComponent } from 'vue';
 import { Carousel, Navigation, Slide } from 'vue3-carousel';
 
 import 'vue3-carousel/dist/carousel.css';
+import { useUserStore } from '@/stores/UserStore';
 
 const data = computed(() => {
 	const newArr: any = [];
 	return newArr.concat(topics.languages, topics.frameworks);
 });
-
-console.log(data.value);
 </script>
 
 <style lang="scss" scoped>

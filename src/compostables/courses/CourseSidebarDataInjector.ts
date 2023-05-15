@@ -2,11 +2,7 @@
 /* eslint-disable */
 import $ from 'jquery';
 import router from '@/router'; // @ refers to src
-import hljs from 'highlight.js';
-import showdown from 'showdown';
-import 'highlight.js/styles/base16/material-darker.css';
-import scrollama from 'scrollama';
-
+import { injectScrollama } from './ScrollamaInjector';
 // compostable
 import { watch, computed, ref } from 'vue';
 /* eslint-enable */
@@ -26,23 +22,6 @@ watch(windowWidth, () => {
 });
 
 // Converter will re responsible to covert the md files into HTML Elements
-const converter = new showdown.Converter({
-	extensions: [
-		{
-			// find all code and then style it
-			type: 'output',
-			filter: (text: any) => {
-				const wrapper = $('<div></div>');
-				const html = $('<div></div>').html(text);
-				html.find('pre code').each((_i: any, block: any) => {
-					hljs.highlightElement(block);
-				});
-				wrapper.append(html);
-				return wrapper.html();
-			},
-		},
-	],
-});
 
 // clipboard API refers to the copyp button in each code section within the rendered
 // MD file
@@ -67,41 +46,6 @@ const injectClipboardAPI = () => {
 	});
 };
 
-// Scrollama is a dependency used to highlight the sidebar title based on the user's
-// scrolled position on the screen
-const injectScrollama = () => {
-	// Loop through each h2 element
-	$('#md-convert h2').each((index: number, h2: any) => {
-		const section = $('<section></section>');
-		$(h2).nextUntil('h2').appendTo(section);
-		section.insertBefore(h2);
-		section.prepend(h2);
-	});
-	console.log('injecting scrollama');
-	// setup scrollama
-	const scroller = scrollama();
-	scroller
-		.setup({
-			step: '#md-convert section',
-			offset: 0.5,
-		})
-		.onStepEnter(({ element }) => {
-			const id = $(element).find('h2').attr('id');
-			const sidebarItem = $(
-				`#page-sidebar-headers li a[href="#${id}"]`,
-			).parent();
-			console.log(sidebarItem);
-			sidebarItem.addClass('active');
-		})
-		.onStepExit(({ element }) => {
-			const id = $(element).find('h2').attr('id');
-			const sidebarItem = $(
-				`#page-sidebar-headers li a[href="#${id}"]`,
-			).parent();
-			sidebarItem.removeClass('active');
-		});
-};
-
 // this refers to the route path
 export const path = computed(() => {
 	return router.currentRoute.value;
@@ -117,7 +61,6 @@ export const injectSidebarComponent = watch(path, () => {
 	}
 });
 
-// this section is used to inject the scrollama headers
 export const injectMarkdownHeaders = () => {
 	$('#page-sidebar-headers').empty();
 	$('#md-convert h2').each((index: number, el: any) => {
@@ -132,25 +75,32 @@ export const injectMarkdownHeaders = () => {
 
 // this section is used to render the md contents
 export const injectMarkdownContent = (file: string | string[]) => {
-	$(document).ready(() => {
-		fetchedMd.value = false;
-		$.ajax({
-			url: `http://localhost:5173/src/data/courses/${file}.md`,
-			type: 'GET',
-			dataType: 'text',
-			success: (data: any) => {
-				// Parse the markdown data using Showdown
-				const html = converter.makeHtml(data);
-				// Update the HTML of a div with the ID 'md-convert'
-				$('#md-convert').html(html);
-				fetchedMd.value = true;
-				injectMarkdownHeaders();
-				injectClipboardAPI();
-				injectScrollama();
-			},
-			error: function(xhr: any, status: any, error: any) {
-				console.error('Error fetching markdown file:', error);
-			},
+	import('./ShowdownInjector')
+		.then((module) => {
+			const converter = module.converter;
+			//	$(document).ready(() => {
+			fetchedMd.value = false;
+			$.ajax({
+				url: `http://localhost:5173/src/data/courses/${file}.md`,
+				type: 'GET',
+				dataType: 'text',
+				success: (data: any) => {
+					// Parse the markdown data using Showdown
+					const html = converter.makeHtml(data);
+					// Update the HTML of a div with the ID 'md-convert'
+					$('#md-convert').html(html);
+					fetchedMd.value = true;
+					injectMarkdownHeaders();
+					injectClipboardAPI();
+					injectScrollama();
+				},
+				error: function(xhr: any, status: any, error: any) {
+					console.error('Error fetching markdown file:', error);
+				},
+			});
+		})
+		.catch((error) => {
+			console.log(error);
+			// Handle any errors that occur during the import
 		});
-	});
 };

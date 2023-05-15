@@ -14,6 +14,7 @@ import {
 } from 'compostables/courses/CourseSidebarDataInjector';
 import { computed, watch, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import 'highlight.js/styles/base16/material-darker.css';
 
 const router = useRouter();
 const path = computed(() => {

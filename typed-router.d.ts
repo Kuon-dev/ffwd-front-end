@@ -48,9 +48,27 @@ declare module 'vue-router/auto/routes' {
 			Record<never, never>,
 			Record<never, never>
 		>;
-		'/admin/': RouteRecordInfo<
-			'/admin/',
+		'/admin': RouteRecordInfo<
 			'/admin',
+			'/admin',
+			Record<never, never>,
+			Record<never, never>
+		>;
+		'/admin/manage/admin': RouteRecordInfo<
+			'/admin/manage/admin',
+			'/admin/manage/admin',
+			Record<never, never>,
+			Record<never, never>
+		>;
+		'/admin/manage/user': RouteRecordInfo<
+			'/admin/manage/user',
+			'/admin/manage/user',
+			Record<never, never>,
+			Record<never, never>
+		>;
+		'/admin/profile/': RouteRecordInfo<
+			'/admin/profile/',
+			'/admin/profile',
 			Record<never, never>,
 			Record<never, never>
 		>;
@@ -89,6 +107,12 @@ declare module 'vue-router/auto/routes' {
 			'/course/:lang/quiz/feedback',
 			{ lang: ParamValue<true> },
 			{ lang: ParamValue<false> }
+		>;
+		'/course/[lang]/score/[score_id]': RouteRecordInfo<
+			'/course/[lang]/score/[score_id]',
+			'/course/:lang/score/:score_id',
+			{ lang: ParamValue<true>; score_id: ParamValue<true> },
+			{ lang: ParamValue<false>; score_id: ParamValue<false> }
 		>;
 		'/forgot-password': RouteRecordInfo<
 			'/forgot-password',
