@@ -27,7 +27,6 @@ export const toggleCheck = () => {
 };
 
 export const toggleShowSidebar = (value: boolean) => {
-	console.log(value);
 	if (value) {
 		isShowSidebar.value = value;
 		return;
@@ -37,7 +36,6 @@ export const toggleShowSidebar = (value: boolean) => {
 };
 
 export const toggleProfileOverlay = (value: boolean) => {
-	console.log(value);
 	if (value) {
 		isShowProfile.value = value;
 		return;

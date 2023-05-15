@@ -13,6 +13,16 @@ export interface PersonalQuizRecord {
 	user_id: number;
 }
 
+interface QuizforSubmit {
+	title: string;
+	user_id: number;
+	score: number;
+	attempted_date: string;
+	completed_time: string;
+	created_at: string;
+	updated_at: string;
+}
+
 // Error Interface
 interface SingleError {
 	message: string;
@@ -21,8 +31,8 @@ interface SingleError {
 
 export const useQuizStore = defineStore('quizStore', {
 	state: () => ({
-		timer: 0,
-		timeTaken: '',
+		startTime: '',
+		endTime: '',
 		chosenAnswers: <any>[],
 		correctAnswers: <any>[],
 		numberOfCorrectAnswers: 0,
@@ -31,20 +41,35 @@ export const useQuizStore = defineStore('quizStore', {
 		quizError: <SingleError>{} || <any>{},
 	}),
 	getters: {
+		getStartTime: (state) => state.startTime,
+		getEndTime: (state) => state.endTime,
 		allChosenAnswers: (state) => state.chosenAnswers,
 		allCorrectAnswers: (state) => state.correctAnswers,
 		userCorrectAnswers: (state) => state.numberOfCorrectAnswers,
-		durationTaken: (state) => state.timeTaken,
 		allPersonalQuizRecords: (state) => state.personalQuizRecords,
 		course: (state) => state.courseSelected,
 	},
 	actions: {
+		dateFormatter(date: string) {
+			const d = new Date(date);
+
+			const isoString = d.toISOString();
+
+			const formattedDate = isoString.slice(0, 10);
+			const formattedTime = isoString.slice(11, 19);
+
+			return `${formattedDate} ${formattedTime}`;
+		},
 		// Start the timer
 		startTimer() {
-			this.timer = Date.now();
+			this.startTime = new Date().toString();
+			console.log('dsad', this.startTime);
 		},
 		// Stop the timer
 		stopTimer(intervalId: any) {
+			this.endTime = new Date().toString();
+			console.log(`end time: ${this.endTime}`);
+
 			window.clearInterval(intervalId);
 			// this.timer = 0;
 		},
@@ -56,6 +81,10 @@ export const useQuizStore = defineStore('quizStore', {
 		clearChosenAnswers() {
 			this.chosenAnswers = [];
 		},
+		// Clear all correct answers
+		clearCorrectAnswers() {
+			this.correctAnswers = [];
+		},
 		// Set time taken to complete quiz
 		setTimeTaken(time: string) {
 			this.timeTaken = time;
@@ -64,7 +93,8 @@ export const useQuizStore = defineStore('quizStore', {
 		setCorrectAnswers(answer: string) {
 			this.correctAnswers.push(answer);
 		},
-		setUserCorrectCount(count: number) {
+		// update user number of correct answer
+		updateNumberofCorrectAnswer(count: number) {
 			this.numberOfCorrectAnswers = count;
 		},
 		// Get all quiz attempt records of the selected course
@@ -109,7 +139,6 @@ export const useQuizStore = defineStore('quizStore', {
 				? (this.personalQuizRecords = newPersonalQuizRecord)
 				: [];
 		},
-
 		async getSpecificScore(path: string) {
 			await getToken();
 
@@ -145,6 +174,34 @@ export const useQuizStore = defineStore('quizStore', {
 			Object.keys(this.quizError).length !== 0
 				? (this.personalQuizRecords = newPersonalQuizRecord)
 				: [];
+		},
+		async submitScore(courseLang: string, userID: number) {
+			await getToken();
+
+			const resultBody: QuizforSubmit = {
+				title: courseLang,
+				user_id: userID,
+				score: this.numberOfCorrectAnswers,
+				attempted_date: this.dateFormatter(this.startTime),
+				completed_time: this.dateFormatter(this.endTime),
+				created_at: '',
+				updated_at: '',
+			};
+
+			console.log(resultBody);
+
+			const res = await apiClient
+				.post('api/quiz/create', resultBody)
+				.catch((err: AxiosError) => {
+					const error = err as AxiosError;
+					const errorMessage: SingleError | any = {
+						message: (error?.response?.data as any).message,
+						status: error?.response?.status,
+					};
+					this.quizError = errorMessage;
+				});
+
+			return res;
 		},
 	},
 });

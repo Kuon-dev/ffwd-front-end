@@ -50,6 +50,6 @@ setTimeout(() => {
 	position: fixed;
 	top: 5px;
 	left: 5px;
-	z-index: 999;
+	z-index: 9999;
 }
 </style>
