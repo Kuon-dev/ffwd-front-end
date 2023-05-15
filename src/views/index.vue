@@ -26,7 +26,7 @@
 
 						<div class="flex items-center gap-8 p-8 lg:p-16 basis-8/12">
 							<div class="w-10/12 rounded-lg flex basis-1/2">
-								<img src="code3.png" class="w-full rounded-lg" alt="Tree" />
+								<img src="/code3.png" class="w-full rounded-lg" alt="Tree" />
 							</div>
 							<div class="basis-1/2">
 								<img src="/code1.png" class="mb-8 rounded-lg" alt="Tree" />

@@ -86,6 +86,15 @@
 			</div>
 		</section>
 	</div>
+
+	<div class="about-section">
+		<h2 style="text-align: center; font-size: 24px">Get in touch</h2>
+		<p style="text-align: center; font-size: 12px">
+			If you have any questions or feedback, please don't hesitate to contact
+			us.
+		</p>
+		<p style="text-align: center; font-size: 12px">Email: tpxx@gmai.com</p>
+	</div>
 </template>
 
 <script lang="ts" setup>

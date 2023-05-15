@@ -379,7 +379,7 @@ await fetchForumContent();
 await forumStore.getAllComments(0);
 
 onBeforeMount(() => {
-	if (import.meta.env.VITE_APP_PUSHER_KEY) {
+	if ((import.meta as any).env.VITE_APP_PUSHER_KEY) {
 		import('stores/WebSocketAPI').then((module: { [key: string]: any }) => {
 			module['addNewCommentSocket' as any];
 			module.addNewCommentSocket(forumStore.forum.forum.id);

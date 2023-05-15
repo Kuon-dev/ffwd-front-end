@@ -64,7 +64,7 @@ const props = defineProps({
 });
 
 // With async/await
-const generateQR = async (text) => {
+const generateQR = async (text: string) => {
 	try {
 		console.log(await QRCode.toDataURL(text));
 	}
@@ -80,7 +80,7 @@ const router = useRouter();
 const image = ref<string>('');
 
 const path = computed(() => {
-	return router.currentRoute.value.params.score_id;
+	return (router.currentRoute.value.params as any).score_id;
 });
 
 onMounted(async () => {

@@ -86,7 +86,7 @@
 import Card from 'course-components/CourseDescCard.vue';
 import BaseCard from 'base-components/BaseCard.vue';
 import List from 'course-components/CourseList.vue';
-import { computed, watch, ref, PropType } from 'vue';
+import { computed, watch, ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { topics } from 'course-components/CourseTopics';
 import { useUserStore } from 'stores/UserStore';
@@ -109,16 +109,13 @@ const courseName = pathnameParts[pathnameParts.length - 1];
 // Set the courseSelected state variable in the quiz store
 quizStore.courseSelected = courseName;
 
-const personalQuizRecords = ref<PersonalQuizRecord[]>(
-	(await quizStore.getAllPersonalQuizRecords(0, userStore.user?.id)) ?? [],
-);
-await quizStore.getAllPersonalQuizRecords(0, userStore.user.id);
+const personalQuizRecords = ref<PersonalQuizRecord[]>([]);
 // const personalQuizRecords = ref<PersonalQuizRecord[]>([]);
 // const quizRecords = await quizStore.getAllPersonalQuizRecords(0, userStore.user?.id);
 
 const router = useRouter();
 const selectedTopic = ref(null);
-const renderTopicData = ref(null);
+const renderTopicData = ref<any>(null);
 
 const path = computed(() => {
 	return router.currentRoute.value as any;
@@ -147,10 +144,12 @@ const dynamicImport = () => {
 	);
 };
 
-dynamicImport();
-renderData();
-// console.log(window.location.pathname.split('/').pop());
-// eslint-disable-next-line
+onMounted(async () => {
+	dynamicImport();
+	renderData();
+	personalQuizRecords.value =
+		(await quizStore.getAllPersonalQuizRecords(0, userStore.user?.id)) ?? [];
+});
 watch(path, () => {
 	dynamicImport();
 	renderData();

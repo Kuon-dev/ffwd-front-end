@@ -127,7 +127,7 @@ import BaseCard from 'base-components/BaseCard.vue';
 import { landingNavigation } from 'nav-components/NavItems';
 */
 
-const closeNavbarOverlay = (e) => {
+const closeNavbarOverlay = (e: any) => {
 	toggleShowSidebar(false);
 };
 </script>
