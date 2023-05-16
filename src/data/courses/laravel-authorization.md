@@ -81,6 +81,3 @@ public function boot()
 
 With the policy registered, Laravel will automatically apply the authorization rules defined in the policy to the corresponding actions.
 
-## Conclusion
-
-Laravel's authorization system provides a powerful and flexible way to control access to different parts of your application. By defining gates and policies, you can easily enforce access control based on user roles and permissions. Take

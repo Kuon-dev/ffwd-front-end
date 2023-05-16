@@ -13,15 +13,3 @@ To use an Ionic color, you can apply the corresponding CSS class or CSS variable
 ```
 
 In this example, we apply the `ion-color-primary` class to an `ion-button` element to make it use the primary color defined in Ionic's color palette.
-
-## Ionic Color Palette
-
-Ionic provides a default color palette with several predefined colors. These colors are categorized as primary, secondary, tertiary, success, warning, danger, light, medium, and dark. You can use these colors to maintain consistency throughout your app.
-
-To apply a specific color from the palette, use the corresponding CSS class or CSS variable. For example, to use the primary color, you can apply the `ion-color-primary` class to an element:
-
-```html
-<div class="ion-color-primary">This text has the primary color</div>
-```
-
-You can also access the color variables directly in your custom CSS styles. For instance, if you want to set the background color of an element to

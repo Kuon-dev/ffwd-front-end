@@ -106,4 +106,3 @@ int main() {
 }
 ```
 
-In this example, the program prompts the user to enter their name, reads the input into the `name` string variable, and then displays a greeting message using `

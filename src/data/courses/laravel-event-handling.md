@@ -28,15 +28,4 @@ php artisan make:listener SendOrderConfirmation --event=OrderCreated
 
 This command generates a `SendOrderConfirmation` listener class in the `app/Listeners` directory. Inside the listener class, you can define the logic that should be executed when the associated event is triggered.
 
-## Registering Event Listeners
 
-To make your listeners respond to events, you need to register them in Laravel's event service provider. The service provider is located at `app/Providers/EventServiceProvider.php`. Inside the `listen` array, you can map events to their corresponding listeners.
-
-For example, if you have an `OrderCreated` event and a `SendOrderConfirmation` listener, you can register them as follows:
-
-```php
-protected $listen = [
-    OrderCreated::class => [
-        SendOrderConfirmation::class,
-    ],
-];

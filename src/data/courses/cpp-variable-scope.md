@@ -37,21 +37,3 @@ int main() {
     return 0;
 }
 
-## Block Scope
-
-Variables declared inside a block, such as a loop or conditional statement, have a block scope. They are only accessible within that specific block and its nested blocks. Block variables are created when the block is executed and destroyed when it exits.
-
-``cpp
-``#include <iostream>
-
-int main() {
-    int x = 10;    // Block variable
-
-    if (x > 5) {
-        int y = 20;    // Nested block variable
-        std::cout << "Nested block variable value: " << y << std::endl;
-    }
-
-    std::cout << "Block variable value: " << x << std::endl;
-    return 0;
-}

@@ -90,6 +90,3 @@ Bitwise operators are used to perform operations on individual bits of binary nu
 
 These operators are beyond the scope of this tutorial, but they can be useful in specific scenarios.
 
-## Other Operators
-
-Java also provides other operators like the conditional operator (`? :`), instanceof operator, and more. These operators are used for specific purposes and

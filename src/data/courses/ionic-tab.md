@@ -77,14 +77,4 @@ Ionic tab component provides seamless navigation between tabs. When a tab button
 
 In the above example, we have two tabs: "Home" and "Notifications." Clicking on the "Home" tab button will display the content of the "Home" tab, and clicking on the "Notifications" tab button will display the content of the "Notifications" tab.
 
-## Customizing Tab Appearance
 
-Ionic tab component provides various attributes and classes to customize its appearance. For example, we can use the `color` attribute to change the color of the active tab. Here's an example:
-
-```html
-<ion-tabs color="secondary">
-  <!-- Tab buttons and contents -->
-</ion-tabs>
-```
-
-In the above example, we set the `color` attribute to "secondary" to change

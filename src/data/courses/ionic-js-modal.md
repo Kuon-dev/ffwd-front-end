@@ -69,12 +69,3 @@ In the above example, we import the `ModalController` class and create a new ins
 
 Inside the `dismissModal()` function, we use the `getTop()` method of the `ModalController` to get the currently displayed modal. If a modal is found, we call the `dismiss()` method on the modal to dismiss it.
 
-## Passing Data between Modals and Pages
-
-Often, you may need to pass data between the modal and the underlying page or component. Ionic provides a convenient way to pass data using the `componentProps` property when creating the modal.
-
-Here's an example of passing data to a modal:
-
-```javascript
-async function presentModal() {
-  const modal = await

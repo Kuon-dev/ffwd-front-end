@@ -1,3 +1,5 @@
+## PHP Syntax
+
 PHP uses a syntax similar to other programming languages. Here are some key points to understand:
 
 - PHP code is enclosed within `<?php` and `?>` tags. This is how you indicate the start and end of PHP code within an HTML file.

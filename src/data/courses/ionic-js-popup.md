@@ -25,7 +25,4 @@ angular.module('myApp', ['ionic'])
 
 In the example above, we have defined a `showPopup` function that creates and displays a basic popup window. The popup has a title, subtitle, and content, and a single button that says "OK". The `type` attribute of the button is set to `button-positive`, which will give it a green color.
 
-To call the `showPopup` function from your view, you can simply use an `ng-click` directive:
 
-```html
-<button class="button button-positive" ng-click="showPopup()">Show Popup</button>

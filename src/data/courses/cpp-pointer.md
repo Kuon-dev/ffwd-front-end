@@ -82,15 +82,3 @@ delete[] arr;  // Deallocate array memory
 
 In this example, `new` is used to allocate memory, and `delete` is used to deallocate the memory when it is no longer needed.
 
-## Pointers and Functions
-
-Pointers are often passed as function arguments to achieve pass-by-reference semantics. By passing a pointer, you can modify the original variable from within the function.
-
-```cpp
-void increment(int* numPtr) {
-    (*numPtr)++;
-}
-
-int main() {
-    int value = 10;
-    increment(&value);  // Pass the address of `value`

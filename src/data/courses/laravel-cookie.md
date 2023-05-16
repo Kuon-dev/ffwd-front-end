@@ -79,4 +79,3 @@ In this example, the `decrypt` function is used to decrypt the cookie value retr
 
 Cookies are a powerful mechanism for storing data on the client-side. In Laravel, you can easily set, retrieve, and delete cookies using the `Cookie` facade. Additionally, Laravel provides support for encrypting cookies to ensure data security.
 
-For more information, refer to the [Laravel Documentation on Cookies](https://laravel.com/docs/cookies).

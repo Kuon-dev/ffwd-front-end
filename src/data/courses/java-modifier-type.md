@@ -34,7 +34,7 @@ Non-access modifiers are used to modify the behavior or characteristics of class
 
 Here's an example that demonstrates the usage of non-access modifiers:
 
-``java
+```java
 public abstract class AbstractClass {
     public static final int MAX_VALUE = 100;
 
@@ -50,6 +50,6 @@ public abstract class AbstractClass {
 
     public volatile int volatileVar;
 }
-``
+```
 
 Understanding and properly using modifier types in Java allows you to control the visibility, behavior, and characteristics of your classes, methods, and variables. By using the appropriate modifiers, you can design more robust and secure code.

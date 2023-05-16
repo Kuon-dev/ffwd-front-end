@@ -92,4 +92,3 @@ for (int i = 1; i <= 3; i++) {
 
 The outer loop controls the number of rows, and the inner loop controls the number of columns. This code will output a square pattern of stars.
 
-Loop control structures in Java provide the flexibility

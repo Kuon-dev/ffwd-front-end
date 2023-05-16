@@ -68,12 +68,6 @@ module3.function2()
 
 In this example, we import `function1()` from `module1.py` and `function2()` from `module3.py`, which are part of the `my_package` package.
 
-## Writing C Extensions
 
-Python allows you to write performance-critical code in C and create C extensions that can be imported and used from Python. Writing C extensions can significantly improve the execution speed of certain operations or enable integration with existing C libraries.
-
-Creating C extensions is an advanced topic that requires knowledge of the C programming language and Python's C API. It involves writing C code and compiling it into a shared library that can be loaded by Python.
-
-If you're interested in writing C extensions, the
 
 

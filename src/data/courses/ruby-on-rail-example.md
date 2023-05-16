@@ -42,7 +42,7 @@ To start the Rails server and see our application in action, run the following c
 
 ```bash
 rails server
-
+```
 This will start the server, and you can access the application by visiting `http://localhost:3000` in your web browser.
 
 ## Step 5: Interact with the Application

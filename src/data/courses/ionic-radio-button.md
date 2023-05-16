@@ -59,16 +59,4 @@ Ionic radio button component emits events when the selected option changes. We c
 
 In the above example, we added the `(ionChange)` event binding to the `handleOptionChange()` method in our component. Whenever the selected option changes, the `handleOptionChange()` method will be called.
 
-## Customizing Radio Button Appearance
 
-Ionic radio button component provides various attributes and classes to customize its appearance. For example, we can use the `color` attribute to change the radio button's color. Here's an example:
-
-```html
-<ion-radio-group [(ngModel)]="selectedOption" color="secondary">
-  <ion-item>
-    <ion-label>Option 1</ion-label>
-    <ion-radio slot="start" value="option1"></ion-radio>
-  </ion-item>
-  <ion-item>
-    <ion-label>Option 2</ion-label>
-    <ion-radio slot="start" value="option2"></

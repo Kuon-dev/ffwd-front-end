@@ -83,17 +83,6 @@ goToAboutPage() {
 }
 ```
 
-In the above example, we define a `params` object that contains the parameters to be passed. We use the `navigateForward()` method of the `NavController` and provide the `queryParams` option with the `params` object.
 
-On the receiving page, you can access the parameters using the `NavParams` class. Here's an example:
 
-```javascript
-import { NavParams } from '@ionic/angular';
 
-constructor(private navParams: NavParams) {}
-
-ngOnInit() {
-  const id = this.navParams.get('id');
-  const name = this.navParams.get('name');
-
-  console.log(id, name

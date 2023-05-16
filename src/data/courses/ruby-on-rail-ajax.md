@@ -59,17 +59,4 @@ For example, if you have an `update.js.erb` template for the `update` action, yo
 $("#post-content").html("<%= j render @post %>");
 
 In this example, the JavaScript code selects an element with the ID `post-content` and replaces its content with the rendered partial for the updated post.
-
-## 5. Handling Ajax Errors
-
-When working with Ajax requests, it's important to handle errors gracefully. Rails provides the ability to handle errors in the `js.erb` templates and display error messages to the user.
-
-Here's an example of how you can handle an error in an `update.js.erb` template:
-
-```javascript
-// update.js.erb
-<% if @post.errors.any? %>
-  $("#error-messages").html("<%= j render 'shared/error_messages', object: @post %>");
-<% else %>
-  $("#post-content").html("<%= j render @post %>");
-<%
+```

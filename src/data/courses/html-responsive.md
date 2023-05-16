@@ -30,9 +30,4 @@ In the example above, the `.container` class is set to occupy the full width of 
 
 By utilizing media queries and adjusting various CSS properties, such as widths, heights, font sizes, and positioning, you can create responsive designs that adapt to different screen sizes and devices.
 
-## Using Viewport Meta Tag
 
-Another crucial aspect of responsive design is the `viewport` meta tag in HTML. This meta tag allows you to control how the webpage is displayed on the user's device by specifying the initial scale, width, and other viewport properties.
-
-```html
-<meta name="viewport" content="width=device-width, initial-scale=1.0">

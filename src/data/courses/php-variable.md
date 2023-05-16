@@ -80,4 +80,4 @@ function greet() {
 greet();
 `````````
 
-In the above example, we have a global variable `$name` and a local variable `$message` defined within the `greet()` function. The `greet()` function can access
+In the above example, we have a global variable `$name` and a local variable `$message` defined within the `greet()` function. 

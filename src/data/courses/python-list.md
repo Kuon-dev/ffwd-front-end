@@ -84,6 +84,7 @@ Python provides a variety of built-in methods for working with lists. Here are a
   ```python
   fruits = ['apple', 'banana', 'orange']
   fruits.remove('banana')  # Output: ['apple', 'orange']
+  ```
 
 These are just a few examples of the operations and methods available for working with lists in Python. Lists are widely used for storing and manipulating collections of data, and they are an essential part of Python programming.
 

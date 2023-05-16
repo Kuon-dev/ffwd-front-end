@@ -77,6 +77,4 @@ Ionic provides a set of CSS variables that you can use to customize the appearan
 
 Refer to the Ionic documentation for a list of available CSS variables and their usage.
 
-## Conclusion
 
-The Ionic Action Sheet component is a powerful tool for presenting a set of options or actions to the user. By following the steps outlined in this tutorial, you can easily integrate the Action Sheet component

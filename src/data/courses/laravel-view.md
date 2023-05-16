@@ -64,13 +64,4 @@ return view('welcome')->with('name', 'John Doe');
 
 In this example, the `with` method is used to pass the variable "name" with the value "John Doe" to the "welcome" view.
 
-## Blade Templating
 
-Laravel's Blade templating engine provides additional features to enhance your views. Blade allows you to use control structures, include partial views, extend layouts, and more.
-
-Here's a brief overview of some commonly used Blade features:
-
-- **Variable Output:** Use `{{ $variable }}` to output variables in your view.
-- **Control Structures:** Utilize `@if`, `@foreach`, `@for`, and other control structures for conditional and iterative logic.
-- **Blade Directives:** Make use of Blade directives like `@extends`, `@section`, `@yield`, `@include`, and `@component` for layouts and reusable components.
-- **Escaping Output:** Use `{{ $variable }}`

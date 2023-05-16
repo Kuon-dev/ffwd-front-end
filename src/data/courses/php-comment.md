@@ -1,4 +1,4 @@
-# PHP Comment
+## PHP Comment
 
 In PHP, comments are used to add explanatory or descriptive notes within the code. Comments are ignored by the PHP interpreter and are not executed as part of the program.
 
@@ -23,4 +23,4 @@ There are two types of comments in PHP:
 
 Comments play an important role in code documentation and can help make the code more readable and understandable for other developers.
 
-It's good practice to use comments to provide information
+

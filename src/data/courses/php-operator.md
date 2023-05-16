@@ -83,11 +83,3 @@ var_dump($result1);  // Output: bool(false)
 var_dump($result2);  // Output: bool(true)
 var_dump($result3);  // Output: bool(false)
 `````````
-
-## String Concatenation Operator
-
-The string concatenation operator (`.`) is used to concatenate two strings. Here's an example:
-
-`````````
-php
-$

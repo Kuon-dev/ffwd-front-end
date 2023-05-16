@@ -63,12 +63,3 @@ if ($uploadOk == 0) {
 ?>
 ``````
 
-In this PHP script, we perform the following steps:
-1. Specify the target directory where the uploaded file will be stored (e.g., "uploads/").
-2. Construct the target file path by concatenating the target directory with the basename of the uploaded file.
-3. Set the initial value of `$uploadOk` to 1, indicating that the file upload is allowed unless an error occurs.
-4. Extract the file extension from the target file path to determine the file type.
-5. Check if the file already exists in the target directory. If it does, set `$uploadOk` to 0.
-6. Check if the file size exceeds the maximum allowed size. If it does, set `$uploadOk` to 0.
-7. Check if the file extension is allowed. If it's not in the list of allowed extensions, set `$uploadOk` to 0.
-8. If `$uploadOk` is still 1, move the uploaded file from

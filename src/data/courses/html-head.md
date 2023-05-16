@@ -25,7 +25,7 @@ Here's an example of a basic HTML document structure with the `<head>` element:
   ```<body>
     <!-- Content of the web page goes here -->
   ```</body>
-\\</html>
+``</html>
 ```
 
 In this example, the `<title>` tag sets the title of the web page, the `<meta>` tag specifies the character encoding, the `<link>` tag links an external CSS file, and the `<script>` tag links an external JavaScript file.

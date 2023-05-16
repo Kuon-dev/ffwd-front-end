@@ -95,4 +95,3 @@ function List() {
 export default List;
 ```
 
-In this example, we define

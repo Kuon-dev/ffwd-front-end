@@ -64,17 +64,4 @@ In the example above, we demonstrate how to perform date arithmetic by adding da
 
 The `Time` class in Ruby allows you to work with time, including parsing, formatting, and performing calculations similar to the `Date` class.
 
-### Creating a Time
 
-You can create a `Time` object using the `Time.new` method or by parsing a string representation of time using `Time.parse`.
-
-```ruby
-require 'time'
-
-# Creating a Time object using Time.new
-time = Time.new(2023, 5, 15, 10, 30, 0)
-puts time  # Output: 2023-05-15 10:30:00 +0530
-
-# Parsing a time string using Time.parse
-time = Time.parse("2023-05-15 10:30:00")
-puts time  # Output: 202

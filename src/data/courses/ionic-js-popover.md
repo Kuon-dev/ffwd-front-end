@@ -68,11 +68,4 @@ In the above example, we import the `PopoverController` class and inject it into
 
 Inside the `dismissPopover()` method, we use the `getTop()` method of the `PopoverController` to get the currently displayed popover. If a popover is found, we call the `dismiss()` method on the popover to dismiss it.
 
-## Customizing Popover Positioning
 
-By default, Ionic's popover component is positioned based on the triggering event. However, you can customize the popover's position using various configuration options.
-
-Here's an example of customizing the popover's position:
-
-```javascript
-async presentPopover(event: any)

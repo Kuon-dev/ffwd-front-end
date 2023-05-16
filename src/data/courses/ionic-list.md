@@ -107,4 +107,3 @@ Here's an example of a list with clickable items:
 </ion-list>
 ```
 
-In the above example, each `ion-item` has an `(click)` event handler that calls the `handleItemClick`

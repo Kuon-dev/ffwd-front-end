@@ -58,12 +58,3 @@ Ionic select component provides various attributes and classes to customize its 
 
 In the above example, we set the `interface` attribute to "action-sheet" to change the select's appearance to an action sheet style.
 
-## Select with Multiple Options
-
-Ionic select component also supports selecting multiple options. We can enable this by setting the `multiple` attribute to `true`. Here's an example:
-
-```html
-<ion-select multiple [(ngModel)]="selectedValues">
-  <ion-select-option value="option1">Option 1</ion-select-option>
-  <ion-select-option value="option2">Option 2</ion-select-option>
-  <ion-select-option value="option3">

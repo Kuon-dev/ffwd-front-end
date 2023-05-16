@@ -6,7 +6,7 @@ Templates in Vue.js are the building blocks of your application's user interface
 
 Vue templates use a declarative syntax that allows you to bind data and create dynamic content. You can use double curly braces (`{{ }}`) for data interpolation and directives to apply special behaviors to elements. Here's an example:
 
-```vue
+```html
 <template>
   <div>
     <h1>{{ title }}</h1>
@@ -41,7 +41,7 @@ Directives in Vue allow you to apply special behaviors to elements. They are pre
 
 Here's an example that demonstrates the usage of these directives:
 
-```vue
+```html
 <template>
   <div>
     <ul>

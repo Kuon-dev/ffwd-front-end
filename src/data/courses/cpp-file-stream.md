@@ -88,6 +88,3 @@ int main() {
 
 In this example, we open the file `"example.txt"` in append mode by passing `std::ios::app` as the second argument to the `std::ofstream` constructor. We then write data to the file, which appends the new content to the existing file.
 
-## Conclusion
-
-File and stream handling in C++ allows us to read data from and

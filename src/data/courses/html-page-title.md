@@ -8,9 +8,9 @@ The page title is an important element in HTML that defines the title of a web p
 To set the page title, you need to use the `<title>` element within the `<head>` section of your HTML document. Here's an example:
 
 ```
-```<head>
-```<title>My Web Page</title>
-```</head>
+<head>
+<title>My Web Page</title>
+</head>
 ```
 
 In the example above, the page title is set to "My Web Page" within the `<title>` tags. Replace "My Web Page" with your desired title.
@@ -27,9 +27,9 @@ When creating page titles, it's important to follow some best practices:
 Here's an example of a well-optimized page title:
 
 ```
-```<head>
-```<title>HTML Page Title Best Practices - Learn HTML | My Website</title>
-```</head>
+<head>
+<title>HTML Page Title Best Practices - Learn HTML | My Website</title>
+</head>
 ```
 
 In the example above, the page title includes relevant keywords, describes the content, and mentions the website name.
@@ -41,9 +41,9 @@ In some cases, you may want to change the page title dynamically based on certai
 Here's an example of changing the page title using JavaScript:
 
 ```
-```<script>
+<script>
     document.title = "New Page Title";
-```</script>
+</script>
 ```
 
 In the example above, the JavaScript code sets the page title to "New Page Title". You can replace this with any dynamic value based on your requirements.

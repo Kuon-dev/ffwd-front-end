@@ -48,19 +48,4 @@ C++ also provides type modifiers that can alter the properties of data types. So
 
 These type modifiers allow you to control the behavior and usage of variables in your programs.
 
-## `sizeof` Operator
 
-To determine the memory size of a data type or a variable, you can use the `sizeof` operator. It returns the number of bytes occupied by the data type or variable.
-
-Here's an example of using the `sizeof` operator:
-
-````cpp
-int main() {
-    int num = 10;
-    cout << "Size of int: " << sizeof(int) << " bytes" << endl;
-    cout << "Size of num: " << sizeof(num) << " bytes" << endl;
-    return 0;
-}
-````
-
-In this example, we use the `sizeof

@@ -65,15 +65,4 @@ If we change the value of `day` to `4`, the switch statement matches `case 4` an
 
 If the value of `day` doesn't match any of the cases, the code block inside the `default` case is executed, and `dayName` is assigned the value `"Invalid day"`.
 
-## Multiple Cases
 
-You can also have multiple cases with the same code block. This allows you to execute the same code for different matching values. Here's an example:
-
-```javascript
-let num = 2;
-
-switch (num) {
-  case 1:
-  case 2:
-  case 3:
-    console.log("The number is between 1 and 3");

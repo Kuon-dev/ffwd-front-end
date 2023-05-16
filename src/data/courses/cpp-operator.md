@@ -5,7 +5,7 @@ Operators in C++ are symbols or keywords that perform various operations on oper
 ## Arithmetic Operators
 
 Arithmetic operators perform basic mathematical calculations. Here are the arithmetic operators available in C++:
-
+```
 | Operator | Description          | Example                 |
 |----------|----------------------|-------------------------|
 | +        | Addition             | `int result = a + b;`   |
@@ -15,11 +15,11 @@ Arithmetic operators perform basic mathematical calculations. Here are the arith
 | %        | Modulus (Remainder)  | `int result = a % b;`   |
 | ++       | Increment            | `a++;`                  |
 | --       | Decrement            | `a--;`                  |
-
+```
 ## Assignment Operators
 
 Assignment operators are used to assign values to variables. They also perform an operation along with assignment. Here are some commonly used assignment operators:
-
+```
 | Operator | Description          | Example              |
 |----------|----------------------|----------------------|
 | =        | Assignment           | `int x = 10;`        |
@@ -28,11 +28,11 @@ Assignment operators are used to assign values to variables. They also perform a
 | *=       | Multiplication assignment | `x *= 2;`        |
 | /=       | Division assignment  | `x /= 2;`            |
 | %=       | Modulus assignment   | `x %= 3;`            |
-
+```
 ## Comparison Operators
 
 Comparison operators are used to compare two values. They return a boolean result (true or false) based on the comparison. Here are the comparison operators available in C++:
-
+```
 | Operator | Description          | Example                 |
 |----------|----------------------|-------------------------|
 | ==       | Equal to             | `if (a == b)`           |
@@ -41,23 +41,15 @@ Comparison operators are used to compare two values. They return a boolean resul
 | >        | Greater than         | `if (a > b)`            |
 | <=       | Less than or equal to | `if (a <= b)`           |
 | >=       | Greater than or equal to | `if (a >= b)`         |
-
+```
 ## Logical Operators
 
 Logical operators are used to perform logical operations on boolean values. They combine conditions and return a boolean result. Here are the logical operators available in C++:
 
+```
 | Operator | Description          | Example                  |
 |----------|----------------------|--------------------------|
 | &&       | Logical AND          | `if (a && b)`            |
 | \|\|     | Logical OR           | `if (a \|\| b)`          |
 | !        | Logical NOT          | `if (!a)`                |
-
-## Bitwise Operators
-
-Bitwise operators perform operations on individual bits of operands. They are used to manipulate data at the bit level. Here are the bitwise operators available in C++:
-
-| Operator | Description          | Example                  |
-|----------|----------------------|--------------------------|
-| &        | Bitwise AND          | `result = a & b;`        |
-| \|       | Bitwise OR           | `result = a \| b;`       |
-| ^        | Bitwise
+```

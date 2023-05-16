@@ -87,11 +87,3 @@ int add(int num1, int num2) {
 
 Functions can be called (invoked) from other parts of the program to execute their code and return results.
 
-## Control Flow Structures
-
-Control flow structures are used to control the flow of execution in a program. They allow you to make decisions and repeat certain blocks of code based on conditions. Here are some commonly used control flow structures in C++:
-
-- `if` statement: Executes a block of code if a certain condition is true.
-- `else` statement: Provides an alternative block of code to execute if the `if` condition is false.
-- `else if` statement: Allows for multiple conditions to be checked in sequence.
-- `switch` statement: Evaluates an expression and executes different code blocks based on the

@@ -84,28 +84,5 @@ export default {
 
 In this example, the child component uses the received props `title` and `message` in the template to display the values. Additionally, a computed property named `formattedMessage` is defined to transform the `message` prop to uppercase using the `toUpperCase()` method.
 
-## Prop Validation
-
-Vue allows you to validate props to ensure they meet specific requirements. You can specify the expected type, provide default values, and enforce required props. Here's an example:
-
-```vue
-<template>
-  <div>
-    <h1>{{ title }}</h1>
-  </div>
-</template>
-
-<script>
-export default {
-  props: {
-    title: {
-      type: String,
-      default: 'Default Title',
-      required: true
-    }
-  }
-};
-</script>
-```
 
 

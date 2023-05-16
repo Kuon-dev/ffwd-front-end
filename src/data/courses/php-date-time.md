@@ -87,9 +87,3 @@ echo "Month: " . $month . "<br>";
 echo "Day: " . $day . "<br>";
 `````````
 
-## Timezones
-
-PHP allows you to work with dates and times in different timezones. You can set the default timezone using the `date_default_timezone_set()` function or set it explicitly for a specific date using the `DateTime` class:
-
-`````````
-php

@@ -63,16 +63,3 @@ Ionic grid system automatically adapts to different screen sizes, providing a re
 
 In the above example, the column widths will adjust based on the screen size. On smaller screens, each column will take up half of the available space (`size="6"`). On medium screens, the first column will take up one-third of the space (`size-md="4"`), and the second column will take up two-thirds of the space (`size-md="8"`).
 
-## Nesting Grids
-
-Ionic grid system allows you to nest grids within grids to create complex layouts. You can use `ion-row` and `ion-col` components inside another `ion-col` to create nested grids. Here's an example:
-
-```html
-<ion-grid>
-  <ion-row>
-    <ion-col>Outer Column 1</ion-col>
-    <ion-col>
-      <ion-grid>
-        <ion-row>
-          <ion-col>Nested Column 1</ion-col>
-          <ion-col>Nested Column 2</

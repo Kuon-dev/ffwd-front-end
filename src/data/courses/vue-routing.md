@@ -112,6 +112,4 @@ this.$router.push('/about');
 
 This code will navigate to the `/about` route programmatically.
 
-## Route Parameters
 
-You can define dynamic
