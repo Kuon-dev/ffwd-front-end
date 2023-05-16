@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
+import vuetify from 'vite-plugin-vuetify';
 // import path from 'path';
 import { fileURLToPath, URL } from 'url';
 import VueRouter from 'unplugin-vue-router/vite';
@@ -35,6 +36,7 @@ export default defineConfig({
 			routesFolder: 'src/views',
 		}),
 		vue(),
+		vuetify({ autoImport: true }),
 	],
 
 	server: {
