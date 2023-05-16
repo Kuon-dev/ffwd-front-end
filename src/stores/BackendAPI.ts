@@ -15,8 +15,8 @@ export const getToken = async () => {
 };
 
 export const apiClient = axios.create({
-	// baseURL: 'http://localhost:8000',backend
-	baseURL: 'http://188.166.222.43:8000',
+	baseURL: (import.meta as any).env.VITE_APP_BACKEND_API,
+	// baseURL: 'http://188.166.222.43:8000',
 	withCredentials: true,
 });
 
