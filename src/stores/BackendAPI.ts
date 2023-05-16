@@ -15,7 +15,8 @@ export const getToken = async () => {
 };
 
 export const apiClient = axios.create({
-	baseURL: 'http://localhost:8000',
+	// baseURL: 'http://localhost:8000',backend
+	baseURL: 'http://188.166.222.43:8000',
 	withCredentials: true,
 });
 
