@@ -3,7 +3,7 @@ import axios from 'axios';
 import $ from 'jquery';
 
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = 'http://localhost:8000';
+// axios.defaults.baseURL = 'http://157.245.148.32';
 
 // This section is for the CSRF token
 // A CSRF token is used to authenticate the request

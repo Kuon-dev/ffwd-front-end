@@ -3,6 +3,7 @@
 import $ from 'jquery';
 import router from '@/router'; // @ refers to src
 import { injectScrollama } from './ScrollamaInjector';
+import { highlightCode } from './HighlightCodeInjector';
 // compostable
 import { watch, computed, ref } from 'vue';
 /* eslint-enable */
@@ -93,6 +94,7 @@ export const injectMarkdownContent = (file: string | string[]) => {
 					injectMarkdownHeaders();
 					injectClipboardAPI();
 					injectScrollama();
+					highlightCode();
 				},
 				error: function(xhr: any, status: any, error: any) {
 					console.error('Error fetching markdown file:', error);

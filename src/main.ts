@@ -47,9 +47,12 @@ pinia.use(({ store }) => {
 	store.router = markRaw(router);
 });
 
+import hljsVuePlugin from '@highlightjs/vue-plugin';
+
 createApp(App)
 	.use(router)
 	.use(pinia)
 	.use(vuetify)
+	.use(hljsVuePlugin)
 	.component('font-awesome-icon', FontAwesomeIcon)
 	.mount('#app');
