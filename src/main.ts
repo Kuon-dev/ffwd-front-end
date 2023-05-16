@@ -9,12 +9,28 @@ import { createPinia } from 'pinia';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-import { fas } from '@fortawesome/free-solid-svg-icons';
-import { far } from '@fortawesome/free-regular-svg-icons';
-import { fab } from '@fortawesome/free-brands-svg-icons';
+import {
+	faUser,
+	faTrash,
+	faPenToSquare,
+	faPen,
+	faCaretDown,
+	faCaretUp,
+	faSearch,
+	faChevronDown,
+} from '@fortawesome/free-solid-svg-icons';
 
 /* add icons to the library */
-library.add(fas, fab, far);
+library.add(
+	faUser,
+	faTrash,
+	faPenToSquare,
+	faPen,
+	faCaretDown,
+	faCaretUp,
+	faSearch,
+	faChevronDown,
+);
 
 // Vuetify
 import 'vuetify/styles';
