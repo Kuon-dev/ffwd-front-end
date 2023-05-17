@@ -54,7 +54,6 @@ export const useUserStore = defineStore('userStore', {
 	actions: {
 		async permittedAccessLevel() {
 			if (!this.user) this.getUser();
-			getToken();
 			const userPerms = await apiClient.post('api/user', this.user);
 			this.authUserAccessLevel = userPerms?.data?.perm_level;
 		},
@@ -113,7 +112,6 @@ export const useUserStore = defineStore('userStore', {
 
 		async handleLogin(credentials: LoginCredentials) {
 			this.authErrors = [];
-			await getToken();
 			const res = await apiClient
 				.post('/login', {
 					email: credentials.email,
