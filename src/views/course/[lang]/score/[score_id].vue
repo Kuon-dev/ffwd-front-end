@@ -87,7 +87,7 @@ const currentQuizData = ref([]);
 // score_id is the id of the quiz record selected
 const fetchQuizContent = async () => {
 	currentQuizData.value = await quizStore.getSpecificQuizRecord(
-		router.currentRoute.value.params.score_id,
+		(router.currentRoute.value.params as any).score_id,
 	);
 };
 await fetchQuizContent();
