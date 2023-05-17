@@ -3,7 +3,6 @@ import axios from 'axios';
 import $ from 'jquery';
 
 axios.defaults.withCredentials = true;
-
 // axios.defaults.baseURL = 'http://157.245.148.32';
 
 // This section is for the CSRF token
@@ -34,7 +33,7 @@ export const ajaxClient = <T>(
 ): Promise<AjaxResponse<T>> => {
 	return new Promise((resolve, reject) => {
 		$.ajax({
-			url: url,
+			url: `${(import.meta as any).env.VITE_APP_BACKEND_API}/${url}`,
 			type: method.toUpperCase(),
 			dataType: 'json',
 			xhrFields: {

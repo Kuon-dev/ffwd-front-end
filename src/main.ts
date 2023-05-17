@@ -18,6 +18,7 @@ import {
 	faCaretUp,
 	faSearch,
 	faChevronDown,
+	faCode,
 } from '@fortawesome/free-solid-svg-icons';
 
 import { faEye, faSquareCaretLeft } from '@fortawesome/free-regular-svg-icons';
@@ -33,6 +34,7 @@ library.add(
 	faChevronDown,
 	faEye,
 	faSquareCaretLeft,
+	faCode,
 );
 
 // Vuetify

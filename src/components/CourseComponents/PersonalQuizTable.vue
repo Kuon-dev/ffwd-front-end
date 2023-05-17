@@ -23,11 +23,16 @@
 				>
 					Time Taken
 				</th>
+				<th
+					scope="col"
+					class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+				>
+					QR Code
+				</th>
 			</tr>
 		</thead>
 		<tbody class="bg-white divide-y divide-gray-200">
 			<!-- personalQuizzes comes from the const prop variable-->
-			<!-- <tr> -->
 			<tr v-for="personalQuiz in personalQuizzes" :key="personalQuiz.id">
 				<td class="px-6 py-4 whitespace-nowrap">
 					<div class="text-sm text-gray-900">{{ personalQuiz.score }}</div>
@@ -39,8 +44,21 @@
 				</td>
 				<td class="px-6 py-4 whitespace-nowrap">
 					<div class="text-sm text-gray-900">
-						{{ personalQuiz.completed_time }}
+						{{
+							new Date(
+								new Date(personalQuiz.completed_time).getTime() -
+									new Date(personalQuiz.attempted_date).getTime()
+							)
+								.toISOString()
+								.substr(11, 8)
+						}}
 					</div>
+				</td>
+				<td class="px-6 py-4 whitespace-nowrap">
+					<router-link
+						:to="`/course/${personalQuiz.title}/score/${personalQuiz.id}`"
+						><v-btn color="primary" text> QR </v-btn></router-link
+					>
 				</td>
 			</tr>
 			<!-- Repeat for each personal quiz record -->
@@ -59,8 +77,4 @@ const props = defineProps({
 		default: () => [],
 	},
 });
-
-// const userStore = useUserStore();
-// const quizStore = useQuizStore();
-// const personalQuizRecords = ref<PersonalQuizRecord[]>((await quizStore.getAllPersonalQuizRecords(0, userStore.user?.id)) ?? []);
 </script>

@@ -39,6 +39,7 @@ export const useQuizStore = defineStore('quizStore', {
 		courseSelected: '',
 		timeTaken: <any>{},
 		personalQuizRecords: [] as PersonalQuizRecord[],
+		quizRecordSelected: <PersonalQuizRecord>{},
 		quizError: <SingleError>{} || <any>{},
 	}),
 	getters: {
@@ -49,6 +50,8 @@ export const useQuizStore = defineStore('quizStore', {
 		userCorrectAnswers: (state) => state.numberOfCorrectAnswers,
 		allPersonalQuizRecords: (state) => state.personalQuizRecords,
 		course: (state) => state.courseSelected,
+		quizRecord: (state) => state.quizRecordSelected,
+		errorList: (state) => state.quizError,
 	},
 	actions: {
 		dateFormatter(date: string) {
@@ -125,6 +128,7 @@ export const useQuizStore = defineStore('quizStore', {
 					this.quizError = errorMessage;
 					return [];
 				});
+			console.log(response);
 
 			const newPersonalQuizRecord = response?.data?.map(
 				(personalQuizRecord: PersonalQuizRecord) => {
@@ -141,6 +145,25 @@ export const useQuizStore = defineStore('quizStore', {
 				? (this.personalQuizRecords = newPersonalQuizRecord)
 				: [];
 		},
+		async getSpecificQuizRecord(id: any) {
+			await getToken();
+			const res = await apiClient
+				.post(`api/quizzes/get/specific/${id}`, {
+					quiz_id: id,
+				})
+				.catch((err: Error | AxiosError) => {
+					const error = err as AxiosError;
+					const errorMessage: SingleError | any = {
+						message: (error?.response?.data as any).message,
+						status: error?.response?.status,
+					};
+					this.quizError = errorMessage;
+				});
+
+			console.log(res?.data.quiz);
+			this.quizRecordSelected = res?.data.quiz;
+			return res?.data.quiz;
+		},
 		async getSpecificScore(path: string) {
 			await getToken();
 
@@ -151,7 +174,6 @@ export const useQuizStore = defineStore('quizStore', {
 			const response = await apiClient
 				.post(`/api/score/${path ?? 0}`, body)
 				.then((res) => {
-					console.log(res.data);
 					return res.data;
 				})
 				.catch((err: Error | AxiosError) => {
