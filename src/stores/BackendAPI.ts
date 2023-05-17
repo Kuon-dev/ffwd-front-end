@@ -20,14 +20,6 @@ export const apiClient = axios.create({
 	withCredentials: true,
 });
 
-apiClient.interceptors.request.use(async (config) => {
-	const csrfToken = await getToken();
-	if (csrfToken) {
-		config.headers['X-CSRF-TOKEN'] = csrfToken;
-	}
-	return config;
-});
-
 interface AjaxResponse<T> {
 	type: 'success' | 'error';
 	data: T | null;
