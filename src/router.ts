@@ -14,12 +14,6 @@ router.beforeEach(async (to: any) => {
 	console.info(`%c[Dev Vue Router] ${to.path}`, 'color: #bada55');
 	// if (!to.meta.requiresAuth) return;
 	if (!store.user || store.user === null) return;
-	if (Object.keys(store.user).length === 0) {
-		const user = await store.getUser();
-		if (!user) {
-			store.authUser = null;
-		}
-	}
 
 	const admin = /^\/admin(\/\w+)*$/;
 	// router guard, as long as there is /admim, redirect if the user is not authorized
@@ -52,7 +46,15 @@ router.beforeEach(async (to: any) => {
   */
 });
 
-router.afterEach(() => {
+router.afterEach(async () => {
+	const store = useUserStore();
+	if (Object.keys(store.user).length === 0) {
+		const user = await store.getUser();
+		if (!user) {
+			store.authUser = null;
+		}
+	}
+
 	NProgress.done();
 });
 
