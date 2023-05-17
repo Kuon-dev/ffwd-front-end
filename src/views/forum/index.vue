@@ -7,7 +7,14 @@
 			<section class="px-5 mb-5 lg:mb-0 lg:w-2/6 order-last lg:order-first">
 				<h3 class="font-semibold text-2xl">Hot Today</h3>
 				<BaseCard class="mt-5">
-					<ForumHots :forums="hots" />
+					<ForumHots :forums="hots" v-if="hots.length > 0" />
+					<div v-else>
+						<v-skeleton-loader
+							v-for="items in 10"
+							:key="items"
+							type="list-item-two-line"
+						/>
+					</div>
 				</BaseCard>
 				<!-- Carousel Section -->
 			</section>
@@ -38,7 +45,14 @@
 					leave-active-class="animate__animated animate__slideOutRight animate__fast"
 				>
 					<div v-if="Object.keys(forumStore.errorList).length === 0">
-						<ForumCard :forums="forums" />
+						<ForumCard :forums="forums" v-if="forums.length > 0" />
+						<div v-else>
+							<v-skeleton-loader
+								v-for="items in 10"
+								:key="items"
+								type="list-item-two-line"
+							/>
+						</div>
 					</div>
 					<BaseCard v-else class="mt-4">
 						<div class="text-red-500">
@@ -59,7 +73,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import BaseCard from 'base-components/BaseCard.vue';
 import SearchBarVue from 'base-components/BaseSearchBar.vue';
 import FilterDropDownVue from 'base-components/BaseDropDown.vue';
@@ -73,9 +87,9 @@ import { VSkeletonLoader } from 'vuetify/labs/VSkeletonLoader';
 const forumStore = useForumStore();
 
 // Define forum data
-const forums = ref<Forum[]>((await forumStore.getAllForums(0)) ?? []);
-const hots = ref<Forum[]>((await forumStore.getHotForums()) ?? []);
-const totalPage = ref(Math.ceil((await forumStore.getPaginationCount()) / 10));
+const forums = ref<Forum[]>([]);
+const hots = ref<Forum[]>([]);
+const totalPage = ref(0);
 const currentPage = ref(forumStore.forumCurrentPagination);
 
 const filterOptions = [
@@ -93,6 +107,12 @@ const changePage = async (index: number) => {
 	forums.value = [];
 	forums.value = await forumStore.getAllForums(index - 1);
 };
+
+onMounted(async () => {
+	forums.value = (await forumStore.getAllForums(0)) ?? ['An error has occured'];
+	hots.value = (await forumStore.getHotForums()) ?? [];
+	totalPage.value = Math.ceil((await forumStore.getPaginationCount()) / 10);
+});
 </script>
 
 <style lang="css" scoped></style>

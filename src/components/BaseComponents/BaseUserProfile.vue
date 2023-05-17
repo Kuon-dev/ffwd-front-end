@@ -1,12 +1,20 @@
 <template>
 	<Teleport to="body">
 		<transition
-			enter-active-class="animate__animated animate__fadeIn"
-			leave-active-class="animate__animated animate__fadeOut"
+			enter-active-class="animate__animated animate__fadeIn animate__fast"
+			leave-active-class="animate__animated animate__fadeOut animate__fast"
 		>
 			<div
 				class="top-0 fixed z-[1000] w-full bg-[#000000A0] h-full overflow-auto"
-				v-if="isShowProfile"
+				v-if="
+					(isShowProfile &&
+						((Object.keys(userManageStore.editUser).length < 1 &&
+							profileType === 'userEdit') ||
+							(Object.keys(userManageStore.editUser).length > 0 &&
+								profileType === 'adminEdit'))) ||
+					(Object.keys(userManageStore.editUser).length < 1 &&
+						profileType === 'adminAdd')
+				"
 				:class="isShowProfile ? '' : 'overflow-auto '"
 			>
 				<div
@@ -32,70 +40,52 @@
 								> -->
 							</BaseCard>
 							<BaseCard class="lg:w-3/5">
-								<h2 class="text-2xl mb-3">Edit Profile</h2>
-								<hr class="border-black" />
-								<form class="lg:grid grid-cols-2 gap-4 my-5">
-									<v-text-field
-										v-model="editName"
-										label="Name"
-										variant="solo"
-									></v-text-field>
-									<v-text-field
-										v-model="editEmail"
-										label="Email"
-										variant="solo"
-									></v-text-field>
-									<v-text-field
-										v-model="editPhone"
-										label="Phone Number"
-										variant="solo"
-										class="h-10"
-									></v-text-field>
-									<!-- <div class="relative">
+								<div v-if="isLoaded">
+									<h2 class="text-2xl mb-3">Edit Profile</h2>
+									<hr class="border-black" />
+									<form class="lg:grid grid-cols-2 gap-4 my-5">
 										<v-text-field
-											:type="passwordFieldType"
-											v-model="editPassword"
-											label="Password"
+											v-model="editName"
+											label="Name"
 											variant="solo"
-										/>
+										></v-text-field>
+										<v-text-field
+											v-model="editEmail"
+											label="Email"
+											variant="solo"
+										></v-text-field>
+										<v-text-field
+											v-model="editPhone"
+											label="Phone Number"
+											variant="solo"
+											class="h-10"
+										></v-text-field>
+										<v-textarea
+											label="Bio"
+											variant="solo"
+											v-model="editBio"
+										></v-textarea>
+									</form>
 
-										<span
-											class="absolute top-4 right-0 grid place-content-center px-4 z-20"
+									<div
+										class="flex flex-col gap-5 items-center lg:flex-row lg:justify-end"
+									>
+										<v-btn
+											color="#7e81ee"
+											class="text-white w-full md:w-1/4"
+											@click="handleSave($event)"
+											>Save</v-btn
 										>
-											<button @click="togglePeek($event)">
-												<font-awesome-icon
-													:icon="
-														isPeekingPassword
-															? 'fa-regular fa-eye-slash'
-															: 'fa-regular fa-eye'
-													"
-												/>
-											</button>
-										</span>
-									</div> -->
-									<v-textarea
-										label="Bio"
-										variant="solo"
-										v-model="editBio"
-									></v-textarea>
-								</form>
-								<div
-									class="flex flex-col gap-5 items-center lg:flex-row lg:justify-end"
-								>
-									<v-btn
-										color="#7e81ee"
-										class="text-white w-full md:w-1/4"
-										@click="handleSave($event)"
-										>Save</v-btn
-									>
-									<v-btn
-										color="#E32227"
-										class="text-white w-full md:w-1/4"
-										@click="handleDiscard()"
-									>
-										Discard
-									</v-btn>
+										<v-btn
+											color="#E32227"
+											class="text-white w-full md:w-1/4"
+											@click="handleDiscard()"
+										>
+											Discard
+										</v-btn>
+									</div>
 								</div>
+								<div v-else>Loading</div>
 							</BaseCard>
 
 							<!-- Comment Related Alerts Field -->
@@ -106,12 +96,12 @@
 								:text="showAlertText"
 							/>
 						</div>
-						<button
-							class="select-none font-bold text-red-500 text-3xl"
-							@click="toggleProfileOverlay(true)"
+						<v-btn
+							class="select-none font-bold text-red-500 text-3xl mt-10"
+							@click="handleClose()"
 						>
-							X
-						</button>
+							close
+						</v-btn>
 					</div>
 				</div>
 			</div>
@@ -120,31 +110,37 @@
 </template>
 
 <script setup lang="ts">
-import $ from 'jquery';
 import { useUserStore, User } from '@/stores/UserStore';
-import { ref, computed } from 'vue';
+import { ref, computed, PropType, onMounted } from 'vue';
 import BaseCard from 'base-components/BaseCard.vue';
 import BaseAlert from 'base-components/BaseAlert.vue';
 import { isShowProfile, toggleProfileOverlay } from 'compostables/NavInjector';
+import { useUserManagementStore } from 'stores/UserManagementStore';
+
+const props = defineProps({
+	profileType: {
+		type: String,
+		default: 'userEdit',
+	},
+});
 
 // Define data properties for the component
 const userStore = useUserStore();
-await userStore.getUser();
+const userManageStore = useUserManagementStore();
 
-const passwordFieldType = ref('password');
-const isPeekingPassword = ref(false);
+const originalUserData = ref();
+const editName = ref();
+const editEmail = ref();
+const editPhone = ref();
+const editBio = ref();
 
-const originalUserData = ref(userStore.user);
-const editName = ref(originalUserData.value?.name);
-const editEmail = ref(originalUserData.value?.email);
-const editPhone = ref(originalUserData.value?.phone_number);
-const editPassword = ref('');
-const editBio = ref(originalUserData.value?.bio);
+const oriName = ref();
+const oriEmail = ref();
+const oriPhone = ref();
+const oriBio = ref();
 
-const oriName = ref(userStore.user?.name);
-const oriEmail = ref(userStore.user?.email);
-const oriPhone = ref(userStore.user?.phone_number);
-const oriBio = ref(userStore.user?.bio);
+const oriData = ref();
+const isLoaded = ref(false);
 
 const showAlert = ref<Boolean>(false);
 const showAlertTitle = ref<string>('');
@@ -164,18 +160,8 @@ const renderAlert = (
 	}, 8000);
 };
 
-const togglePeek = (e: Event) => {
-	e.preventDefault();
-	isPeekingPassword.value = !isPeekingPassword.value;
-	if (isPeekingPassword.value) {
-		passwordFieldType.value = 'text';
-	}
-	else {
-		passwordFieldType.value = 'password';
-	}
-};
-
 const handleSave = (e: Event) => {
+	e.preventDefault();
 	const updatedUser: User = {
 		id: originalUserData.value?.id,
 		created_at: null,
@@ -185,20 +171,22 @@ const handleSave = (e: Event) => {
 		name: editName.value!.trim(),
 		email: editEmail.value!.trim(),
 		phone_number: editPhone.value!.trim(),
-		password: editPassword.value.trim(),
+		password: '',
 		bio: editBio.value!.trim(),
 	};
 
-	$.each($('input'), (index: number, field: Element) => {
-		if (!$(field).val()) {
-			renderAlert(
-				'error',
-				'Empty Field!',
-				'Please do not leave any field empty!',
-			);
-		}
-	});
-
+	if (
+		!editName.value ||
+		!editEmail.value ||
+		!editPhone.value ||
+		!editBio.value
+	) {
+		renderAlert(
+			'error',
+			'Empty Field!',
+			'Please do not leave any field empty!',
+		);
+	}
 	userStore.editUser(updatedUser);
 };
 
@@ -206,9 +194,37 @@ const handleDiscard = () => {
 	editName.value = oriName.value;
 	editEmail.value = oriEmail.value;
 	editPhone.value = oriPhone.value;
-	editPassword.value = '';
+	// editPassword.value = '';
 	editBio.value = oriBio.value;
 };
+
+const handleClose = () => {
+	originalUserData.value = {};
+	oriData.value = {};
+	(userManageStore.manageEditUser = {}), toggleProfileOverlay(false);
+};
+
+onMounted(async () => {
+	await userStore.getUser();
+	originalUserData.value =
+		Object.keys(userManageStore.editUser).length > 0
+			? userManageStore.editUser
+			: userStore.user;
+	editName.value = originalUserData.value?.name;
+	editEmail.value = originalUserData.value?.email;
+	editPhone.value = originalUserData.value?.phone_number;
+	editBio.value = originalUserData.value?.bio;
+
+	oriData.value =
+		Object.keys(userManageStore.editUser).length > 0
+			? userManageStore.editUser
+			: userStore.user;
+	oriName.value = oriData.value?.name;
+	oriEmail.value = oriData.value?.email;
+	oriPhone.value = oriData.value?.phone_number;
+	oriBio.value = oriData.value?.bio;
+	isLoaded.value = true;
+});
 </script>
 
 <style></style>

@@ -20,27 +20,40 @@ export const apiClient = axios.create({
 	withCredentials: true,
 });
 
-export const ajaxClient = (url: string, method: string) => {
-	$.ajax({
-		url: url,
-		type: method.toUpperCase(),
-		dataType: 'json',
-		xhrFields: {
-			withCredentials: true,
-		},
-		success: (data: any) => {
-			return {
-				type: 'success',
-				data: data,
-				status: 200,
-			};
-		},
-		error: (xhr: any, status: any, error: any) => {
-			return {
-				type: 'error',
-				data: error,
-				status: status,
-			};
-		},
+interface AjaxResponse<T> {
+	type: 'success' | 'error';
+	data: T | null;
+	status: number;
+}
+
+export const ajaxClient = <T>(
+	url: string,
+	method: string,
+	data: any = null,
+): Promise<AjaxResponse<T>> => {
+	return new Promise((resolve, reject) => {
+		$.ajax({
+			url: url,
+			type: method.toUpperCase(),
+			dataType: 'json',
+			xhrFields: {
+				withCredentials: true,
+			},
+			data: data,
+			success: (responseData: T) => {
+				resolve({
+					type: 'success',
+					data: responseData,
+					status: 200,
+				});
+			},
+			error: (_, status, error) => {
+				reject({
+					type: 'error',
+					data: error,
+					status: status,
+				});
+			},
+		});
 	});
 };
