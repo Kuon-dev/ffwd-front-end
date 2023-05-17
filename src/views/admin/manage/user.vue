@@ -141,7 +141,7 @@
 			</div>
 		</section>
 	</BaseCard>
-	<BaseUserProfile v-if="isShowProfile" profile-type="adminEdit" />
+	<BaseUserProfile v-if="isShowProfile" :profile-type="profileStatus" />
 </template>
 
 <script setup lang="ts">
@@ -160,6 +160,7 @@ const manageStore = useUserManagementStore();
 const userStore = useUserStore();
 
 const allUsers = ref();
+const profileStatus = ref('adminEdit');
 
 const searchQuery = ref('');
 
@@ -170,6 +171,7 @@ const performSearch = (query: string) => {
 };
 
 const editUserAccount = (e: any) => {
+	profileStatus.value = 'adminEdit';
 	manageStore.manageEditUser = e;
 	toggleProfileOverlay(true);
 };

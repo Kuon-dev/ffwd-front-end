@@ -7,11 +7,13 @@
 			<div
 				class="top-0 fixed z-[1000] w-full bg-[#000000A0] h-full overflow-auto"
 				v-if="
-					isShowProfile &&
-					((Object.keys(userManageStore.editUser).length < 1 &&
-						profileType === 'userEdit') ||
-						(Object.keys(userManageStore.editUser).length > 0 &&
-							profileType === 'adminEdit'))
+					(isShowProfile &&
+						((Object.keys(userManageStore.editUser).length < 1 &&
+							profileType === 'userEdit') ||
+							(Object.keys(userManageStore.editUser).length > 0 &&
+								profileType === 'adminEdit'))) ||
+					(Object.keys(userManageStore.editUser).length < 1 &&
+						profileType === 'adminAdd')
 				"
 				:class="isShowProfile ? '' : 'overflow-auto '"
 			>
@@ -38,48 +40,52 @@
 								> -->
 							</BaseCard>
 							<BaseCard class="lg:w-3/5">
-								<h2 class="text-2xl mb-3">Edit Profile</h2>
-								<hr class="border-black" />
-								<form class="lg:grid grid-cols-2 gap-4 my-5">
-									<v-text-field
-										v-model="editName"
-										label="Name"
-										variant="solo"
-									></v-text-field>
-									<v-text-field
-										v-model="editEmail"
-										label="Email"
-										variant="solo"
-									></v-text-field>
-									<v-text-field
-										v-model="editPhone"
-										label="Phone Number"
-										variant="solo"
-										class="h-10"
-									></v-text-field>
-									<v-textarea
-										label="Bio"
-										variant="solo"
-										v-model="editBio"
-									></v-textarea>
-								</form>
-								<div
-									class="flex flex-col gap-5 items-center lg:flex-row lg:justify-end"
-								>
-									<v-btn
-										color="#7e81ee"
-										class="text-white w-full md:w-1/4"
-										@click="handleSave($event)"
-										>Save</v-btn
+								<div v-if="isLoaded">
+									<h2 class="text-2xl mb-3">Edit Profile</h2>
+									<hr class="border-black" />
+									<form class="lg:grid grid-cols-2 gap-4 my-5">
+										<v-text-field
+											v-model="editName"
+											label="Name"
+											variant="solo"
+										></v-text-field>
+										<v-text-field
+											v-model="editEmail"
+											label="Email"
+											variant="solo"
+										></v-text-field>
+										<v-text-field
+											v-model="editPhone"
+											label="Phone Number"
+											variant="solo"
+											class="h-10"
+										></v-text-field>
+										<v-textarea
+											label="Bio"
+											variant="solo"
+											v-model="editBio"
+										></v-textarea>
+									</form>
+
+									<div
+										class="flex flex-col gap-5 items-center lg:flex-row lg:justify-end"
 									>
-									<v-btn
-										color="#E32227"
-										class="text-white w-full md:w-1/4"
-										@click="handleDiscard()"
-									>
-										Discard
-									</v-btn>
+										<v-btn
+											color="#7e81ee"
+											class="text-white w-full md:w-1/4"
+											@click="handleSave($event)"
+											>Save</v-btn
+										>
+										<v-btn
+											color="#E32227"
+											class="text-white w-full md:w-1/4"
+											@click="handleDiscard()"
+										>
+											Discard
+										</v-btn>
+									</div>
 								</div>
+								<div v-else>Loading</div>
 							</BaseCard>
 
 							<!-- Comment Related Alerts Field -->
@@ -91,7 +97,7 @@
 							/>
 						</div>
 						<v-btn
-							class="select-none font-bold text-red-500 text-3xl"
+							class="select-none font-bold text-red-500 text-3xl mt-10"
 							@click="handleClose()"
 						>
 							close
@@ -104,7 +110,6 @@
 </template>
 
 <script setup lang="ts">
-import $ from 'jquery';
 import { useUserStore, User } from '@/stores/UserStore';
 import { ref, computed, PropType, onMounted } from 'vue';
 import BaseCard from 'base-components/BaseCard.vue';
@@ -135,6 +140,7 @@ const oriPhone = ref();
 const oriBio = ref();
 
 const oriData = ref();
+const isLoaded = ref(false);
 
 const showAlert = ref<Boolean>(false);
 const showAlertTitle = ref<string>('');
@@ -169,16 +175,18 @@ const handleSave = (e: Event) => {
 		bio: editBio.value!.trim(),
 	};
 
-	$.each($('input'), (index: number, field: Element) => {
-		if (!$(field).val()) {
-			renderAlert(
-				'error',
-				'Empty Field!',
-				'Please do not leave any field empty!',
-			);
-		}
-	});
-
+	if (
+		!editName.value ||
+		!editEmail.value ||
+		!editPhone.value ||
+		!editBio.value
+	) {
+		renderAlert(
+			'error',
+			'Empty Field!',
+			'Please do not leave any field empty!',
+		);
+	}
 	userStore.editUser(updatedUser);
 };
 
@@ -211,10 +219,11 @@ onMounted(async () => {
 		Object.keys(userManageStore.editUser).length > 0
 			? userManageStore.editUser
 			: userStore.user;
-	oriName.value = oriData.value.name;
+	oriName.value = oriData.value?.name;
 	oriEmail.value = oriData.value?.email;
 	oriPhone.value = oriData.value?.phone_number;
 	oriBio.value = oriData.value?.bio;
+	isLoaded.value = true;
 });
 </script>
 
