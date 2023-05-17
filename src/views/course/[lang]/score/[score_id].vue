@@ -18,7 +18,7 @@
 					<dd
 						class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"
 					>
-						{{ quizStore.quizRecord.quiz.score }}
+						{{ quizStore.quizRecord.score }}
 					</dd>
 				</div>
 				<div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -28,7 +28,7 @@
 					<dd
 						class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"
 					>
-						{{ quizStore.quizRecord.quiz.attempted_date }}
+						{{ quizStore.quizRecord.attempted_date }}
 					</dd>
 				</div>
 				<div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -38,7 +38,7 @@
 					<dd
 						class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"
 					>
-						{{ quizStore.quizRecord.quiz.completed_time }}
+						{{ quizStore.quizRecord.completed_time }}
 					</dd>
 				</div>
 				<div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -78,16 +78,6 @@ const props = defineProps({
 	},
 });
 
-// With async/await
-const generateQR = async (text: string) => {
-	try {
-		console.log(await QRCode.toDataURL(text));
-	}
-	catch (err) {
-		console.error(err);
-	}
-};
-
 const userStore = useUserStore();
 const quizStore = useQuizStore();
 const router = useRouter();
@@ -104,8 +94,8 @@ await fetchQuizContent();
 
 // Calculate time taken to complete the quiz
 const millisecondsTaken =
-	new Date(quizStore.quizRecord.quiz.completed_time).getTime() -
-	new Date(quizStore.quizRecord.quiz.attempted_date).getTime();
+	new Date(quizStore.quizRecord.completed_time).getTime() -
+	new Date(quizStore.quizRecord.attempted_date).getTime();
 const seconds = Math.floor(millisecondsTaken / 1000);
 const minutes = Math.floor(seconds / 60);
 const hours = Math.floor(minutes / 60);
