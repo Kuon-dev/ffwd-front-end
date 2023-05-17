@@ -33,7 +33,7 @@ export const ajaxClient = <T>(
 ): Promise<AjaxResponse<T>> => {
 	return new Promise((resolve, reject) => {
 		$.ajax({
-			url: url,
+			url: `${(import.meta as any).env.VITE_APP_BACKEND_API}/${url}`,
 			type: method.toUpperCase(),
 			dataType: 'json',
 			xhrFields: {
