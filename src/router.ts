@@ -48,6 +48,7 @@ router.beforeEach(async (to: any) => {
 
 router.afterEach(async () => {
 	const store = useUserStore();
+	if (!store.user) return;
 	if (Object.keys(store.user).length === 0) {
 		const user = await store.getUser();
 		if (!user) {

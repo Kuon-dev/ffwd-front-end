@@ -13,8 +13,8 @@
 			<section class="flex">
 				<div>
 					<!--Manage User-->
-					<a
-						href="#!"
+					<router-link
+						to="/admin"
 						class="box border rounded-md p-2 flex md:w-64 h-28 justify-between mb-4"
 					>
 						<img
@@ -26,10 +26,10 @@
 							<div class="font-light">User</div>
 							<div class="font-semibold text-2xl">1357</div>
 						</div>
-					</a>
+					</router-link>
 
-					<a
-						href="#!"
+					<router-link
+						to="/admin"
 						class="box border rounded-md p-2 flex md:w-64 h-28 justify-between mb-4"
 					>
 						<img
@@ -41,7 +41,7 @@
 							<div class="font-light">Admin</div>
 							<div class="font-semibold text-2xl">20</div>
 						</div>
-					</a>
+					</router-link>
 				</div>
 
 				<!--forum today-->

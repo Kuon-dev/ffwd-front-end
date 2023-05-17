@@ -1,12 +1,18 @@
 <template>
 	<Teleport to="body">
 		<transition
-			enter-active-class="animate__animated animate__fadeIn"
-			leave-active-class="animate__animated animate__fadeOut"
+			enter-active-class="animate__animated animate__fadeIn animate__fast"
+			leave-active-class="animate__animated animate__fadeOut animate__fast"
 		>
 			<div
 				class="top-0 fixed z-[1000] w-full bg-[#000000A0] h-full overflow-auto"
-				v-if="isShowProfile"
+				v-if="
+					isShowProfile &&
+					((Object.keys(userManageStore.editUser).length < 1 &&
+						profileType === 'userEdit') ||
+						(Object.keys(userManageStore.editUser).length > 0 &&
+							profileType === 'adminEdit'))
+				"
 				:class="isShowProfile ? '' : 'overflow-auto '"
 			>
 				<div
@@ -51,28 +57,6 @@
 										variant="solo"
 										class="h-10"
 									></v-text-field>
-									<!-- <div class="relative">
-										<v-text-field
-											:type="passwordFieldType"
-											v-model="editPassword"
-											label="Password"
-											variant="solo"
-										/>
-
-										<span
-											class="absolute top-4 right-0 grid place-content-center px-4 z-20"
-										>
-											<button @click="togglePeek($event)">
-												<font-awesome-icon
-													:icon="
-														isPeekingPassword
-															? 'fa-regular fa-eye-slash'
-															: 'fa-regular fa-eye'
-													"
-												/>
-											</button>
-										</span>
-									</div> -->
 									<v-textarea
 										label="Bio"
 										variant="solo"
@@ -106,12 +90,12 @@
 								:text="showAlertText"
 							/>
 						</div>
-						<button
+						<v-btn
 							class="select-none font-bold text-red-500 text-3xl"
-							@click="toggleProfileOverlay(true)"
+							@click="handleClose()"
 						>
-							X
-						</button>
+							close
+						</v-btn>
 					</div>
 				</div>
 			</div>
@@ -122,29 +106,35 @@
 <script setup lang="ts">
 import $ from 'jquery';
 import { useUserStore, User } from '@/stores/UserStore';
-import { ref, computed } from 'vue';
+import { ref, computed, PropType, onMounted } from 'vue';
 import BaseCard from 'base-components/BaseCard.vue';
 import BaseAlert from 'base-components/BaseAlert.vue';
 import { isShowProfile, toggleProfileOverlay } from 'compostables/NavInjector';
+import { useUserManagementStore } from 'stores/UserManagementStore';
+
+const props = defineProps({
+	profileType: {
+		type: String,
+		default: 'userEdit',
+	},
+});
 
 // Define data properties for the component
 const userStore = useUserStore();
-await userStore.getUser();
+const userManageStore = useUserManagementStore();
 
-const passwordFieldType = ref('password');
-const isPeekingPassword = ref(false);
+const originalUserData = ref();
+const editName = ref();
+const editEmail = ref();
+const editPhone = ref();
+const editBio = ref();
 
-const originalUserData = ref(userStore.user);
-const editName = ref(originalUserData.value?.name);
-const editEmail = ref(originalUserData.value?.email);
-const editPhone = ref(originalUserData.value?.phone_number);
-const editPassword = ref('');
-const editBio = ref(originalUserData.value?.bio);
+const oriName = ref();
+const oriEmail = ref();
+const oriPhone = ref();
+const oriBio = ref();
 
-const oriName = ref(userStore.user?.name);
-const oriEmail = ref(userStore.user?.email);
-const oriPhone = ref(userStore.user?.phone_number);
-const oriBio = ref(userStore.user?.bio);
+const oriData = ref();
 
 const showAlert = ref<Boolean>(false);
 const showAlertTitle = ref<string>('');
@@ -164,18 +154,8 @@ const renderAlert = (
 	}, 8000);
 };
 
-const togglePeek = (e: Event) => {
-	e.preventDefault();
-	isPeekingPassword.value = !isPeekingPassword.value;
-	if (isPeekingPassword.value) {
-		passwordFieldType.value = 'text';
-	}
-	else {
-		passwordFieldType.value = 'password';
-	}
-};
-
 const handleSave = (e: Event) => {
+	e.preventDefault();
 	const updatedUser: User = {
 		id: originalUserData.value?.id,
 		created_at: null,
@@ -185,7 +165,7 @@ const handleSave = (e: Event) => {
 		name: editName.value!.trim(),
 		email: editEmail.value!.trim(),
 		phone_number: editPhone.value!.trim(),
-		password: editPassword.value.trim(),
+		password: '',
 		bio: editBio.value!.trim(),
 	};
 
@@ -206,9 +186,36 @@ const handleDiscard = () => {
 	editName.value = oriName.value;
 	editEmail.value = oriEmail.value;
 	editPhone.value = oriPhone.value;
-	editPassword.value = '';
+	// editPassword.value = '';
 	editBio.value = oriBio.value;
 };
+
+const handleClose = () => {
+	originalUserData.value = {};
+	oriData.value = {};
+	(userManageStore.manageEditUser = {}), toggleProfileOverlay(false);
+};
+
+onMounted(async () => {
+	await userStore.getUser();
+	originalUserData.value =
+		Object.keys(userManageStore.editUser).length > 0
+			? userManageStore.editUser
+			: userStore.user;
+	editName.value = originalUserData.value?.name;
+	editEmail.value = originalUserData.value?.email;
+	editPhone.value = originalUserData.value?.phone_number;
+	editBio.value = originalUserData.value?.bio;
+
+	oriData.value =
+		Object.keys(userManageStore.editUser).length > 0
+			? userManageStore.editUser
+			: userStore.user;
+	oriName.value = oriData.value.name;
+	oriEmail.value = oriData.value?.email;
+	oriPhone.value = oriData.value?.phone_number;
+	oriBio.value = oriData.value?.bio;
+});
 </script>
 
 <style></style>

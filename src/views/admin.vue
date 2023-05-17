@@ -1,14 +1,12 @@
 <template>
 	<div class="bg-cover top-0 h-full flex flex-col bg-gray-100 overflow-hidden">
 		<Nav />
-		<div class="flex flex-row w-full mt-10 justify-center">
-			<div class="rounded-lg flex-row flex xl:w-9/12 w-full mx-2">
+		<div class="flex flex-row w-full justify-center mt-40">
+			<div class="rounded-lg flex-row flex xl:w-9/12 w-full mx-2 max-h-fit">
 				<aside
-					class="fixed z-[999] h-screen w-96 pb-4 pr-4 transition-all duration-300 lg:relative lg:-left-20 lg:z-10 lg:w-64 lg:pt-20"
+					class="fixed z-[999] h-screen w-96 pb-4 pr-4 transition-all duration-300 lg:relative lg:z-10 lg:w-64"
 				>
-					<Sidebar
-						class="fixed w-96 overflow-hidden pb-48 pt-6 pl-6 lg:pt-0 lg:pl-0"
-					/>
+					<Sidebar class="w-96 overflow-hidden left-20 fixed" />
 				</aside>
 				<div class="w-full lg:px-6 lg:ml-10 2xl:ml-0">
 					<router-view></router-view>

@@ -10,6 +10,7 @@ import router from '@/router';
 export const isChecked = ref(false);
 export const isShowSidebar = ref(false);
 export const isShowProfile = ref(false);
+export const isAdminEditing = ref(false);
 
 export const path = computed(() => {
 	return router.currentRoute.value;
