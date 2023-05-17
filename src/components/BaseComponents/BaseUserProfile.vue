@@ -7,13 +7,13 @@
 			<div
 				class="top-0 fixed z-[1000] w-full bg-[#000000A0] h-full overflow-auto"
 				v-if="
-					(isShowProfile &&
-						((Object.keys(userManageStore.editUser).length < 1 &&
-							profileType === 'userEdit') ||
-							(Object.keys(userManageStore.editUser).length > 0 &&
-								profileType === 'adminEdit'))) ||
-					(Object.keys(userManageStore.editUser).length < 1 &&
-						profileType === 'adminAdd')
+					isShowProfile &&
+					((Object.keys(userManageStore.editUser).length < 1 &&
+						profileType === 'userEdit') ||
+						(Object.keys(userManageStore.editUser).length > 0 &&
+							profileType === 'adminEdit') ||
+						(Object.keys(userManageStore.editUser).length < 1 &&
+							profileType === 'adminAdd'))
 				"
 				:class="isShowProfile ? '' : 'overflow-auto '"
 			>
@@ -161,6 +161,7 @@ const renderAlert = (
 };
 
 const handleSave = (e: Event) => {
+	console.log(props.profileType);
 	e.preventDefault();
 	const updatedUser: User = {
 		id: originalUserData.value?.id,
@@ -186,6 +187,7 @@ const handleSave = (e: Event) => {
 			'Empty Field!',
 			'Please do not leave any field empty!',
 		);
+		return;
 	}
 	userStore.editUser(updatedUser);
 };
@@ -207,7 +209,8 @@ const handleClose = () => {
 onMounted(async () => {
 	await userStore.getUser();
 	originalUserData.value =
-		Object.keys(userManageStore.editUser).length > 0
+		Object.keys(userManageStore.editUser).length > 0 &&
+		props.profileType === 'adminEdit'
 			? userManageStore.editUser
 			: userStore.user;
 	editName.value = originalUserData.value?.name;
@@ -216,7 +219,8 @@ onMounted(async () => {
 	editBio.value = originalUserData.value?.bio;
 
 	oriData.value =
-		Object.keys(userManageStore.editUser).length > 0
+		Object.keys(userManageStore.editUser).length > 0 &&
+		props.profileType === 'adminEdit'
 			? userManageStore.editUser
 			: userStore.user;
 	oriName.value = oriData.value?.name;

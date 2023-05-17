@@ -26,7 +26,7 @@
 							/>
 							<span
 								class="text-error text-sm"
-								v-for="(error, index) in store.errorList.email"
+								v-for="(error, index) in store.errorList?.email"
 								:key="index"
 							>
 								{{ error }}
