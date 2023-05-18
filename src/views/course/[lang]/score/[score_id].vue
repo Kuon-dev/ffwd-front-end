@@ -94,8 +94,8 @@ await fetchQuizContent();
 
 // Calculate time taken to complete the quiz
 const millisecondsTaken =
-	new Date(quizStore.quizRecord.completed_time).getTime() -
-	new Date(quizStore.quizRecord.attempted_date).getTime();
+	new Date(quizStore.quizRecord?.completed_time)?.getTime() -
+	new Date(quizStore.quizRecord?.attempted_date)?.getTime();
 const seconds = Math.floor(millisecondsTaken / 1000);
 const minutes = Math.floor(seconds / 60);
 const hours = Math.floor(minutes / 60);
@@ -118,7 +118,7 @@ onMounted(async () => {
 	await quizStore.getSpecificScore(path.value);
 	// With promises
 	await QRCode.toDataURL(
-		`localhost:5173/${router.currentRoute.value.fullPath as any}`,
+		`localhost:5173${router.currentRoute.value.fullPath as any}`,
 	)
 		.then((url) => {
 			image.value = url;
