@@ -93,6 +93,16 @@
 								/>
 							</div>
 
+							<div class="col-span-6" v-if="store.errorList?.name">
+								<p
+									v-for="(errors, index) in store.errorList?.name"
+									:key="index"
+									class="text-error"
+								>
+									{{ errors }}
+								</p>
+							</div>
+
 							<div class="col-span-6">
 								<label
 									for="Email"

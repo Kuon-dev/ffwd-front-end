@@ -21,7 +21,11 @@ import {
 	faCode,
 } from '@fortawesome/free-solid-svg-icons';
 
-import { faEye, faSquareCaretLeft } from '@fortawesome/free-regular-svg-icons';
+import {
+	faEye,
+	faSquareCaretLeft,
+	faEyeSlash,
+} from '@fortawesome/free-regular-svg-icons';
 /* add icons to the library */
 library.add(
 	faUser,
@@ -33,6 +37,7 @@ library.add(
 	faSearch,
 	faChevronDown,
 	faEye,
+	faEyeSlash,
 	faSquareCaretLeft,
 	faCode,
 );
