@@ -16,7 +16,7 @@ export const apiClient = axios.create({
 	withCredentials: true,
 });
 
-interface AjaxResponse<T> {
+export interface AjaxResponse<T> {
 	type: 'success' | 'error';
 	data: T | null;
 	status: number;
