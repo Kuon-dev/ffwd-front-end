@@ -54,7 +54,6 @@ export const useUserStore = defineStore('userStore', {
 	actions: {
 		async permittedAccessLevel() {
 			if (!this.user) this.getUser();
-			getToken();
 			const userPerms = await apiClient.post('api/user', this.user);
 			this.authUserAccessLevel = userPerms?.data?.perm_level;
 		},
@@ -112,8 +111,8 @@ export const useUserStore = defineStore('userStore', {
 		},
 
 		async handleLogin(credentials: LoginCredentials) {
-			this.authErrors = [];
 			await getToken();
+			this.authErrors = [];
 			const res = await apiClient
 				.post('/login', {
 					email: credentials.email,
@@ -122,6 +121,7 @@ export const useUserStore = defineStore('userStore', {
 				})
 				.catch((err: AxiosError) => {
 					const error = err as AxiosError;
+					console.log(error);
 					this.authErrors = (error?.response?.data as any).errors;
 					return {
 						status: error?.response?.status,
@@ -170,6 +170,7 @@ export const useUserStore = defineStore('userStore', {
 		},
 
 		async loginRedirect() {
+			await getToken();
 			await this.getUser();
 			const res = await apiClient.get('/dashboard');
 			const route = await (res?.data as any).route;

@@ -70,7 +70,16 @@
 										>
 											Edit Account
 										</v-btn>
-
+										<v-divider class="my-1" v-if="true"></v-divider>
+										<router-link to="/admin/">
+											<v-btn
+												v-if="store.accessLevel > 1"
+												rounded
+												variant="text"
+											>
+												Admin Dashboard
+											</v-btn>
+										</router-link>
 										<v-divider class="my-1"></v-divider>
 										<v-btn rounded variant="text" @click="store.handleLogout()">
 											Logout

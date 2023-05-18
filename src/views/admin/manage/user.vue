@@ -18,6 +18,7 @@
 					</nav>
 					<h1 class="text-xl sm:text-2xl font-semibold text-gray-900">
 						All users
+						{{ overlay }}
 					</h1>
 				</div>
 				<div class="block sm:flex items-center md:divide-x md:divide-gray-100">
@@ -39,6 +40,7 @@
 						<button
 							type="button"
 							class="text-white bg-brand hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium inline-flex items-center rounded-lg text-sm px-3 py-2 text-center"
+							@click="openOverlay(1)"
 						>
 							Add new user account
 						</button>
@@ -46,6 +48,7 @@
 						<button
 							type="button"
 							class="text-white bg-brand hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium inline-flex items-center rounded-lg text-sm px-3 py-2 text-center"
+							@click="openOverlay(2)"
 						>
 							Add new admin account
 						</button>
@@ -142,10 +145,66 @@
 		</section>
 	</BaseCard>
 	<BaseUserProfile v-if="isShowProfile" :profile-type="profileStatus" />
+	<v-overlay
+		:model-value="overlay"
+		class="align-center justify-center"
+		location-strategy="connected"
+		scroll-strategy="block"
+	>
+		<BaseCard class="w-[50rem]">
+			<div>
+				<h2 class="text-2xl mb-3">Edit Profile</h2>
+				<hr class="border-black" />
+				<form class="lg:grid grid-cols-2 gap-4 my-5">
+					<v-text-field
+						v-model="newName"
+						label="Name"
+						variant="solo"
+					></v-text-field>
+					<v-text-field
+						v-model="newEmail"
+						label="Email"
+						variant="solo"
+					></v-text-field>
+					<v-text-field
+						v-model="newPhone"
+						label="Phone Number"
+						variant="solo"
+						class="h-10"
+					></v-text-field>
+					<v-textarea
+						label="Password"
+						variant="solo"
+						v-model="newPassword"
+					></v-textarea>
+				</form>
+
+				<div
+					class="flex flex-col gap-5 items-center lg:flex-row lg:justify-end"
+				>
+					<v-btn
+						color="#7e81ee"
+						class="text-white w-full md:w-1/4"
+						@click="handleAddNewUser()"
+						>Save</v-btn
+					>
+					<v-btn color="#E32227" class="text-white w-full md:w-1/4">
+						Discard
+					</v-btn>
+				</div>
+			</div>
+		</BaseCard>
+	</v-overlay>
+	<BaseAlert
+		v-if="showAlert"
+		:type="showAlertType"
+		:title="showAlertTitle"
+		:text="showAlertText"
+	/>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { VSkeletonLoader } from 'vuetify/labs/VSkeletonLoader';
 import BaseUserProfile from 'base-components/BaseUserProfile.vue';
 import {
@@ -155,12 +214,31 @@ import {
 import { useUserStore, User } from 'stores/UserStore';
 import BaseCard from 'base-components/BaseCard.vue';
 import { toggleProfileOverlay, isShowProfile } from 'compostables/NavInjector';
+import BaseAlert from 'base-components/BaseAlert.vue';
 
 const manageStore = useUserManagementStore();
 const userStore = useUserStore();
+const showAlert = ref<Boolean>(false);
+const showAlertTitle = ref<string>('');
+const showAlertText = ref<string>('');
+const showAlertType = ref<'error' | 'success' | 'warning' | 'info'>('error');
+const renderAlert = (
+	type: 'error' | 'success' | 'warning' | 'info',
+	title: string,
+	text: string,
+) => {
+	showAlertType.value = type ?? 'error';
+	showAlertTitle.value = title;
+	showAlertText.value = text;
+	showAlert.value = true;
+	setTimeout(() => {
+		showAlert.value = false;
+	}, 8000);
+};
 
 const allUsers = ref();
 const profileStatus = ref('adminEdit');
+const newUser = ref(0);
 
 const searchQuery = ref('');
 
@@ -168,6 +246,42 @@ const performSearch = (query: string) => {
 	allUsers.value = manageStore.data.filter((user: any) =>
 		user.name.toLowerCase().includes(query),
 	);
+};
+
+const overlay = ref(false);
+const openOverlay = (e: any) => {
+	if (overlay.value) {
+		overlay.value = false;
+		setTimeout(() => {
+			overlay.value = true;
+		}, 200);
+	}
+	else {
+		overlay.value = true;
+	}
+	newUser.value = e;
+};
+const closeOverlay = () => {
+	overlay.value = false;
+};
+
+const handleAddNewUser = () => {
+	if (
+		!newName.value ||
+		!newEmail.value ||
+		!newPhone.value ||
+		!newPassword.value
+	) {
+		renderAlert(
+			'error',
+			'Empty Field!',
+			'Please do not leave any field empty!',
+		);
+		return;
+	}
+	else {
+		// submit user
+	}
 };
 
 const editUserAccount = (e: any) => {
@@ -219,6 +333,11 @@ const parseDate = (date: string) => {
 		monthNames[parse.getMonth()]
 	}-${parse.getDay()} at ${parse.getHours()}:${parse.getMinutes()}`;
 };
+
+const newName = ref();
+const newPassword = ref();
+const newEmail = ref();
+const newPhone = ref();
 
 onMounted(async () => {
 	allUsers.value = await manageStore.getAllUsers(userStore.accessLevel);
