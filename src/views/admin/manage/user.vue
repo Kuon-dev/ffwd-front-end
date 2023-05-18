@@ -158,25 +158,32 @@
 				<form class="lg:grid grid-cols-2 gap-4 my-5">
 					<v-text-field
 						v-model="newName"
+						:rules="[rules.required]"
+						clearable
 						label="Name"
 						variant="solo"
 					></v-text-field>
 					<v-text-field
 						v-model="newEmail"
+						:rules="[rules.required]"
+						placeholder="johndoe@gmail.com"
 						label="Email"
 						variant="solo"
 					></v-text-field>
 					<v-text-field
 						v-model="newPhone"
+						:rules="[rules.required, rules.number]"
 						label="Phone Number"
 						variant="solo"
 						class="h-10"
 					></v-text-field>
-					<v-textarea
+					<v-text-field
 						label="Password"
+						:rules="[rules.required]"
+						type="password"
 						variant="solo"
 						v-model="newPassword"
-					></v-textarea>
+					></v-text-field>
 				</form>
 
 				<div
@@ -215,6 +222,7 @@ import { useUserStore, User } from 'stores/UserStore';
 import BaseCard from 'base-components/BaseCard.vue';
 import { toggleProfileOverlay, isShowProfile } from 'compostables/NavInjector';
 import BaseAlert from 'base-components/BaseAlert.vue';
+import { ajaxClient, getAjaxToken } from 'stores/BackendAPI';
 
 const manageStore = useUserManagementStore();
 const userStore = useUserStore();
@@ -248,6 +256,11 @@ const performSearch = (query: string) => {
 	);
 };
 
+const rules = ref({
+	required: (value: any) => !!value || 'Field is required',
+	number: (value: any) => !!parseInt(value) || 'Field must be number',
+});
+
 const overlay = ref(false);
 const openOverlay = (e: any) => {
 	if (overlay.value) {
@@ -265,7 +278,7 @@ const closeOverlay = () => {
 	overlay.value = false;
 };
 
-const handleAddNewUser = () => {
+const handleAddNewUser = async () => {
 	if (
 		!newName.value ||
 		!newEmail.value ||
@@ -280,7 +293,17 @@ const handleAddNewUser = () => {
 		return;
 	}
 	else {
-		// submit user
+		const res = await ajaxClient('api/user/manage/profile/add', 'POST', {
+			name: newName.value,
+			email: newEmail.value,
+			phone: newPhone.value,
+			password: newPassword.value,
+			role: newUser.value === 2 ? 'admin' : 'user',
+		})
+			.then((response: any) => response)
+			.catch((err: any) => {
+				renderAlert('error', 'Empty Field!', err.message);
+			});
 	}
 };
 
