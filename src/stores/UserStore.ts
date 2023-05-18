@@ -111,6 +111,7 @@ export const useUserStore = defineStore('userStore', {
 		},
 
 		async handleLogin(credentials: LoginCredentials) {
+			await getToken();
 			this.authErrors = [];
 			const res = await apiClient
 				.post('/login', {
@@ -120,6 +121,7 @@ export const useUserStore = defineStore('userStore', {
 				})
 				.catch((err: AxiosError) => {
 					const error = err as AxiosError;
+					console.log(error);
 					this.authErrors = (error?.response?.data as any).errors;
 					return {
 						status: error?.response?.status,
@@ -168,6 +170,7 @@ export const useUserStore = defineStore('userStore', {
 		},
 
 		async loginRedirect() {
+			await getToken();
 			await this.getUser();
 			const res = await apiClient.get('/dashboard');
 			const route = await (res?.data as any).route;

@@ -9,7 +9,6 @@ export const getToken = async () => {
 		return response;
 	});
 	(axios.defaults.headers as any).common['X-CSRF-TOKEN'] = token;
-	return token ?? null;
 };
 
 export const apiClient = axios.create({
