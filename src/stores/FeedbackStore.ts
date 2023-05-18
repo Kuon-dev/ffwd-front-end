@@ -59,6 +59,7 @@ export const useFeedbackStore = defineStore('feedbackStore', {
 			)
 				.then((res) => res.data as FeedbackData)
 				.catch((err: Error) => {
+					console.log(err);
 					this.feedbackError = err;
 				});
 
