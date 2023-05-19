@@ -2,9 +2,6 @@
 import axios from 'axios';
 import $ from 'jquery';
 
-axios.defaults.withCredentials = true;
-axios.defaults.baseURL = 'http://localhost:8000';
-
 // This section is for the CSRF token
 // A CSRF token is used to authenticate the request
 export const getToken = async () => {
@@ -15,31 +12,78 @@ export const getToken = async () => {
 };
 
 export const apiClient = axios.create({
-	baseURL: 'http://localhost:8000',
+	baseURL: (import.meta as any).env.VITE_APP_BACKEND_API,
 	withCredentials: true,
 });
 
-export const ajaxClient = (url: string, method: string) => {
-	$.ajax({
-		url: url,
-		type: method.toUpperCase(),
-		dataType: 'json',
-		xhrFields: {
-			withCredentials: true,
-		},
-		success: (data: any) => {
-			return {
-				type: 'success',
-				data: data,
-				status: 200,
-			};
-		},
-		error: (xhr: any, status: any, error: any) => {
-			return {
-				type: 'error',
-				data: error,
-				status: status,
-			};
-		},
+export interface AjaxResponse<T> {
+	type: 'success' | 'error';
+	data: T | null;
+	status: number;
+}
+
+export const getAjaxToken: any = async () => {
+	return new Promise<string>((resolve, reject) => {
+		$.ajax({
+			url: `${
+				(import.meta as any).env.VITE_APP_BACKEND_API
+			}/sanctum/csrf-cookie`,
+			type: 'GET',
+			xhrFields: {
+				withCredentials: true,
+			},
+			success: () => {
+				resolve(getCookieValue('XSRF-TOKEN'));
+			},
+			error: (_, status, error) => {
+				reject({
+					type: 'error',
+					data: error,
+					status: status,
+				});
+			},
+		});
+	});
+};
+
+const getCookieValue: any = (name: string) => {
+	const value = `; ${document.cookie}`;
+	const parts = value.split(`; ${name}=`);
+	if (parts.length === 2) return parts.pop()?.split(';').shift();
+};
+
+export const ajaxClient = async <T>(
+	url: string,
+	method: string,
+	data: any = null,
+): Promise<AjaxResponse<T>> => {
+	const csrfToken = await getAjaxToken();
+	return new Promise((resolve, reject) => {
+		$.ajax({
+			url: `${(import.meta as any).env.VITE_APP_BACKEND_API}/${url}`,
+			type: method.toUpperCase(),
+			dataType: 'json',
+			xhrFields: {
+				withCredentials: true,
+			},
+			data: data,
+			beforeSend: (xhr) => {
+				xhr.setRequestHeader('X-XSRF-TOKEN', decodeURIComponent(csrfToken));
+			},
+			success: (responseData: T) => {
+				resolve({
+					type: 'success',
+					data: responseData,
+					status: 200,
+				});
+			},
+			error: (_, status, error) => {
+				reject({
+					type: 'error',
+					data: error,
+					status: status,
+				});
+			},
+		});
 	});
 };

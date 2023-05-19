@@ -392,6 +392,14 @@ onMounted(async () => {
 });
 </script>
 
+<route lang="json">
+{
+	"meta": {
+		"requiresAuth": true
+	}
+}
+</route>
+
 <style lang="scss">
 #forum-content {
 }

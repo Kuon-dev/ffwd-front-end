@@ -26,7 +26,7 @@
 							/>
 							<span
 								class="text-error text-sm"
-								v-for="(error, index) in store.errorList.email"
+								v-for="(error, index) in store.errorList?.email"
 								:key="index"
 							>
 								{{ error }}
@@ -74,7 +74,7 @@
 
 							<span
 								class="text-error text-sm"
-								v-for="(error, index) in store.errorList.password"
+								v-for="(error, index) in store.errorList?.password"
 								:key="index"
 							>
 								{{ error }}
@@ -166,7 +166,7 @@ const handleLogin = async (e: Event) => {
 	if (status?.status === 204) {
 		// console.log('successfully logged in');
 	}
-	if (store.errorList.length > 0) {
+	if (store.errorList?.length > 0) {
 		emailError.value = store.errorList.email;
 		passwordError.value = store.errorList.password;
 		return;

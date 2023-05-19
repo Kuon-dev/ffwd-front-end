@@ -1,12 +1,12 @@
 <template>
 	<!--The whole page-->
-	<div class="flex flex-col items-center h-[80%]">
+	<div class="flex flex-col items-center mr-40">
 		<nav
-			class="navi fixed h-5/6 border border-inherit rounded-lg shadow-2xl left-4 top-28 bg-white transition ease-in-out duration-150"
+			class="navi mx-10 border border-inherit rounded-lg shadow-2xl -left-24 top-28 bg-white transition ease-in-out duration-150"
 		>
 			<!--Admin Profile-->
-			<a
-				href="#!"
+			<router-link
+				to="/admin/"
 				class="box flex justify-center border-b py-5 border-inherit text-lg hover:bg-gray-200"
 			>
 				<img
@@ -17,11 +17,11 @@
 				<span class="label self-center font-medium text-brand text-lg"
 					>Admin Name</span
 				>
-			</a>
+			</router-link>
 
 			<!--Dashboard-->
-			<a
-				href="#!"
+			<router-link
+				to="/admin/"
 				class="box flex justify-center border-b py-3 border-inherit hover:bg-gray-200"
 			>
 				<img
@@ -32,86 +32,63 @@
 				<span class="label self-center font-semibold text-brand text-lg"
 					>Dashboard</span
 				>
-			</a>
+			</router-link>
 
 			<!--Content-->
 			<ul>
 				<!--Manage User-->
-				<li>
+				<li v-for="items in navItems" :key="items.title">
 					<div class="box mt-3 hover:bg-gray-200 flex justify-center">
-						<a href="#!" class="content flex pt-3 pb-2 w-8/12">
+						<router-link :to="items.path" class="content flex pt-3 pb-2 w-8/12">
 							<img
-								src="https://cdn4.iconfinder.com/data/icons/aircraft-blue-line/64/165_passengers-people-group-crowd-512.png"
+								:src="items.img"
 								alt="Manage User Icon"
 								class="icon w-8 h-8 mr-3"
 							/>
-							<span class="label self-center font-light">Manage User</span>
-						</a>
-					</div>
-				</li>
-
-				<!--Manage Admin-->
-				<li>
-					<div class="box hover:bg-gray-200 flex justify-center">
-						<a href="#!" class="content flex py-3 hover:bg-gray-200 w-8/12">
-							<img
-								src="https://cdn-icons-png.flaticon.com/512/10106/10106294.png"
-								alt="Manage User Icon"
-								class="icon w-8 h-7 mr-3"
-							/>
-							<span class="label self-center font-light">Manage Admin</span>
-						</a>
-					</div>
-				</li>
-
-				<!--Forum-->
-				<li>
-					<div class="box hover:bg-gray-200 flex justify-center">
-						<a href="#!" class="content flex py-3 hover:bg-gray-200 w-8/12">
-							<img
-								src="https://icons.veryicon.com/png/o/miscellaneous/20-classification-function-icon/9_5-community-forum.png"
-								alt="Manage User Icon"
-								class="icon w-8 h-7 mr-3"
-							/>
-							<span class="label self-center font-light">Forum</span>
-						</a>
-					</div>
-				</li>
-
-				<!--View Feedback-->
-				<li>
-					<div class="box hover:bg-gray-200 flex justify-center">
-						<a href="#!" class="content flex py-3 hover:bg-gray-200 w-8/12">
-							<img
-								src="https://cdn-icons-png.flaticon.com/512/5299/5299394.png"
-								alt="Manage User Icon"
-								class="icon w-8 h-8 mr-3"
-							/>
-							<span class="label self-center font-light">Feedback</span>
-						</a>
+							<span class="label self-center font-light">
+								{{ items.title }}</span
+							>
+						</router-link>
 					</div>
 				</li>
 			</ul>
 
 			<!--Logout-->
-			<div class="box absolute bottom-2 w-11/12">
-				<a
-					href="#!"
-					class="hover:bg-gray-200 rounded-3xl ml-5 flex justify-center py-4"
-				>
+			<div
+				class="box flex justify-center border-t py-3 border-inherit hover:bg-gray-200"
+			>
+				<div class="hover:bg-gray-200 rounded-3xl flex justify-center py-4">
 					<img
 						src="https://img.freepik.com/free-icon/logout_318-749779.jpg"
 						alt="Manage User Icon"
 						class="icon w-6 h-6 mr-3"
 					/>
 					<span class="label self-center font-light">Logout</span>
-				</a>
+				</div>
 			</div>
 		</nav>
 	</div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const navItems = [
+	{
+		title: 'Manage User',
+		img: 'https://cdn4.iconfinder.com/data/icons/aircraft-blue-line/64/165_passengers-people-group-crowd-512.png',
+		path: '/admin/manage/user/',
+	},
+	{
+		title: 'Forum',
+		img: 'https://icons.veryicon.com/png/o/miscellaneous/20-classification-function-icon/9_5-community-forum.png',
+		path: '/admin/forum',
+	},
+	{
+		title: 'Feedback',
+		img: 'https://cdn-icons-png.flaticon.com/512/5299/5299394.png',
+		path: '/admin/feedback',
+	},
+];
+</script>
 
 <style lang="scss" scoped>
 a:hover img {
