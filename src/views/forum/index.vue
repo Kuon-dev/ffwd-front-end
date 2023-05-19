@@ -3,8 +3,8 @@
 		class="h-full top-0 lg:flex lg:justify-center bg-cover bg-gray-100 flex-col"
 	>
 		<!-- Hot Today Section -->
-		<div class="flex flex-row">
-			<section class="px-5 mb-5 lg:mb-0 lg:w-2/6 order-last lg:order-first">
+		<div class="flex flex-col lg:flex-row">
+			<section class="px-5 mb-5 lg:mb-0 lg:w-2/6 lg:order-first">
 				<h3 class="font-semibold text-2xl">Hot Today</h3>
 				<BaseCard class="mt-5">
 					<ForumHots :forums="hots" v-if="hots.length > 0" />
@@ -20,7 +20,7 @@
 			</section>
 
 			<!-- QnA Discussions Section -->
-			<section class="px-5 lg:w-4/6 order-first lg:order-last">
+			<section class="px-5 lg:w-4/6 lg:order-last">
 				<BaseCard>
 					<h3 class="font-semibold">Q&A Discussions</h3>
 					<!-- Search Section -->

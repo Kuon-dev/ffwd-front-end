@@ -19,12 +19,14 @@ import {
 	faSearch,
 	faChevronDown,
 	faCode,
+	faBarsStaggered,
 } from '@fortawesome/free-solid-svg-icons';
 
 import {
 	faEye,
 	faSquareCaretLeft,
 	faEyeSlash,
+	faSquare,
 } from '@fortawesome/free-regular-svg-icons';
 /* add icons to the library */
 library.add(
@@ -40,6 +42,8 @@ library.add(
 	faEyeSlash,
 	faSquareCaretLeft,
 	faCode,
+	faSquare,
+	faBarsStaggered,
 );
 
 // Vuetify
