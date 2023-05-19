@@ -34,8 +34,8 @@ const handleInputChange = (event: Event) => {
 	}, 3000);
 };
 
-const handleSearch = () => {
-	const data: Forum[] = forumStore.searchForum(searchQuery.value);
+const handleSearch = async () => {
+	const data: Forum[] = await forumStore.searchForum(searchQuery.value);
 	emitSearchedForums(data);
 };
 
