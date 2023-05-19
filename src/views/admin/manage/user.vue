@@ -229,7 +229,7 @@ import { useUserStore, User } from 'stores/UserStore';
 import BaseCard from 'base-components/BaseCard.vue';
 import { toggleProfileOverlay, isShowProfile } from 'compostables/NavInjector';
 import BaseAlert from 'base-components/BaseAlert.vue';
-import { ajaxClient, getAjaxToken } from 'stores/BackendAPI';
+import { ajaxClient } from 'stores/BackendAPI';
 
 const newName = ref();
 const newPassword = ref();
