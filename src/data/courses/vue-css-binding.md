@@ -83,24 +83,3 @@ export default {
 
 In this example, the `:style="{ color: textColor, fontSize: fontSize + 'px' }"` directive applies inline styles to the `<div>` element. The `textColor` and `fontSize` properties control the respective styles. The `textColor` property determines the color, and the `fontSize` property determines the font size in pixels.
 
-Similar to class binding, you can use computed properties or methods to dynamically generate style objects. Here's an example using a computed property:
-
-```vue
-<template>
-  <div>
-    <div :style="textStyle">Hello, Vue!</div>
-  </div>
-</template>
-
-<script>
-export default {
-  computed: {
-    textStyle() {
-      return {
-        color: this.textColor,
-        fontSize: this.fontSize + 'px'
-      };
-    }
-  },
-  data() {
-    return

@@ -74,5 +74,3 @@ $minimum = min(5, 10, 3, 8);   // Minimum value among the given numbers
 $maximum = max(5, 10, 3, 8);   // Maximum value among the given numbers
 $random = rand(1, 100);        // Random number between 1 and 100
 `````````
-
-In this example, `$rounded` will be `5`, `$ceiling` will be `5`, `$floor` will be `4`, `$minimum` will

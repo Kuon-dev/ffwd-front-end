@@ -48,4 +48,3 @@ public class HelloWorld {
 }
 ```
 
-In this example, we define a class called `HelloWorld` with a `main` method. The `main` method is the entry point of a Java program. It uses the `System

@@ -60,9 +60,4 @@ public class ArrayUtils {
 
 In the above example, the `getLastElement` method is a generic method that takes an array of type `T` and returns the last element of the array. The type parameter `T` is declared before the return type of the method.
 
-## Type Bounds
 
-You can restrict the types that can be used as type arguments by specifying type bounds. Type bounds define an upper limit on the types that can be used. For example, you can specify that the type argument must be a subclass of a particular class or implement a specific interface. Here's an example of a generic class with a type bound:
-
-```java
-public class

@@ -56,6 +56,3 @@ public interface Vehicle {
 
 In the above example, the `Vehicle` interface declares two abstract methods: `start()` and `stop()`. Any class that implements the `Vehicle` interface must provide an implementation for these methods.
 
-## Using Abstraction
-
-To use abstraction in your Java programs, you can create concrete classes that inherit from abstract classes or implement interfaces. These concrete classes provide implementations for the

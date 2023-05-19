@@ -22,46 +22,59 @@ export interface AjaxResponse<T> {
 	status: number;
 }
 
-export const ajaxClient = <T>(
-	url: string,
-	method: string,
-	data: any = null,
-): Promise<AjaxResponse<T>> => {
-	return new Promise((resolve, reject) => {
-		// Retrieve CSRF token
+export const getAjaxToken: any = async () => {
+	return new Promise<string>((resolve, reject) => {
 		$.ajax({
 			url: `${
 				(import.meta as any).env.VITE_APP_BACKEND_API
-			}}/sanctum/csrf-cookie`,
+			}/sanctum/csrf-cookie`,
 			type: 'GET',
-			dataType: 'json',
 			xhrFields: {
 				withCredentials: true,
 			},
 			success: () => {
-				// Make the request with CSRF token
-				$.ajax({
-					url: `${(import.meta as any).env.VITE_APP_BACKEND_API}/${url}`,
-					type: method.toUpperCase(),
-					dataType: 'json',
-					xhrFields: {
-						withCredentials: true,
-					},
-					data: data,
-					success: (responseData: T) => {
-						resolve({
-							type: 'success',
-							data: responseData,
-							status: 200,
-						});
-					},
-					error: (_, status, error) => {
-						reject({
-							type: 'error',
-							data: error,
-							status: status,
-						});
-					},
+				resolve(getCookieValue('XSRF-TOKEN'));
+			},
+			error: (_, status, error) => {
+				reject({
+					type: 'error',
+					data: error,
+					status: status,
+				});
+			},
+		});
+	});
+};
+
+const getCookieValue: any = (name: string) => {
+	const value = `; ${document.cookie}`;
+	const parts = value.split(`; ${name}=`);
+	if (parts.length === 2) return parts.pop()?.split(';').shift();
+};
+
+export const ajaxClient = async <T>(
+	url: string,
+	method: string,
+	data: any = null,
+): Promise<AjaxResponse<T>> => {
+	const csrfToken = await getAjaxToken();
+	return new Promise((resolve, reject) => {
+		$.ajax({
+			url: `${(import.meta as any).env.VITE_APP_BACKEND_API}/${url}`,
+			type: method.toUpperCase(),
+			dataType: 'json',
+			xhrFields: {
+				withCredentials: true,
+			},
+			data: data,
+			beforeSend: (xhr) => {
+				xhr.setRequestHeader('X-XSRF-TOKEN', decodeURIComponent(csrfToken));
+			},
+			success: (responseData: T) => {
+				resolve({
+					type: 'success',
+					data: responseData,
+					status: 200,
 				});
 			},
 			error: (_, status, error) => {

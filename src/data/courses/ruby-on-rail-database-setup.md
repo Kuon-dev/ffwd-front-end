@@ -49,7 +49,7 @@ Migrations are used in Rails to manage database schema changes over time. Rails 
 rails db:migrate
 
 This will apply any pending migrations and bring your database schema up to date.
-
+```
 ## Step 4: Interact with the Database
 
 With the database set up, you can now interact with it through your Rails application. You can define models that correspond to database tables and use ActiveRecord, Rails' object-relational mapping (ORM) library, to perform database operations.

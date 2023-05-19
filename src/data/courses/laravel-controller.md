@@ -79,4 +79,4 @@ In this example, Laravel will automatically inject an instance of the `Request` 
 
 Controllers are an essential part of Laravel's MVC architecture, helping you organize your application's request handling logic. By creating controllers, defining methods, and routing requests to those methods, you can build powerful and structured web applications.
 
-For more information, refer to the [Laravel Documentation on Controllers](https://laravel.com/docs/controllers).
+

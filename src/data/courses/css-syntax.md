@@ -7,11 +7,11 @@ CSS syntax is the set of rules and conventions used to write valid CSS code. Und
 
 A CSS rule consists of a selector and one or more declarations. The selector determines which HTML elements the rule applies to, and the declarations define the styles to be applied. Here's the basic structure of a CSS rule:
 
-\\\css
+```css
 selector {
   property: value;
 }
-\\\
+```
 
 Let's break down each part of the CSS rule:
 
@@ -23,9 +23,9 @@ Let's break down each part of the CSS rule:
 
 Comments in CSS allow you to add explanatory notes or disable specific code without affecting the styles. CSS comments are ignored by the browser and are only visible in the code. Here's the syntax for CSS comments:
 
-\\\css
+```css
 /* This is a CSS comment */
-\\\
+```
 
 Comments start with `/*` and end with `*/`. Anything between these symbols is considered a comment and is not executed by the browser.
 
@@ -33,13 +33,13 @@ Comments start with `/*` and end with `*/`. Anything between these symbols is co
 
 CSS declarations are used to define specific styles for the selected elements. Each declaration consists of a property-value pair separated by a colon (`:`). Multiple declarations are separated by semicolons (`;`). Here's an example of CSS declarations:
 
-\\\css
+```css
 h1 {
   color: blue;
   font-size: 24px;
   margin-top: 10px;
 }
-\\\
+```
 
 In the example above, the `h1` selector targets all `<h1>` elements, and the declarations specify that the text color should be blue, the font size should be 24 pixels, and there should be a margin of 10 pixels on the top.
 

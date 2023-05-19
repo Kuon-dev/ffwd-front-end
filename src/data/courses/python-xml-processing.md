@@ -8,14 +8,15 @@ To parse XML documents in Python, you can use the `xml.etree.ElementTree` module
 
 ```python
 import xml.etree.ElementTree as ET
+```
 
-# Parse an XML document
+## Parse an XML document
 tree = ET.parse("path/to/file.xml")
 
-# Get the root element
+## Get the root element
 root = tree.getroot()
 
-# Access elements and attributes
+## Access elements and attributes
 for child in root:
     print(child.tag, child.attrib)
 
@@ -28,34 +29,38 @@ Once you have parsed an XML document, you can navigate its structure to access s
 - Accessing elements by tag: You can use the `find()` method to find the first matching element or the `findall()` method to find all matching elements.
 
 ```python
-# Find the first matching element
+## Find the first matching element
 element = root.find("tag")
+```
 
-# Find all matching elements
+## Find all matching elements
 elements = root.findall("tag")
 
 - Accessing element attributes: You can use the `get()` method to get the value of an attribute.
 
 ```python
-# Get the value of an attribute
+## Get the value of an attribute
 value = element.get("attribute")
+```
 
 - Accessing element text: You can use the `text` attribute to get the text content of an element.
 
 ```python
 # Get the text content of an element
 text = element.text
+```
 
 - Accessing parent and sibling elements: You can use the `parent` attribute to access the parent element and the `next` and `previous` attributes to access sibling elements.
 
 ```python
-# Access the parent element
+## Access the parent element
 parent = element.parent
+```
 
-# Access the next sibling element
+## Access the next sibling element
 next_sibling = element.next
 
-# Access the previous sibling element
+## Access the previous sibling element
 previous_sibling = element.previous
 
 ## Modifying XML
@@ -65,29 +70,32 @@ Python allows you to modify XML documents by adding, modifying, or deleting elem
 - Adding elements: You can use the `Element` class to create new elements and the `append()` method to add them to the XML tree.
 
 ```python
-# Create a new element
+## Create a new element
 new_element = ET.Element("tag")
+```
 
-# Set attributes
+## Set attributes
 new_element.set("attribute", "value")
 
-# Add the new element
+## Add the new element
 root.append(new_element)
 
 - Modifying elements and attributes: You can use the `set()` method to modify the value of an attribute and the `text` attribute to modify the text content of an element.
 
 ```python
-# Modify an attribute
+## Modify an attribute
 element.set("attribute", "new_value")
+```
 
-# Modify the text content
+## Modify the text content
 element.text = "new_text"
 
 - Deleting elements: You can use the `remove()` method to remove an element from the XML tree.
 
 ```python
-# Remove an element
+## Remove an element
 root.remove(element)
+```
 
 ## Generating XML
 
@@ -95,12 +103,13 @@ Python also allows you to generate XML documents from scratch using the same `xm
 
 ```python
 import xml.etree.ElementTree as ET
+```
 
-# Create the root element
+## Create the root element
 root = ET.Element("root")
 
-# Create child elements
+## Create child elements
 child1 = ET.Element("child1")
 child2 = ET.Element("child2")
 
-# Set attributes
+

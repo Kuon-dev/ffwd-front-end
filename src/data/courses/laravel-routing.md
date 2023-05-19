@@ -85,7 +85,4 @@ php artisan route:cache
 
 After caching the routes, the cached file will be used for subsequent requests until you modify your routes.
 
-## Additional Resources
 
-- [Laravel Routing Documentation](https://laravel.com/docs/routing)
-- [Laravel Route Parameters](https://laravel.com/docs/routing#route-parameters)

@@ -1,14 +1,14 @@
 # HTML Attribute
 
 In HTML, attributes provide additional information or modify the behavior of HTML elements. Attributes are specified within the opening tag of an element and are written as name-value pairs.
-
+## Example Code
 Here's an example of an HTML attribute:
 
 ```
 ```<a href="https://www.example.com">Click here</a>
 ```
 
-In the example above, the \<a> element represents a hyperlink, and the `href` attribute specifies the URL that the link should navigate to. The attribute value is enclosed in double quotes. When a user clicks on the "Click here" text, the browser will redirect them to the specified URL.
+In the example above, the `<a> element represents a hyperlink, and the `href` attribute specifies the URL that the link should navigate to. The attribute value is enclosed in double quotes. When a user clicks on the "Click here" text, the browser will redirect them to the specified URL.
 
 HTML attributes can be used to achieve various effects and behaviors. Some commonly used attributes include:
 

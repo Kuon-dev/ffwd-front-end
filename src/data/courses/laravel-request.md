@@ -90,4 +90,3 @@ In this example, the `messages` method defines custom error messages for specifi
 
 Laravel requests provide a powerful way to handle and validate incoming HTTP requests. By creating request classes, defining validation rules, and accessing request data in your controllers, you can ensure the integrity and security of your application's input.
 
-For more information, refer to the [Laravel Documentation on Requests](https://laravel.com/docs/requests).

@@ -9,13 +9,14 @@ CSS `overflow` is a property that controls how content that overflows the bounda
 
 Here's an example that demonstrates the use of the `overflow` property:
 
-\\\css
+```css
 .container {
   width: 200px;
   height: 100px;
   border: 1px solid black;
   overflow: scroll;
 }
+```
 
 In the example above, the `.container` element has a fixed width and height, and the `overflow` property is set to `scroll`. This will add a scrollbar to the element if the content exceeds its boundaries.
 

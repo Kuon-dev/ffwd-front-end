@@ -89,4 +89,3 @@ class Counter extends React.Component {
 export default Counter;
 ```
 
-In this example, we define a class component called `Counter` that manages a count state. The `incrementCount` method is used to update the count state when the button is clicked, and the

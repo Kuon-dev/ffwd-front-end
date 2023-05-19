@@ -1,5 +1,3 @@
-`````````title: CSS Comments
-`````````tags: CSS, Beginner, Programming
 
 # CSS Comments
 

@@ -1,4 +1,4 @@
-# What is PHP?
+## What is PHP?
 
 PHP is a widely used server-side scripting language for web development. It stands for Hypertext Preprocessor and is embedded within HTML code.
 

@@ -51,6 +51,7 @@ Example:
 binary_num = 0b1010
 octal_num = 0o17
 hexadecimal_num = 0x2F
+```
 
 Python automatically converts numbers to decimal for computation and returns results in decimal format.
 

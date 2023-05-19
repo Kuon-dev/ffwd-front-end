@@ -71,24 +71,3 @@ export default {
 
 In this example, we use the `v-on:input` directive to bind the `handleInput` method to the input's input event. Whenever the user types or modifies the input value, the `handleInput` method will be called, allowing you to react to the changes.
 
-### v-on:change
-
-The `v-on:change` directive triggers an event handler when the input value is committed or changed by the user. It's commonly used with select dropdowns, checkboxes, and radio buttons. Here's an example:
-
-```vue
-<template>
-  <div>
-    <label for="gender">Gender:</label>
-    <select id="gender" v-model="selectedGender" v-on:change="handleGenderChange">
-      <option value="male">Male</option>
-      <option value="female">Female</option>
-    </select>
-    <p>Selected gender: {{ selectedGender }}</p>
-  </div>
-</template>
-
-<script>
-export default {
-  data() {
-    return {
-      selectedGender:

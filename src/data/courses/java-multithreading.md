@@ -101,4 +101,4 @@ In this example, the `ReentrantLock` is used to acquire and release the lock exp
 
 Threads often need to communicate and coordinate with each other. Java provides several mechanisms for thread intercommunication, such as `wait`, `notify`, and `notifyAll` methods.
 
-###
+

@@ -52,8 +52,3 @@ public class Circle implements Drawable {
 
 In the above example, the `Circle` class implements the `Drawable` interface and provides an implementation for the `draw()` method.
 
-## Using Interfaces in Java
-
-Interfaces can be used in various scenarios, including:
-
-- **Defining APIs**: Interfaces are commonly used to define APIs (Application Programming Interfaces) in Java. By defining interfaces, you establish a contract

@@ -78,4 +78,3 @@ public function upload(Request $request)
 
 In this example, we access the uploaded file using the `file` method. We can then use various methods, such as `getClientOriginalName`, `getSize`, and `getClientOriginalExtension`, to retrieve information about the file. You can customize the processing logic based on your application's requirements.
 
-That's it! You have learned the basics of file uploading in Laravel. Feel free to explore more advanced features, such as file

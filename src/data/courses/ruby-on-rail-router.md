@@ -48,9 +48,7 @@ Rails provides a convenient way to define routes for a resourceful controller us
 
 ```ruby
 resources :users
-
+```
 In this example, the `resources :users` statement generates a set of routes for the `UsersController`, including routes for index, show, new, create, edit, update, and destroy actions.
 
-## Conclusion
 
-Understanding the Ruby on Rails router is essential for building well-structured and maintainable web applications. By configuring routes, you can define how URLs are handled and map them to the appropriate controller actions. The router provides flexibility in defining basic routes, handling

@@ -71,6 +71,3 @@ Bitwise operators perform operations on binary representations of integers:
 - `<<`: Bitwise left shift.
 - `>>`: Bitwise right shift.
 
-## Conclusion
-
-Understanding and utilizing different operators

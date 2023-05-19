@@ -79,18 +79,3 @@ export default Greeting;
 
 In this example, we use the `PropTypes` module to define that the `name` prop of the `Greeting` component should be a string and is required. If the prop type is incorrect or not provided, a warning will be logged in the console during development.
 
-## Passing Props to Child Components
-
-Props can be passed down multiple levels of components to reach child components. Each component along the hierarchy can access and use the props it receives. Here's an example:
-
-```jsx
-import React from 'react';
-
-function Greeting(props) {
-  return <h1>Hello, {props.name}!</h1>;
-}
-
-function App() {
-  return (
-    <div>
-      <Greeting name="John" />

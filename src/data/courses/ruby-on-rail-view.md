@@ -17,7 +17,7 @@ def show
   @user = User.find(params[:id])
   render 'users/show'
 end
-
+```
 In this example, the `render 'users/show'` line renders the `show.html.erb` view template for the `users` controller. The `@user` instance variable is made available to the view, allowing you to pass data from the controller to the view.
 
 ## ERB Syntax
@@ -26,7 +26,7 @@ ERB templates allow you to embed Ruby code within HTML using `<% %>` and `<%= %>
 
 ```html
 <h1>Welcome, <%= @user.name %></h1>
-
+```
 In this example, the `@user.name` value is dynamically inserted into the HTML markup when the view is rendered.
 
 ## Partials
@@ -41,7 +41,7 @@ Partials are reusable view templates that can be included within other views. Th
 # app/views/shared/_user_info.html.erb
 <p>Name: <%= user.name %></p>
 <p>Email: <%= user.email %></p>
-
+```
 In this example, the `_user_info.html.erb` partial is rendered within the `show.html.erb` view. The `user` variable is passed as a local variable to the partial, allowing it to access the user's information.
 
 ## Asset Pipeline
@@ -53,9 +53,7 @@ You can include stylesheets and JavaScript files in your views using the `styles
 ```html
 <%= stylesheet_link_tag 'application' %>
 <%= javascript_include_tag 'application' %>
-
+```
 These helper methods generate the appropriate HTML tags to include the CSS and JavaScript assets specified.
 
-## Conclusion
 
-Views play a crucial role in the Ruby on Rails framework as they are responsible for presenting the application's user interface. By creating view templates and using the ERB syntax, you can generate dynamic HTML content. Additionally, you can leverage partials for reusable components and the Asset Pipeline for managing static assets. With this knowledge, you'll

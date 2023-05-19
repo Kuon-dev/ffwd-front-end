@@ -86,4 +86,3 @@ public function messages()
 }
 ```
 
-In this example, we customize the error messages for the `email` field's `required`, `email`, and `unique` rules

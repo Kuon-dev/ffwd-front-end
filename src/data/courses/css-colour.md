@@ -14,6 +14,8 @@ CSS provides various ways to specify colors for elements on a web page. You can 
 4. HSL Values:
    HSL (Hue, Saturation, Lightness) is an alternative color model in CSS. It allows you to define colors based on hue, saturation, and lightness values. The hue is represented by an angle ranging from 0 to 360 degrees, saturation and lightness are represented by percentages ranging from 0% to 100%. For example, `color: hsl(0, 100%, 50%);` sets the color to red. HSL values provide a different way to manipulate colors and offer more control over their appearance.
 
+
+## Conclusion
 Choosing the right color scheme is crucial for creating visually appealing and accessible web pages. Experiment with different color options and consider the context and purpose of your website when selecting colors.
 
 Remember, you can apply color not only to the `color` property but also to various other properties like `background-color`, `border-color`, and more.

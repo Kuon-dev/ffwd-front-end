@@ -79,21 +79,4 @@ Rectangle rect = new Rectangle(10, 20);
 
 In the above example, we create objects of the respective classes using different constructors. The objects are initialized with the specified values passed to the constructors.
 
-## Constructor Chaining
 
-Constructor chaining is the process of calling one constructor from another constructor within the same class. It allows code reuse and avoids duplicate initialization logic. In constructor chaining, the `this()` keyword is used to invoke another constructor in the same class.
-
-```java
-public class Car {
-    private String brand;
-    private String color;
-    private int year;
-
-    // Default constructor
-    public Car() {
-        this("Unknown", "Unknown", 0);  // Calling the parameterized constructor
-    }
-
-    // Parameterized constructor
-    public Car(String brand, String color, int year) {
-        this.brand = brand

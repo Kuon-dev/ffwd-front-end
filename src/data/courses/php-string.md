@@ -78,5 +78,3 @@ php
 $message = "This is a ```"quoted```" text.";
 $newline = "First line```nSecond line";
 `````````
-
-In this example, the value of `$message` will be `'This is a "quoted" text.'` and the value of `$newline` will be:
