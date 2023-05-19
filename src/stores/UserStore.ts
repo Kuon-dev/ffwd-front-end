@@ -59,11 +59,13 @@ export const useUserStore = defineStore('userStore', {
 		},
 
 		async getUser() {
+			this.authErrors = [];
 			await getToken();
 			if (!this.user) return;
 			const userData = await apiClient
 				.get('api/user')
-				.catch((err: Error | AxiosError) => {
+				.catch((err: AxiosError) => {
+					if (err?.response?.status === 401) return;
 					const error = err as AxiosError;
 					const errorMessage: SingleError = {
 						message: (error?.response?.data as any).message,
@@ -91,6 +93,7 @@ export const useUserStore = defineStore('userStore', {
 		},
 
 		async handleRegister(credentials: RegisterCredentials) {
+			this.authErrors = [];
 			await getToken();
 			const res = await apiClient
 				.post('/register', {
@@ -99,13 +102,13 @@ export const useUserStore = defineStore('userStore', {
 					password: credentials.password,
 					password_confirmation: credentials.password_confirmation,
 				})
+				.then((response) => {
+					if (response) return true;
+				})
 				.catch((err: Error | AxiosError) => {
 					const error = err as AxiosError;
 					this.authErrors = (error?.response?.data as any).errors;
-					console.log(this.authErrors);
-					return {
-						status: error?.response?.status,
-					};
+					return false;
 				});
 			return res;
 		},
@@ -143,6 +146,7 @@ export const useUserStore = defineStore('userStore', {
 		},
 
 		async handleForgotPassword(email: String) {
+			this.authErrors = [];
 			await getToken();
 			const res = await apiClient
 				.post('/forgot-password', {
@@ -160,16 +164,24 @@ export const useUserStore = defineStore('userStore', {
 		},
 
 		async handleResetPassword(credentials: ResetPasswordCredentials) {
-			const res = await apiClient.post('/reset-password', credentials);
+			this.authErrors = [];
+			const res = await apiClient
+				.post('/reset-password', credentials)
+				.catch((err: AxiosError) => {
+					console.log(err);
+					this.authErrors = (err?.response?.data as any)?.message;
+				});
 			return res;
 		},
 
 		async handleResendEmailVerification() {
+			this.authErrors = [];
 			const res = await apiClient.post('/verification-notification');
 			return res;
 		},
 
 		async loginRedirect() {
+			this.authErrors = [];
 			await getToken();
 			await this.getUser();
 			const res = await apiClient.get('/dashboard');

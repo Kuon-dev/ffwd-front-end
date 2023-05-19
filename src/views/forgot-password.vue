@@ -24,7 +24,7 @@
 							v-model="email"
 						/>
 						<span class="text-error text-sm">
-							{{ emailError?.[0] }}
+							{{ emailError?.email?.[0] }}
 						</span>
 
 						<span class="text-sky-500 text-sm">
@@ -34,13 +34,15 @@
 				</div>
 
 				<div class="flex items-center justify-between">
-					<button
+					<v-btn
 						type="submit"
+						:loading="load"
 						@click="handleForgotPassword($event)"
-						class="inline-block rounded-lg bg-brand px-5 py-3 text-sm font-medium text-white"
+						class="text-sm font-medium text-white"
+						color="#7E81FF"
 					>
 						Enter
-					</button>
+					</v-btn>
 
 					<p class="text-sm text-gray-500">
 						No account?
@@ -68,6 +70,7 @@ const store = useUserStore();
 
 const emailError = ref();
 const responseStatus = ref();
+const load = ref(false);
 
 // const backendAPI = ref(import.meta.env.VITE_DEV_API)
 
@@ -75,14 +78,18 @@ const email = ref('');
 
 const handleForgotPassword = async (e: Event) => {
 	e.preventDefault();
+	load.value = true;
 	emailError.value = '';
 	responseStatus.value = '';
 	const status = await store.handleForgotPassword(email.value);
 	// debugging purpose
-	emailError.value = store.errorList;
-	if (!store.errorList || store.errorList.length !== 0) {
+	if (store.errorList.length === 0) {
 		responseStatus.value = (status as any).data.status;
 	}
+	else {
+		emailError.value = store.errorList;
+	}
+	load.value = false;
 };
 </script>
 

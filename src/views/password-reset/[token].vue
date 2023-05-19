@@ -46,13 +46,15 @@
 				</div>
 
 				<div class="flex items-center justify-between">
-					<button
+					<v-btn
 						type="submit"
+						:loading="load"
 						@click="handleForgotPassword($event)"
-						class="inline-block rounded-lg bg-brand px-5 py-3 text-sm font-medium text-white"
+						class="text-sm font-medium text-white"
+						color="#7E81FF"
 					>
 						Enter
-					</button>
+					</v-btn>
 
 					<p class="text-sm text-gray-500">
 						No account?
@@ -82,6 +84,7 @@ const route = useRoute();
 
 const passwordError = ref();
 const responseStatus = ref();
+const load = ref(false);
 
 // const backendAPI = ref(import.meta.env.VITE_DEV_API)
 
@@ -90,6 +93,7 @@ const passwordConf = ref('');
 
 const handleForgotPassword = async (e: Event) => {
 	passwordError.value = '';
+	load.value = true;
 	e.preventDefault();
 	if (password.value !== passwordConf.value) {
 		passwordError.value = ['password does not match'];
@@ -104,10 +108,13 @@ const handleForgotPassword = async (e: Event) => {
 		token: (route.params as any).token,
 	});
 	// debugging purpose
-	passwordError.value = store.errorList;
-	if (!store.errorList || store.errorList.length !== 0) {
-		responseStatus.value = res?.data.status;
+	if (store.errorList.length === 0) {
+		responseStatus.value = (res as any)?.data?.status;
 	}
+	else {
+		passwordError.value = store.errorList;
+	}
+	load.value = false;
 };
 </script>
 

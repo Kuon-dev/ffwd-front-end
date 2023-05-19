@@ -221,10 +221,17 @@
 			</div>
 		</section>
 	</div>
+	<BaseAlert
+		v-if="showAlert"
+		:type="showAlertType"
+		:title="showAlertTitle"
+		:text="showAlertText"
+	/>
 </template>
 
 <script setup lang="ts">
 import BaseCard from 'base-components/BaseCard.vue';
+import BaseAlert from 'base-components/BaseAlert.vue';
 import { ref } from 'vue';
 import { useUserStore } from 'stores/UserStore';
 
@@ -240,6 +247,24 @@ const passwordConf = ref<String>('');
 
 const errorMessage = ref('');
 
+const showAlert = ref<Boolean>(false);
+const showAlertTitle = ref<string>('');
+const showAlertText = ref<string>('');
+const showAlertType = ref<'error' | 'success' | 'warning' | 'info'>('error');
+const renderAlert = (
+	type: 'error' | 'success' | 'warning' | 'info',
+	title: string,
+	text: string,
+) => {
+	showAlertType.value = type ?? 'error';
+	showAlertTitle.value = title;
+	showAlertText.value = text;
+	showAlert.value = true;
+	setTimeout(() => {
+		showAlert.value = false;
+	}, 8000);
+};
+
 const submitRegister = async (e: Event) => {
 	e.preventDefault();
 	if (password.value !== passwordConf.value) {
@@ -254,6 +279,12 @@ const submitRegister = async (e: Event) => {
 		password_confirmation: passwordConf.value,
 	};
 	const res = await store.handleRegister(body);
+	if (res) {
+		store.loginRedirect();
+	}
+	else {
+		renderAlert('error', 'an error has occured', 'please try again later');
+	}
 };
 </script>
 

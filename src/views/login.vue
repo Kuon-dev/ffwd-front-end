@@ -176,7 +176,7 @@ const handleLogin = async (e: Event) => {
 
 <style scoped>
 .base-bg {
-	background-image: url('img3.jpg');
+	background-image: url('/img3.jpg');
 	background-position: center;
 	background-size: cover;
 	background-repeat: no-repeat;
