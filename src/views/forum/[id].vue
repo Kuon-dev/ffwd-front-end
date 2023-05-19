@@ -401,44 +401,56 @@ onMounted(async () => {
 </route>
 
 <style lang="scss">
-#forum-content {
+#forum-content,
+#target {
 }
 
 #forum-content h1,
+#target h1,
 #forum-content h2,
+#target h2,
 #forum-content h3,
+#target h3,
 #forum-content h4,
+#target h4,
 #forum-content h5,
-#forum-content h6 {
+#target h5,
+#forum-content h6,
+#target h6 {
 	margin-top: 24px;
 	margin-bottom: 16px;
 	font-weight: 600;
 	line-height: 1.25;
 }
 
-#forum-content h2 {
+#forum-content h2,
+#target h2 {
 	font-weight: 600;
 	padding-bottom: 0.3em;
 	font-size: 1.5em;
 	// border-bottom: 1px solid hsla(210,18%,87%,1);
 }
 
-#forum-content h3 {
+#forum-content h3,
+#target h3 {
 	font-weight: 600;
 	font-size: 1.25em;
 }
 
-#forum-content h4 {
+#forum-content h4,
+#target h4 {
 	font-weight: 600;
 	font-size: 1em;
 }
 
-#forum-content h5 {
+#forum-content h5,
+#target h5 {
 	font-weight: 600;
 	font-size: 0.875em;
 }
 
-#forum-content h6 {
+#forum-content h6,
+#target h6 {
 	font-weight: 600;
 	font-size: 0.85em;
 	color: #57606a;
