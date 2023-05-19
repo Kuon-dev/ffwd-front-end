@@ -60,6 +60,18 @@ declare module 'vue-router/auto/routes' {
 			Record<never, never>,
 			Record<never, never>
 		>;
+		'/admin/feedback/': RouteRecordInfo<
+			'/admin/feedback/',
+			'/admin/feedback',
+			Record<never, never>,
+			Record<never, never>
+		>;
+		'/admin/forum': RouteRecordInfo<
+			'/admin/forum',
+			'/admin/forum',
+			Record<never, never>,
+			Record<never, never>
+		>;
 		'/admin/manage/admin': RouteRecordInfo<
 			'/admin/manage/admin',
 			'/admin/manage/admin',

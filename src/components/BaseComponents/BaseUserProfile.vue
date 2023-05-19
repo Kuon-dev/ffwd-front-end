@@ -11,9 +11,7 @@
 					((Object.keys(userManageStore.editUser).length < 1 &&
 						profileType === 'userEdit') ||
 						(Object.keys(userManageStore.editUser).length > 0 &&
-							profileType === 'adminEdit') ||
-						(Object.keys(userManageStore.editUser).length < 1 &&
-							profileType === 'adminAdd'))
+							profileType === 'adminEdit'))
 				"
 				:class="isShowProfile ? '' : 'overflow-auto '"
 			>
@@ -117,6 +115,8 @@ import BaseAlert from 'base-components/BaseAlert.vue';
 import { isShowProfile, toggleProfileOverlay } from 'compostables/NavInjector';
 import { useUserManagementStore } from 'stores/UserManagementStore';
 
+const emits = defineEmits(['updateUser']);
+
 const props = defineProps({
 	profileType: {
 		type: String,
@@ -176,6 +176,7 @@ const handleSave = (e: Event) => {
 		bio: editBio.value!.trim(),
 	};
 
+	console.log(updatedUser);
 	if (
 		!editName.value ||
 		!editEmail.value ||
@@ -189,7 +190,10 @@ const handleSave = (e: Event) => {
 		);
 		return;
 	}
-	userStore.editUser(updatedUser);
+	if (props.profileType === 'userEdit') userStore.editUser(updatedUser);
+	if (props.profileType === 'adminEdit') userStore.editUser(updatedUser);
+	emits('updateUser');
+	renderAlert('success', 'Updated', 'User details updated');
 };
 
 const handleDiscard = () => {
