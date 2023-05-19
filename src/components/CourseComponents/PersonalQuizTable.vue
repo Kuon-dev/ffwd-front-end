@@ -58,56 +58,20 @@
 					<!-- <router-link
 						:to="`/course/${personalQuiz.title}/score/${personalQuiz.id}`"
 						> -->
-					<v-btn color="primary" text @click="dialog = !dialog"> QR </v-btn>
+					<v-btn color="primary" text @click="openOverlay(personalQuiz)">
+						QR
+					</v-btn>
 
-					<v-fade-transition hide-on-leave>
-						<v-card
-							v-if="dialog"
-							append-icon="$close"
-							class="mx-auto absolute"
-							elevation="16"
-							max-width="500"
-							title="Send a receipt"
-						>
-							<template v-slot:append>
-								<v-btn
-									icon="$close"
-									variant="text"
-									@click="dialog = false"
-								></v-btn>
-							</template>
-
-							<v-divider></v-divider>
-
-							<div class="py-12 text-center">
-								<v-icon
-									class="mb-6"
-									color="success"
-									icon="mdi-check-circle-outline"
-									size="128"
-								></v-icon>
-
-								<div class="text-h4 font-weight-bold">
-									This receipt was sent
-								</div>
-							</div>
-
-							<v-divider></v-divider>
-
-							<div class="pa-4 text-end">
-								<v-btn
-									class="text-none"
-									color="medium-emphasis"
-									min-width="92"
-									rounded
-									variant="outlined"
-									@click="dialog = false"
-								>
-									Close
-								</v-btn>
-							</div>
-						</v-card>
-					</v-fade-transition>
+					<v-overlay
+						:model-value="overlay"
+						class="align-center justify-center"
+						location-strategy="connected"
+						scroll-strategy="block"
+					>
+						<BaseCard class="w-[50rem]">
+							<img :src="image" />
+						</BaseCard>
+					</v-overlay>
 					<!-- </router-link> -->
 				</td>
 			</tr>
@@ -117,9 +81,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, watch, ref, PropType } from 'vue';
+import QRCode from 'qrcode';
+import { computed, watch, ref, PropType, onMounted } from 'vue';
 import { useUserStore } from 'stores/UserStore';
 import { useQuizStore, PersonalQuizRecord } from 'stores/QuizStore';
+import { useRouter } from 'vue-router';
+const router = useRouter();
 
 const props = defineProps({
 	personalQuizzes: {
@@ -127,6 +94,26 @@ const props = defineProps({
 		default: () => [],
 	},
 });
+const overlay = ref(false);
+const image = ref<string>('');
 
-const dialog = ref(false);
+const openOverlay = async (quiz: any) => {
+	if (overlay.value) {
+		overlay.value = false;
+		setTimeout(() => {
+			overlay.value = true;
+		}, 200);
+	}
+	else {
+		overlay.value = true;
+	}
+
+	await QRCode.toDataURL(`localhost:5173/course/${quiz.title}/score/${quiz.id}`)
+		.then((url) => {
+			image.value = url;
+		})
+		.catch((err) => {
+			console.error(err);
+		});
+};
 </script>
