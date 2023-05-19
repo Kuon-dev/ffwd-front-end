@@ -59,18 +59,3 @@ String removedElement = queue.remove(); // Remove and retrieve the front element
 System.out.println(removedElement); // Output: Apple
 ```
 
-## Stack
-
-A stack is a data structure that follows the LIFO (Last-In-First-Out) principle. Elements are added and removed from the top of the stack. In Java, the `Stack` class represents a stack. It provides methods to push (add) elements to the stack, pop (remove) elements from the stack, and access the top element. Here's an example of using a stack in Java:
-
-```java
-import java.util.Stack;
-
-Stack<String> stack = new Stack<>();
-
-stack.push("Apple"); // Push an element to the stack
-stack.push("Banana");
-stack.push("Cherry");
-
-String topElement = stack.peek(); // Get the top element
-System.out.println(topElement); //

@@ -62,32 +62,3 @@ clientSocket.close();
 
 In the above example, the server listens on port 1234 using a `ServerSocket`, while the client connects to the server using a `Socket`. Data is exchanged using `DataInputStream` and `DataOutputStream` for reading and writing UTF-8 encoded text.
 
-### UDP Socket Programming
-
-UDP (User Datagram Protocol) is a connectionless, unreliable protocol. It provides a simple way to send and receive packets of data without establishing a connection. Here's an example of a UDP client and server in Java:
-
-```java
-// UDP Server
-import java.io.*;
-import java.net.*;
-
-DatagramSocket serverSocket = new DatagramSocket(1234); // Create a server socket
-
-byte[] receiveData = new byte[1024];
-byte[] sendData;
-
-while (true) {
-    DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
-    serverSocket.receive(receivePacket); // Receive data from a client
-
-    String clientMessage = new String(receivePacket.getData()).trim();
-    System.out.println("Received from client: " + clientMessage);
-
-    InetAddress clientAddress = receivePacket.getAddress();
-    int clientPort = receivePacket.getPort();
-
-    String serverMessage = "Hello, client!";
-    sendData = serverMessage.getBytes();
-
-    DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, clientAddress, clientPort);
-    server

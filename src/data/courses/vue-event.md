@@ -105,6 +105,4 @@ export default {
 
 In this example, the `custom-event` is emitted from the `ChildComponent` and handled by the `handleCustomEvent` method in the parent component. The `payload` can be passed along with the emitted event.
 
-## Conclusion
 
-That

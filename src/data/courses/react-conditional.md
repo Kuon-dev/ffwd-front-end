@@ -86,17 +86,3 @@ export default Greeting;
 
 In this example, the `Greeting` component uses a variable called `greetingElement` to store the appropriate heading element based on the value of `props.isLoggedIn`. The variable is then included within the JSX code to be rendered.
 
-## Conditional Rendering with Inline Functions
-
-You can also use inline functions for conditional rendering in React. This approach allows you to include more complex JavaScript expressions within the JSX code. Here's an example:
-
-```jsx
-import React from 'react';
-
-function Greeting(props) {
-  return (
-    <div>
-      {(() => {
-        if (props.isLoggedIn) {
-          return <h1>Welcome back!</h1>;
-        }

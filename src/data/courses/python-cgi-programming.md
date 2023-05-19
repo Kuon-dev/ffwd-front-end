@@ -81,16 +81,3 @@ file_item = form["file"]
 with open("/path/to/save/location", "wb") as file:
     file.write(file_item.file.read())
 
-# Create HTML output
-print("<html>")
-print("<head><title>CGI Script</title></head>")
-print("<body>")
-print("<h1>File uploaded successfully!</h1>")
-print("</body>")
-print("</html>")
-
-In this example, we retrieve the uploaded file using the form field name (e.g., "file"). We then save the file to the desired location on the server.
-
-## Conclusion
-
-Python CGI programming

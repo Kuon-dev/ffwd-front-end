@@ -70,6 +70,3 @@ In the above example, the `Subclass` constructor calls the `super()` to invoke t
 
 In Java, you can also define classes as `final` or `abstract`. A `final` class cannot be subclassed, meaning it cannot have any subclasses. An `abstract` class, on the other hand, is a class that cannot be instantiated and is meant to be subclassed. Abstract classes can have abstract methods, which are meant to be overridden by subclasses.
 
-## Conclusion
-
-Inheritance is a powerful mechanism in Java that allows classes to inherit properties and behaviors from other classes. It promotes code reuse, modularity, and extensibility. By understanding and utilizing inheritance effectively, you can create well-organized and maintain

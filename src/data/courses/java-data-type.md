@@ -64,31 +64,3 @@ int[] numbers = {1, 2, 3, 4, 5};
 String[] names = {"Alice", "Bob", "Charlie"};
 ```
 
-### Enumerated Types
-
-Enumerated types, or enums, define a set of named values. They are used to represent a fixed number of possible values. For example:
-
-```java
-public enum Day {
-    MONDAY,
-    TUESDAY,
-    WEDNESDAY,
-    THURSDAY,
-    FRIDAY,
-    SATURDAY,
-    SUNDAY
-}
-```
-
-## Type Inference
-
-Java also provides type inference through the `var` keyword, introduced in Java 10. It allows the compiler to infer the type of a variable based on the assigned value. For example:
-
-```java
-var age = 25;  // Inferred as int
-var name = "Alice";  // Inferred as String
-```
-
-Type inference can improve code readability and reduce redundancy when the type is already evident from the assigned value.
-
-These

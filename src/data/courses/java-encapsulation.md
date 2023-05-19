@@ -55,10 +55,3 @@ In the above example, the `Person` class encapsulates the `name` and `age` field
 
 By encapsulating the fields and providing controlled access through methods, we can maintain the integrity of the `Person` object and enforce rules for accessing and modifying its data.
 
-## Access Modifiers
-
-In Java, access modifiers are keywords that control the accessibility of classes, fields, methods, and constructors. The access modifiers commonly used for encapsulation are:
-
-- `private`: Limits access to the declared item to within the same class.
-- `public`: Allows access to the declared item from any other class.
-- `protected`: Allows access to the

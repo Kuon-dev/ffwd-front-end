@@ -52,7 +52,7 @@ def user_params
 end
 
 In this example, the `user_params` method specifies that only the `name`, `email`, and `password` parameters are allowed when creating or updating a user.
-
+```
 ## Conclusion
 
 Controllers play a crucial role in Ruby on Rails applications, handling incoming requests and orchestrating the application's logic. By understanding controllers, you can effectively process requests, retrieve and manipulate data, and render appropriate views. Controllers are an integral part of building dynamic and interactive web applications with Ruby on Rails.

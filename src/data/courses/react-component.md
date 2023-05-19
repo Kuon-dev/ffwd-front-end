@@ -104,4 +104,4 @@ class Timer extends React.Component {
 export default Timer;
 ```
 
-In this example, we define a class component called `Timer` that starts a timer when the component is mounted using the `componentDidMount` method. We also clear the timer when the component is unmounted
+

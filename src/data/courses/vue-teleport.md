@@ -69,6 +69,4 @@ There are certain restrictions when using Vue Teleport. It's important to note t
 - Events emitted from the teleported content will bubble up to the component's parent, not the original component itself.
 - CSS styles and classes scoped to the original component will not be applied to the teleported content.
 
-## Conclusion
 
-Vue Teleport is a powerful feature that allows you to render component content at a different

@@ -7,12 +7,12 @@ CSS stands for Cascading Style Sheets. It is a styling language used to describe
 
 CSS works by associating style rules with HTML elements. These style rules define how the elements should be displayed in a web browser. The rules consist of selectors and declarations. Here's an example:
 
-\\\css
+```css
 p {
   color: blue;
   font-size: 16px;
 }
-\\\
+```
 
 In the example above, `p` is a selector that targets all `<p>` elements. The declarations within the curly braces specify the styles to be applied to the selected elements. In this case, the color is set to blue and the font size is set to 16 pixels.
 
@@ -33,9 +33,9 @@ These are just a few examples of CSS selectors. There are many more selectors av
 
 CSS can be applied to HTML documents in multiple ways. One common method is to use external CSS files. By linking an external CSS file to an HTML document, you can keep the styles separate from the HTML structure, making it easier to manage and update the styles across multiple pages. Here's an example of linking an external CSS file:
 
-\\\html
+```html
 <link rel="stylesheet" href="styles.css">
-\\\
+```
 
 In the example above, the `<link>` element is used to link the external CSS file `styles.css` to the HTML document.
 

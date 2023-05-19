@@ -82,4 +82,3 @@ With this alias defined, you can use `Models`User` instead of `App`Models`User` 
 
 Namespaces are a crucial aspect of organizing code in Laravel applications. They help prevent naming conflicts, improve code readability, and make it easier to locate and work with different code elements. Understanding how to define namespaces, import classes, and use aliases will greatly benefit your Laravel development workflow.
 
-For more information, refer to the [Laravel Documentation on Namespaces](https://laravel.com/docs/namespaces).

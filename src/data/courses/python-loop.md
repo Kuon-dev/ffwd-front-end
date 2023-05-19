@@ -45,16 +45,5 @@ Python provides loop control statements to modify the behavior of loops. These s
 
 These statements can be used within both `for` and `while` loops to control the flow of execution.
 
-## Nested Loops
 
-In Python, you can also have loops within loops, known as nested loops. This allows you to perform more complex iterations and repetitive tasks.
-
-Example:
-
-```python
-for i in range(1, 4):
-    for j in range(1, 4):
-        print(i, j)
-
-Nested loops can be useful when working with multidimensional data structures or when you need to perform operations on combinations of items.
 

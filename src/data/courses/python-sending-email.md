@@ -81,6 +81,3 @@ with smtplib.SMTP("smtp.example.com", 587) as smtp:
 
 In this example, we open the attachment file in binary mode and read its contents. We then use the `add_attachment()` method to attach the file to the email. You can specify the main type and subtype of the attachment content and provide a filename.
 
-## Conclusion
-
-Python's email libraries and modules make it straightforward to send emails programmatically. You can send plain text emails, HTML emails

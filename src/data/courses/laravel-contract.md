@@ -84,15 +84,3 @@ class CacheServiceProvider extends ServiceProvider
 
 With the class bound to the contract, Laravel will automatically resolve the contract with your custom implementation whenever an instance of the contract is requested.
 
-## Creating Custom Contracts
-
-In addition to using existing contracts in Laravel, you can also create your own custom contracts. Custom contracts allow you to define specific behaviors and methods that classes should adhere to.
-
-To create a custom contract, you simply define an interface with the desired methods. For example, let's say you want to create a contract for a logging service:
-
-```php
-namespace App`Contracts;
-
-interface Logger
-{
-    public function log

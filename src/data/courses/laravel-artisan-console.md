@@ -71,5 +71,3 @@ protected function getOptions()
 
 You can then access the argument and option values in the `handle` method using the `$this->argument('name')` and `$this->option('force')` methods, respectively.
 
-## Conclusion
-

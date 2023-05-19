@@ -90,6 +90,3 @@ export default Link;
 
 In this example, we define a functional component called `Link` that renders an anchor element. We attach a click event handler to the link and call `event.preventDefault()` to prevent the default behavior of navigating to the specified href.
 
-## Event Propagation and Bubbling
-
-In React, events are automatically propagated from child components to their parent components. This means that if a child component has an event handler and the event occurs on that child component, the event

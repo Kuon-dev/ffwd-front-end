@@ -75,14 +75,3 @@ if (number > 0) {
 
 In the above example, if the condition `number > 0` is true, the message "The number is positive" will be printed. If the nested condition `number % 2 == 0` is true, the message "The number is even" will also be printed.
 
-## switch Statement
-
-The `switch` statement allows you to test the value of a variable against multiple cases and execute different blocks of code based on the matched case. It provides an alternative to using multiple `if-else` statements. Here's the syntax of a `switch` statement:
-
-```java
-switch (expression) {
-    case value1:
-        // Code to be executed if expression matches value1
-        break;
-    case value2:
-        // Code

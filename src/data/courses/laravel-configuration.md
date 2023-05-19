@@ -29,6 +29,3 @@ Laravel provides various configuration files in the `config` directory to custom
 
 You can modify these configuration files to suit your application's requirements. However, it's recommended to use environment-specific configuration values and avoid hardcoding sensitive information in these files.
 
-## Configuration Caching
-
-To optimize your application's performance, Laravel allows you to cache the configuration files into a single file. This reduces the overhead

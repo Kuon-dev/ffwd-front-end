@@ -84,4 +84,3 @@ In this example, the `download` method is used to create a response that prompts
 
 The `Response` class in Laravel provides a flexible way to create and send HTTP responses. You can create basic responses, return JSON, redirect users, return views, and even enable file downloads. Understanding how to work with responses is crucial for building web applications with Laravel.
 
-For more information, refer to the [Laravel Documentation on Responses](https://laravel.com/docs/responses).

@@ -75,36 +75,5 @@ export default {
 
 In this example, the `li` element will be rendered for each property in the `user` object, displaying the key-value pairs as list items.
 
-### Rendering Components
 
-You can use `v-for` to render components dynamically based on a data source. For example:
-```vue
-<template>
-  <div>
-    <ul>
-      <my-component v-for="(item, index) in items" :key="index" :item="item"></my-component>
-    </ul>
-  </div>
-</template>
 
-<script>
-import MyComponent from './MyComponent.vue';
-
-export default {
-  components: {
-    MyComponent
-  },
-  data() {
-    return {
-      items: [
-        { name: 'Item 1', price: 10 },
-        { name: 'Item 2', price: 20 },
-        { name: 'Item 3', price: 30 }
-      ]
-    };
-  }
-};
-</script>
-```
-
-In this example, the `my-component` component will be rendered for each item in the `items` array. The `:item` prop is passed to each instance of the component, allowing it to receive and display the

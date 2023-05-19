@@ -114,12 +114,4 @@ public function store(Request $request)
 
 This will validate the form fields based on the specified rules. If validation fails, Laravel will automatically redirect the user back to the form with the validation errors.
 
-### Form Request Validation
 
-Alternatively, you can use form request classes to handle form validation. Laravel's form request classes allow you to encapsulate the validation logic and keep your controller clean.
-
-To create a form request class, you can use the `make:request` Artisan command:
-
-``
-```bash
-php artisan make:request

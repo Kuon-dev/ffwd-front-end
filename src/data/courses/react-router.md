@@ -47,12 +47,3 @@ export default App;
 
 In this example, we wrap our application with the `BrowserRouter` component, which provides the necessary routing functionality. Inside the `Switch` component, we define multiple `Route` components. The `exact` attribute ensures that only the exact path matches are rendered.
 
-## Route Parameters
-
-React Router allows you to define dynamic routes by using parameters. Parameters are specified using a colon (`:`) followed by the parameter name in the route path.
-
-Here's an example of using route parameters:
-
-```jsx
-import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router

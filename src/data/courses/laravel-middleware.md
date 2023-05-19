@@ -47,7 +47,3 @@ In the above example, the `auth` middleware is applied with the `admin` paramete
 
 Middleware can be assigned a priority to determine the order in which they are executed. Middleware with a lower priority value will be executed before those with a higher priority. The priority can be set in the `app/Http/Kernel.php` file's `$middlewarePriority` property.
 
-## Additional Resources
-
-- [Laravel Middleware Documentation](https://laravel.com/docs/middleware)
-- [Laravel HTTP Middleware](https://laravel.com/docs/middleware#middleware)

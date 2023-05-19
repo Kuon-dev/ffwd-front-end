@@ -83,6 +83,7 @@ Python provides a rich set of built-in methods for working with strings. Here ar
   ```python
   message = 'Hello, World!'
   words = message.split(', ')  # Output: ['Hello', 'World!']
+  ```
 
 These are just a few examples of the operations and methods available for working with strings in Python. Strings are a versatile and powerful data type in Python, and they are extensively used in various applications.
 

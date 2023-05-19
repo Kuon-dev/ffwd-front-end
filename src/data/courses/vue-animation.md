@@ -78,6 +78,4 @@ Here's an example that demonstrates the use of transition modes:
 
 In this example, the `mode="in-out"` attribute is added to the `<transition>` component. When the element is toggled, it will first fade out, then the new element will fade in.
 
-## Animation Libraries
 
-While Vue's built-in transition component is sufficient for many cases, you can

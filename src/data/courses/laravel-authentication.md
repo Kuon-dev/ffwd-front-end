@@ -66,5 +66,4 @@ Route::get('/password/reset/{token}', 'App`Http`Controllers`Auth`ResetPasswordCo
 Route::post('/password/reset', 'App`Http`Controllers`Auth`ResetPasswordController@reset')->name('password.update');
 ```
 
-## Conclusion
 

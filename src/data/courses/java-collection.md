@@ -69,12 +69,4 @@ String removedElement = queue.remove(); // Remove and retrieve the front element
 System.out.println(removedElement); // Output: Apple
 ```
 
-## Map
 
-A map is a collection of key-value pairs, where each key is unique. In Java, the `Map` interface represents a map and is implemented by classes such as `HashMap`, `TreeMap`, and `LinkedHashMap`. Maps provide methods to add, remove, and retrieve values based on their keys. Here's an example of using a `HashMap` as a map in Java:
-
-```java
-import java.util.HashMap;
-import java.util.Map;
-
-Map<String, Integer> scores = new HashMap

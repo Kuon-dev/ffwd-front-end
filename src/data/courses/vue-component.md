@@ -110,5 +110,3 @@ export default {
 };
 </script>
 ```
-
-In this example, the component defines two props: `title` and `message`. The `title` prop is of type `String` and has a default

@@ -64,6 +64,4 @@ Vue provides a shorthand syntax for `v-if`. Instead of using `v-if`, you can use
 
 This shorthand syntax achieves the same result as the previous example using `v-if` and a `template` element.
 
-## v-if vs v-show
 
-Vue also provides the `v-show` directive, which is another way to conditionally show or hide elements. The main difference between `v-if` and `v-show` is that `v-if` conditionally adds or removes elements from the DOM, while `v-show` toggles the CSS `display` property of the element. If an element is initially hidden with `v-if`, it won't be included in the DOM at all, whereas an element hidden with `v-show` will still be present in the DOM but not displayed. Use `v-if` when you need to conditionally render a block of elements that might not be used frequently,
