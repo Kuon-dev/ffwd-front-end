@@ -111,12 +111,14 @@
 															content-class="bg-sky-700"
 														>
 															<v-btn
+																:loading="loadingEdit"
 																v-if="action.value === 'edit'"
 																@click="editUserAccount(item)"
 															>
 																{{ action.title }}
 															</v-btn>
 															<v-btn
+																:loading="loadingDel"
 																v-else-if="action.value === 'ban'"
 																@click="handleUserStatus(item)"
 															>
@@ -144,7 +146,11 @@
 			</div>
 		</section>
 	</BaseCard>
-	<BaseUserProfile v-if="isShowProfile" :profile-type="profileStatus" />
+	<BaseUserProfile
+		v-if="isShowProfile"
+		:profile-type="profileStatus"
+		@update-user="fetchUsers()"
+	/>
 	<v-overlay
 		:model-value="overlay"
 		class="align-center justify-center"
@@ -191,6 +197,7 @@
 				>
 					<v-btn
 						color="#7e81ee"
+						:loading="loadingAdd"
 						class="text-white w-full md:w-1/4"
 						@click="handleAddNewUser()"
 						>Save</v-btn
@@ -222,7 +229,12 @@ import { useUserStore, User } from 'stores/UserStore';
 import BaseCard from 'base-components/BaseCard.vue';
 import { toggleProfileOverlay, isShowProfile } from 'compostables/NavInjector';
 import BaseAlert from 'base-components/BaseAlert.vue';
-import { ajaxClient, getAjaxToken } from 'stores/BackendAPI';
+import { ajaxClient } from 'stores/BackendAPI';
+
+const newName = ref();
+const newPassword = ref();
+const newEmail = ref();
+const newPhone = ref();
 
 const manageStore = useUserManagementStore();
 const userStore = useUserStore();
@@ -243,6 +255,10 @@ const renderAlert = (
 		showAlert.value = false;
 	}, 8000);
 };
+
+const loadingAdd = ref(false);
+const loadingDel = ref(false);
+const loadingEdit = ref(false);
 
 const allUsers = ref();
 const profileStatus = ref('adminEdit');
@@ -293,6 +309,7 @@ const handleAddNewUser = async () => {
 		return;
 	}
 	else {
+		loadingAdd.value = true;
 		const res = await ajaxClient('api/user/manage/profile/add', 'POST', {
 			name: newName.value,
 			email: newEmail.value,
@@ -303,7 +320,13 @@ const handleAddNewUser = async () => {
 			.then((response: any) => response)
 			.catch((err: any) => {
 				renderAlert('error', 'Empty Field!', err.message);
+				loadingAdd.value = false;
 			});
+		if (res) {
+			renderAlert('success', 'Post success', 'Added a new user');
+		}
+		allUsers.value = await manageStore.getAllUsers(userStore.accessLevel);
+		loadingAdd.value = false;
 	}
 };
 
@@ -313,8 +336,18 @@ const editUserAccount = (e: any) => {
 	toggleProfileOverlay(true);
 };
 
-const handleUserStatus = (e: any) => {
-	console.log('test');
+const handleUserStatus = async (e: any) => {
+	loadingDel.value = true;
+	const res = await ajaxClient('api/user/manage/profile/ban', 'POST', {
+		id: e.id,
+	})
+		.then((response: any) => response)
+		.catch((err: any) => {
+			renderAlert('error', 'An Error has occurred!', err.message);
+		});
+
+	allUsers.value = await manageStore.getAllUsers(userStore.accessLevel);
+	loadingDel.value = false;
 };
 
 interface UserAction {
@@ -357,10 +390,9 @@ const parseDate = (date: string) => {
 	}-${parse.getDay()} at ${parse.getHours()}:${parse.getMinutes()}`;
 };
 
-const newName = ref();
-const newPassword = ref();
-const newEmail = ref();
-const newPhone = ref();
+const fetchUsers = async () => {
+	allUsers.value = await manageStore.getAllUsers(userStore.accessLevel);
+};
 
 onMounted(async () => {
 	allUsers.value = await manageStore.getAllUsers(userStore.accessLevel);
