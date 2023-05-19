@@ -70,4 +70,4 @@ CSS transitions are supported in modern browsers, including most versions of Chr
 ## Conclusion
 
 CSS transitions provide an easy and powerful way to add smooth and animated effects to your web pages. By specifying the transition properties, timing functions, and delays, you can create engaging and interactive user experiences. Experiment with CSS transitions in your projects to enhance the visual appeal and user engagement.
-```
+
