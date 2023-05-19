@@ -28,15 +28,9 @@
 						<SearchBarVue @search="performSearch($event)"></SearchBarVue>
 					</div>
 
-					<!-- Filter Section -->
-					<div class="flex flex-col md:flex-row md:justify-between gap-5">
-						<div class="filter-section">
-							<FilterDropDownVue :options="filterOptions"></FilterDropDownVue>
-						</div>
-						<router-link to="/forum/create">
-							<v-btn color="#7e81ee" class="text-white"> Ask a Question </v-btn>
-						</router-link>
-					</div>
+					<router-link to="/forum/create">
+						<v-btn color="#7e81ee" class="text-white"> Ask a Question </v-btn>
+					</router-link>
 				</BaseCard>
 
 				<!-- Forum Sections -->
@@ -76,8 +70,6 @@
 import { ref, onMounted } from 'vue';
 import BaseCard from 'base-components/BaseCard.vue';
 import SearchBarVue from 'base-components/BaseSearchBar.vue';
-import FilterDropDownVue from 'base-components/BaseDropDown.vue';
-import FormCarouselSectionVue from 'forum-components/ForumCarouselSection.vue';
 import ForumCard from 'forum-components/ForumCard.vue';
 import ForumHots from 'forum-components/ForumHotSection.vue';
 import { useForumStore, Forum } from 'stores/ForumStore';
@@ -92,15 +84,10 @@ const hots = ref<Forum[]>([]);
 const totalPage = ref(0);
 const currentPage = ref(forumStore.forumCurrentPagination);
 
-const filterOptions = [
-	{ value: 'Trending', label: 'Trending' },
-	{ value: 'Name', label: 'Name' },
-	{ value: 'Rating', label: 'Rating' },
-];
-
 // Define methods for the component
-const performSearch = (query: Event) => {
-	console.log(query);
+const performSearch = async (searchedForums: Forum[]) => {
+	const data: Forum[] = await searchedForums;
+	forums.value = data;
 };
 
 const changePage = async (index: number) => {
