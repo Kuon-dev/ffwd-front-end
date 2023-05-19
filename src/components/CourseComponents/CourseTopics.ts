@@ -130,7 +130,7 @@ export const html: Course[] = [
 	{
 		title: 'HTML',
 		lists: [
-			{ topic: 'HTML Tutorial', path: 'html/html-tutorial' },
+			{ topic: 'HTML Tutorial', path: 'html/what-is-html' },
 			{ topic: 'HTML Basic', path: 'html/html-basic' },
 			{ topic: 'HTML Elements', path: 'html/html-elements' },
 			{ topic: 'HTML Attributes', path: 'html/html-attribute' },

@@ -73,6 +73,4 @@ Here's an example of applying CSS styles to a paragraph element:
 
 In the above example, we have added an internal stylesheet in the `<head>` section to set the color and font size of the paragraph (`<p>`) element.
 
-## Conclusion
 
-This concludes our basic HTML tutorial. We have covered the fundamental structure of an HTML document, HTML elements, and adding
