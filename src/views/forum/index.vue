@@ -3,8 +3,8 @@
 		class="h-full top-0 lg:flex lg:justify-center bg-cover bg-gray-100 flex-col"
 	>
 		<!-- Hot Today Section -->
-		<div class="flex flex-row">
-			<section class="px-5 mb-5 lg:mb-0 lg:w-2/6 order-last lg:order-first">
+		<div class="flex flex-col lg:flex-row">
+			<section class="px-5 mb-5 lg:mb-0 lg:w-2/6 lg:order-first">
 				<h3 class="font-semibold text-2xl">Hot Today</h3>
 				<BaseCard class="mt-5">
 					<ForumHots :forums="hots" v-if="hots.length > 0" />
@@ -20,7 +20,7 @@
 			</section>
 
 			<!-- QnA Discussions Section -->
-			<section class="px-5 lg:w-4/6 order-first lg:order-last">
+			<section class="px-5 lg:w-4/6 lg:order-last">
 				<BaseCard>
 					<h3 class="font-semibold">Q&A Discussions</h3>
 					<!-- Search Section -->
@@ -28,15 +28,9 @@
 						<SearchBarVue @search="performSearch($event)"></SearchBarVue>
 					</div>
 
-					<!-- Filter Section -->
-					<div class="flex flex-col md:flex-row md:justify-between gap-5">
-						<div class="filter-section">
-							<FilterDropDownVue :options="filterOptions"></FilterDropDownVue>
-						</div>
-						<router-link to="/forum/create">
-							<v-btn color="#7e81ee" class="text-white"> Ask a Question </v-btn>
-						</router-link>
-					</div>
+					<router-link to="/forum/create">
+						<v-btn color="#7e81ee" class="text-white"> Ask a Question </v-btn>
+					</router-link>
 				</BaseCard>
 
 				<!-- Forum Sections -->
@@ -76,8 +70,6 @@
 import { ref, onMounted } from 'vue';
 import BaseCard from 'base-components/BaseCard.vue';
 import SearchBarVue from 'base-components/BaseSearchBar.vue';
-import FilterDropDownVue from 'base-components/BaseDropDown.vue';
-import FormCarouselSectionVue from 'forum-components/ForumCarouselSection.vue';
 import ForumCard from 'forum-components/ForumCard.vue';
 import ForumHots from 'forum-components/ForumHotSection.vue';
 import { useForumStore, Forum } from 'stores/ForumStore';
@@ -92,15 +84,10 @@ const hots = ref<Forum[]>([]);
 const totalPage = ref(0);
 const currentPage = ref(forumStore.forumCurrentPagination);
 
-const filterOptions = [
-	{ value: 'Trending', label: 'Trending' },
-	{ value: 'Name', label: 'Name' },
-	{ value: 'Rating', label: 'Rating' },
-];
-
 // Define methods for the component
-const performSearch = (query: Event) => {
-	console.log(query);
+const performSearch = async (searchedForums: Forum[]) => {
+	const data: Forum[] = await searchedForums;
+	forums.value = data;
 };
 
 const changePage = async (index: number) => {

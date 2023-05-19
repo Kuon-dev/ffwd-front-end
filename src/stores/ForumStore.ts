@@ -76,6 +76,7 @@ export const useForumStore = defineStore('forumStore', {
 		postComments: [] as Comment[],
 		forumError: <SingleError>{} || <any>{},
 		commentError: <SingleError>{} || <any>{},
+		searchedForums: [] as Forum[],
 	}),
 	getters: {
 		allForums: (state) => state.forums,
@@ -155,6 +156,45 @@ export const useForumStore = defineStore('forumStore', {
 				};
 				this.forumError = errorMessage;
 			});
+		},
+		async searchForum(query: string) {
+			getToken();
+
+			const user = ref<String[]>([]);
+			const vote = ref<any>({
+				upVotes: [],
+				downVotes: [],
+			});
+			const newForum = ref<Forum[]>([]);
+
+			const forumData = await apiClient
+				.post(`api/forums/search?q=${query}`)
+				.then((res) => {
+					user.value = res.data.users;
+					vote.value.upVotes = res.data.upVotes;
+					vote.value.downVotes = res.data.downVotes;
+					return res.data;
+				})
+				.catch((err: Error | AxiosError) => {
+					const error = err as AxiosError;
+					const errorMessage: SingleError | any = {
+						message: (error?.response?.data as any).message,
+						status: error?.response?.status,
+					};
+					this.forumError = errorMessage;
+				});
+
+			forumData?.data?.forEach((forum: FetchedForum, index: number) => {
+				const tempForum: Forum = {
+					...forum,
+					username: user.value[index],
+					upVotes: vote.value.upVotes[index],
+					downVotes: vote.value.downVotes[index],
+				};
+				newForum.value.push(tempForum);
+			});
+
+			return Object.keys(this.forumError).length !== 0 ? [] : newForum.value;
 		},
 		async getSpecificForum(id: any) {
 			await getToken();

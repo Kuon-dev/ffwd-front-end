@@ -18,7 +18,9 @@
 
 <script setup lang="ts">
 import { defineEmits, ref } from 'vue';
+import { Forum, useForumStore } from 'stores/ForumStore';
 
+const forumStore = useForumStore();
 const emits = defineEmits(['search']);
 
 const searchQuery = ref('');
@@ -28,12 +30,17 @@ const handleInputChange = (event: Event) => {
 	clearTimeout(timeoutId.value);
 
 	timeoutId.value = setTimeout(() => {
-		emits('search', searchQuery.value);
+		// emits('search', searchQuery.value);
 	}, 3000);
 };
 
-const handleSearch = () => {
-	// You can add custom logic here for handling search, e.g. emitting an event with the search query as payload
+const handleSearch = async () => {
+	const data: Forum[] = await forumStore.searchForum(searchQuery.value);
+	emitSearchedForums(data);
+};
+
+const emitSearchedForums = (response: Forum[]) => {
+	emits('search', response);
 };
 </script>
 

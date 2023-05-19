@@ -19,9 +19,15 @@ import {
 	faSearch,
 	faChevronDown,
 	faCode,
+	faBarsStaggered,
 } from '@fortawesome/free-solid-svg-icons';
 
-import { faEye, faSquareCaretLeft } from '@fortawesome/free-regular-svg-icons';
+import {
+	faEye,
+	faSquareCaretLeft,
+	faEyeSlash,
+	faSquare,
+} from '@fortawesome/free-regular-svg-icons';
 /* add icons to the library */
 library.add(
 	faUser,
@@ -33,8 +39,11 @@ library.add(
 	faSearch,
 	faChevronDown,
 	faEye,
+	faEyeSlash,
 	faSquareCaretLeft,
 	faCode,
+	faSquare,
+	faBarsStaggered,
 );
 
 // Vuetify
