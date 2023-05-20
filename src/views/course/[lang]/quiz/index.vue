@@ -17,7 +17,7 @@
 			</div>
 		</BaseCard>
 		<BaseCard
-			class="fixed text-center w-40 top-28 right-20 z-50"
+			class="fixed text-center w-40 top-32 right-5 md:right-20 z-50"
 			v-if="!submittedQuiz"
 		>
 			<p>Timer: {{ formattedTime }}</p>
