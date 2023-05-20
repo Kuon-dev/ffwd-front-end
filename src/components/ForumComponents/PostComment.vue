@@ -27,7 +27,11 @@
 					</div>
 					<div
 						class="flex flex-row gap-2"
-						v-if="store.user?.id === comment.user_id || store.accessLevel > 1"
+						v-if="
+							comment.is_deleted_by_user === 0 &&
+							comment.is_removed_by_admin === 0 &&
+							(store.user?.id === comment.user_id || store.accessLevel > 1)
+						"
 					>
 						<button @click="toggleEdit(index)">
 							<font-awesome-icon
@@ -202,6 +206,9 @@ const editComment = async (
 			.then(async (response) => {
 				renderAlert('success', 'Success', (response?.data as any).message);
 				// comments.value = await (forumStore.getAllComments(0)) ?? [];
+				setTimeout(() => {
+					location.reload();
+				}, 2000);
 			})
 			.catch((err: Error | AxiosError) => {
 				const error = err as AxiosError;
@@ -234,6 +241,9 @@ const editComment = async (
 			.post('/api/comments/edit', body)
 			.then(async (response) => {
 				renderAlert('success', 'Success', (response?.data as any).message);
+				setTimeout(() => {
+					location.reload();
+				}, 2000);
 				// comments.value = await (forumStore.getAllComments(0)) ?? [];
 			})
 			.catch((err: Error | AxiosError) => {
@@ -278,6 +288,9 @@ const deleteComment = async (
 			.post('/api/comments/deleteAdmin', body)
 			.then(async (response) => {
 				renderAlert('success', 'Success', (response?.data as any).message);
+				setTimeout(() => {
+					location.reload();
+				}, 2000);
 			})
 			.catch((err: Error | AxiosError) => {
 				const error = err as AxiosError;
