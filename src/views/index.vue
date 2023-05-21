@@ -43,7 +43,7 @@
 						>
 							<div class="flex basis-1/4 flex-col">
 								<h2
-									class="text-3xl font-extrabold text-black dark:text-white sm:text-4xl"
+									class="text-3xl font-extrabold text-black dark:text-white lg:text-4xl"
 								>
 									<span class="block">Language </span>
 								</h2>
@@ -53,7 +53,7 @@
 								</p>
 							</div>
 
-							<div class="bg-purple-50 p-5 rounded-lg drop-shadow-md">
+							<div class="bg-purple-50 w-[47rem] p-5 rounded-lg drop-shadow-md">
 								<Carousel
 									:items-to-show="2.5"
 									:wrap-around="true"

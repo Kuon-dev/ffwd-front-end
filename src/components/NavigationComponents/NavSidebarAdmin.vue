@@ -15,8 +15,8 @@
 					class="icon w-12 h-12 mr-5"
 				/>
 				<span class="label self-center font-medium text-brand text-lg">
-					{{ store.user.name }}</span
-				>
+					{{ store?.user?.name }}
+				</span>
 			</router-link>
 
 			<!--Dashboard-->

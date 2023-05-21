@@ -87,6 +87,34 @@ export const useUserStore = defineStore('userStore', {
 				return userData?.data ?? null;
 			}
 		},
+		async forceGetUser() {
+			this.authErrors = [];
+			await getToken();
+			const userData = await apiClient
+				.get('api/user')
+				.catch((err: AxiosError) => {
+					if (err?.response?.status === 401) return;
+					const error = err as AxiosError;
+					const errorMessage: SingleError = {
+						message: (error?.response?.data as any).message,
+						status: error?.response?.status,
+					};
+					this.authErrors = errorMessage;
+				});
+			if (userData?.data) {
+				const userPerms = await apiClient.post('api/user', userData?.data);
+				this.authUserAccessLevel = await userPerms?.data?.perm_level;
+				this.authUser = userData?.data;
+				/*
+        if (userPerms.data.perm_level < accessType) {
+          (this as any).router.push('/404')
+          return
+        }
+
+        */
+				return userData?.data ?? null;
+			}
+		},
 
 		async setNullUser() {
 			this.authUser = null;
@@ -183,7 +211,7 @@ export const useUserStore = defineStore('userStore', {
 		async loginRedirect() {
 			this.authErrors = [];
 			await getToken();
-			await this.getUser();
+			await this.forceGetUser();
 			const res = await apiClient.get('/dashboard');
 			const route = await (res?.data as any).route;
 			if (route) (this as any).router.push(route);
