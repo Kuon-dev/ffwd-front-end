@@ -108,7 +108,11 @@ const openOverlay = async (quiz: any) => {
 		overlay.value = true;
 	}
 
-	await QRCode.toDataURL(`localhost:5173/course/${quiz.title}/score/${quiz.id}`)
+	await QRCode.toDataURL(
+		`${(import.meta as any).env.VITE_APP_FRONTEND_API}/course/${
+			quiz.title
+		}/score/${quiz.id}`,
+	)
 		.then((url) => {
 			image.value = url;
 		})

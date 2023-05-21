@@ -82,7 +82,9 @@ export const injectMarkdownContent = (file: string | string[]) => {
 			//	$(document).ready(() => {
 			fetchedMd.value = false;
 			$.ajax({
-				url: `http://localhost:5173/src/data/courses/${file}.md`,
+				url: `${
+					(import.meta as any).env.VITE_APP_BACKEND_API
+				}/api/course/get/${file}.md`,
 				type: 'GET',
 				dataType: 'text',
 				success: (data: any) => {
