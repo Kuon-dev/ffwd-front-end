@@ -7,8 +7,9 @@ const router = createRouter({
 	history: createWebHistory(),
 });
 
-router.beforeEach(async (to: any) => {
+router.beforeEach(async (to: any, from: any) => {
 	const store = useUserStore();
+	if (from.path === '/login') await store.getUser();
 	if (!store.user) return;
 	if (Object.keys(store.user).length === 0) {
 		const user = await store.getUser();
