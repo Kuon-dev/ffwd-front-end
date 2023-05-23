@@ -20,7 +20,9 @@
 								Learn code for any languages that you want to learn!
 							</p>
 							<div class="lg:mt-0 lg:flex-shrink-0 mt-5">
-								<v-btn color="#7E81FF" class="text-white">Get started</v-btn>
+								<router-link to="/course">
+									<v-btn color="#7E81FF" class="text-white">Get started</v-btn>
+								</router-link>
 							</div>
 						</div>
 

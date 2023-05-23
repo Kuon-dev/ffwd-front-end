@@ -9,7 +9,7 @@
 
 		<List :course="selectedTopic" class="mt-10"></List>
 
-		<BaseCard class="mt-10">
+		<BaseCard class="mt-10" v-if="userStore.accessLevel > 0">
 			<p>Test your knowledge by taking on the quiz!</p>
 			<v-btn color="#7E81FF" class="mt-5">
 				<router-link :to="`${path.fullPath}/quiz`" class="text-white">
