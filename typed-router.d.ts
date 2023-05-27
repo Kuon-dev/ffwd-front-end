@@ -72,12 +72,6 @@ declare module 'vue-router/auto/routes' {
 			Record<never, never>,
 			Record<never, never>
 		>;
-		'/admin/manage/': RouteRecordInfo<
-			'/admin/manage/',
-			'/admin/manage',
-			Record<never, never>,
-			Record<never, never>
-		>;
 		'/admin/manage/admin': RouteRecordInfo<
 			'/admin/manage/admin',
 			'/admin/manage/admin',
