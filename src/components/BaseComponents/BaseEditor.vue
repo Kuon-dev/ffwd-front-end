@@ -91,15 +91,13 @@ const handleSubmit = async (e: Event) => {
 	editor
 		.save()
 		.then(async (output) => {
-			console.log(output);
 			if (!props.server) return;
 			const res = await apiClient.post(props.server, {
 				user_id: props.user.id,
-				forum: forumStore.forum.forum.id ?? -1,
+				forum: forumStore.forum?.forum?.id ?? -1,
 				title: props.title ?? 'Test title',
 				content: output,
 			});
-			console.log(res);
 			renderAlert(
 				'success',
 				'Post success',
@@ -107,6 +105,7 @@ const handleSubmit = async (e: Event) => {
 			);
 		})
 		.catch((err) => {
+			console.log(err);
 			renderAlert('error', 'An error occurred', err);
 		});
 };
