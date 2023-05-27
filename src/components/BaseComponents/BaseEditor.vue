@@ -59,8 +59,10 @@ const editor = new EditorJS({
 		paragraph: Paragraph,
 		// ...
 	},
-	data: JSON.parse(forumStore.forum.forum.content),
-	async onChange(api, event) {
+	data: JSON.parse(
+		props.status === 'adding' ? '[]' : forumStore.forum?.forum?.content,
+	),
+	async onChange(api: any, event: any) {
 		const data = await api.saver.save();
 		handleInputChange(data);
 	},
