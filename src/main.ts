@@ -20,6 +20,7 @@ import {
 	faChevronDown,
 	faCode,
 	faBarsStaggered,
+	faStar,
 } from '@fortawesome/free-solid-svg-icons';
 
 import {
@@ -44,6 +45,7 @@ library.add(
 	faCode,
 	faSquare,
 	faBarsStaggered,
+	faStar,
 );
 
 // Vuetify
