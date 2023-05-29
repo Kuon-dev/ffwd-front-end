@@ -63,14 +63,22 @@
 	>
 		Submit
 	</v-btn>
-	<v-btn
-		color="#7E81FF"
-		class="my-5 text-white text-center"
-		v-else
-		@click="pageBack"
-	>
-		Back
-	</v-btn>
+	<div class="flex gap-5" v-else>
+		<v-btn
+			color="#7E81FF"
+			class="my-5 text-white text-center"
+			@click="pageBack"
+		>
+			Back
+		</v-btn>
+		<v-btn
+			color="#7E81FF"
+			class="my-5 text-white text-center"
+			@click="feedbackPage"
+		>
+			Feedback
+		</v-btn>
+	</div>
 </template>
 
 <script setup lang="ts">
@@ -229,6 +237,12 @@ const scrollToTop = () => {
 
 const pageBack = () => {
 	history.back();
+};
+
+const feedbackPage = () => {
+	const currentPath = router.currentRoute.value.path;
+	const feedbackPath = currentPath + '/feedback';
+	router.push(feedbackPath);
 };
 
 onMounted(() => {
